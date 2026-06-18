@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنل مدیریت بات VPN</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Tahoma', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        .header { text-align: center; color: white; margin-bottom: 30px; }
+        .header h1 { font-size: 2rem; margin-bottom: 10px; }
+
+        /* Tab Styles */
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .tab-btn { background: rgba(255,255,255,0.2); border: none; padding: 12px 24px; border-radius: 10px; color: white; cursor: pointer; font-size: 1rem; transition: all 0.3s; }
+        .tab-btn.active { background: white; color: #667eea; }
+        .tab-content { background: white; border-radius: 20px; padding: 30px; display: none; }
+        .tab-content.active { display: block; }
+
+        /* Card Styles */
+        .card { background: #f8f9fa; border-radius: 15px; padding: 20px; margin-bottom: 20px; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #e0e0e0; flex-wrap: wrap; gap: 10px; }
+        .card-title { font-size: 1.2rem; font-weight: bold; color: #333; }
+
+        /* Form Styles */
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; }
+        input, textarea, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; }
+        textarea { min-height: 80px; resize: vertical; }
+
+        /* Button Styles */
+        button { background: #667eea; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 1rem; transition: all 0.3s; }
+        button:hover { background: #5a67d8; }
+        .btn-danger { background: #e53e3e; }
+        .btn-danger:hover { background: #c53030; }
+        .btn-success { background: #48bb78; }
+        .btn-success:hover { background: #38a169; }
+        .btn-warning { background: #ed8936; }
+        .btn-warning:hover { background: #dd6b20; }
+        .btn-small { padding: 5px 10px; font-size: 0.8rem; margin: 2px; }
+
+        /* Table Styles */
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; text-align: right; border-bottom: 1px solid #ddd; }
+        th { background: #667eea; color: white; }
+        .table-responsive { overflow-x: auto; }
+
+        /* Status Badges */
+        .badge { display: inline-block; padding: 3px 8px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; }
+        .badge-pending { background: #ed8936; color: white; }
+        .badge-approved { background: #48bb78; color: white; }
+        .badge-rejected { background: #e53e3e; color: white; }
+        .capacity-badge { display: inline-block; padding: 3px 8px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
+        .capacity-full { background: #f56565; color: white; }
+        .capacity-available { background: #48bb78; color: white; }
+        .capacity-warning { background: #ed8936; color: white; }
+
+        /* Utility Classes */
+        .loading { text-align: center; padding: 20px; color: #666; }
+        .error { color: #e53e3e; padding: 10px; text-align: center; }
+        .flex { display: flex; gap: 20px; flex-wrap: wrap; }
+        .flex-center { display: flex; justify-content: center; align-items: center; }
+        .text-center { text-align: center; }
+        .stat-card { flex: 1; min-width: 150px; background: white; border-radius: 15px; padding: 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .stat-number { font-size: 28px; font-weight: bold; margin-top: 10px; }
+        .stat-label { font-size: 14px; color: #666; }
+
+        /* Modal Styles */
+        #imageModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; cursor: pointer; align-items: center; justify-content: center; }
+        #imageModal img { max-width: 95%; max-height: 95%; object-fit: contain; border-radius: 8px; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .tabs { justify-content: center; }
+            .tab-btn { padding: 8px 16px; font-size: 0.8rem; }
+            .tab-content { padding: 15px; }
+            .card-header { flex-direction: column; align-items: flex-start; }
+            th, td { padding: 8px; font-size: 12px; }
+            .stat-card { min-width: 120px; }
+            .stat-number { font-size: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 پنل مدیریت بات VPN</h1>
+            <p>مدیریت پنل‌ها، سرویس‌ها، لینک‌های پرداخت و رسیدها</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="panels">📡 پنل‌ها</button>
+            <button class="tab-btn" data-tab="services">💰 سرویس‌ها</button>
+            <button class="tab-btn" data-tab="payment-links">🔗 لینک‌های پرداخت</button>
+            <button class="tab-btn" data-tab="receipts">📋 رسیدها</button>
+            <button class="tab-btn" data-tab="reports">📊 گزارشات</button>
+            <button class="tab-btn" data-tab="settings">⚙️ تنظیمات</button>
+        </div>
+
+        <!-- ==================== PANELS TAB ==================== -->
+        <div id="panels" class="tab-content active">
+            <div class="card">
+                <div class="card-header"><span class="card-title">➕ افزودن پنل جدید</span></div>
+                <form id="addPanelForm">
+                    <div class="flex">
+                        <div class="form-group" style="flex:2"><label>نام پنل</label><input type="text" name="name" placeholder="مثال: سرور آلمان" required></div>
+                        <div class="form-group" style="flex:3"><label>آدرس URL</label><input type="text" name="url" placeholder="https://example.com:2053/panel" required></div>
+                    </div>
+                    <div class="flex">
+                        <div class="form-group" style="flex:1"><label>نام کاربری</label><input type="text" name="username" required></div>
+                        <div class="form-group" style="flex:1"><label>رمز عبور</label><input type="password" name="password" required></div>
+                        <div class="form-group" style="flex:1"><label>حداکثر کاربر (0=∞)</label><input type="number" name="max_slots" value="0" min="0"></div>
+                    </div>
+                    <div class="form-group"><label>آدرس سابسکریپشن</label><input type="text" name="sub_url" placeholder="https://england.spacegate.ir:2096/sub/"></div>
+                    <button type="submit">➕ افزودن پنل</button>
+                </form>
+            </div>
+            <div class="card">
+                <div class="card-header"><span class="card-title">📋 لیست پنل‌ها</span></div>
+                <div id="panelsList" class="table-responsive"><div class="loading">در حال بارگذاری...</div></div>
+            </div>
+            <div class="card" id="inboundsSection" style="display:none;">
+                <div class="card-header"><span class="card-title">📡 مدیریت اینباندها</span><button onclick="closeInboundsPanel()" class="btn-danger btn-small">✖️ بستن</button></div>
+                <div id="inboundsList"></div>
+                <button onclick="saveSelectedInbounds()" style="margin-top:15px;">💾 ذخیره</button>
+            </div>
+        </div>
+
+        <!-- ==================== SERVICES TAB ==================== -->
+        <div id="services" class="tab-content">
+            <div class="card">
+                <div class="card-header"><span class="card-title">➕ افزودن سرویس جدید</span></div>
+                <form id="addServiceForm">
+                    <div class="flex">
+                        <div class="form-group" style="flex:2"><label>نام سرویس</label><input type="text" name="name" required></div>
+                        <div class="form-group" style="flex:1"><label>حجم (GB)</label><input type="number" name="traffic_gb" required></div>
+                        <div class="form-group" style="flex:1"><label>قیمت (تومان)</label><input type="number" name="price_toman" required></div>
+                        <div class="form-group" style="flex:1"><label>اعتبار (روز)</label><input type="number" name="expiry_days" required></div>
+                        <div class="form-group" style="flex:1"><label>ترتیب</label><input type="number" name="sort_order" value="0"></div>
+                    </div>
+                    <button type="submit">➕ افزودن سرویس</button>
+                </form>
+            </div>
+            <div class="card">
+                <div class="card-header"><span class="card-title">📋 لیست سرویس‌ها</span></div>
+                <div id="servicesList" class="table-responsive"><div class="loading">در حال بارگذاری...</div></div>
+            </div>
+        </div>
+
+        <!-- ==================== PAYMENT LINKS TAB ==================== -->
+        <div id="payment-links" class="tab-content">
+            <div class="card">
+                <div class="card-header"><span class="card-title">➕ افزودن لینک پرداخت</span></div>
+                <form id="addPaymentLinkForm">
+                    <div class="flex">
+                        <div class="form-group" style="flex:1"><label>سرویس</label><select name="service_id" id="serviceSelect" required><option>بارگذاری...</option></select></div>
+                        <div class="form-group" style="flex:1"><label>نام سرویس</label><input type="text" name="service_name" required></div>
+                        <div class="form-group" style="flex:1"><label>پنل</label><select name="panel_id" id="panelSelect" required><option>بارگذاری...</option></select></div>
+                        <div class="form-group" style="flex:1"><label>اینباند ID</label><input type="number" name="inbound_id" required></div>
+                        <div class="form-group" style="flex:1"><label>قیمت</label><input type="number" name="price_toman" required></div>
+                    </div>
+                    <div class="form-group"><label>لینک پرداخت</label><input type="text" name="link" placeholder="https://pay.xyz.com/..." required></div>
+                    <button type="submit">➕ افزودن لینک</button>
+                </form>
+            </div>
+            <div class="card">
+                <div class="card-header"><span class="card-title">📋 لیست لینک‌های پرداخت</span></div>
+                <div id="paymentLinksList" class="table-responsive"><div class="loading">در حال بارگذاری...</div></div>
+            </div>
+        </div>
+
+        <!-- ==================== RECEIPTS TAB ==================== -->
+        <!-- ===== CHANGE: Added auto-refresh controls to receipts card ===== -->
+        <div id="receipts" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">📋 رسیدهای انتظار تأیید</span>
+                    <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                        <span style="font-size:0.9rem; color:#666;">⏱️ رفرش خودکار:</span>
+                        <button class="btn-small" onclick="setRefreshInterval(15)" style="background: #48bb78;">۱۵ ثانیه</button>
+                        <button class="btn-small" onclick="setRefreshInterval(30)" style="background: #667eea;">۳۰ ثانیه</button>
+                        <button class="btn-small" onclick="setRefreshInterval(60)" style="background: #ed8936;">۶۰ ثانیه</button>
+                        <button class="btn-small btn-danger" onclick="stopAutoRefresh()">⏹️ توقف</button>
+                        <button class="btn-small" onclick="loadPendingReceipts();" style="background: #38a169;">🔄 هم‌اکنون</button>
+                        <span id="refreshStatus" style="font-size:0.8rem; color:#999; margin-left:10px;">⏳ غیرفعال</span>
+                    </div>
+                </div>
+                <div id="receiptsList"><div class="loading">در حال بارگذاری...</div></div>
+            </div>
+        </div>
+
+        <!-- ==================== REPORTS TAB ==================== -->
+        <div id="reports" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">📊 آمار فروش</span>
+                    <div class="flex">
+                        <button class="btn-small" onclick="loadStats('daily')">روزانه</button>
+                        <button class="btn-small" onclick="loadStats('monthly')">ماهانه</button>
+                        <button class="btn-small" onclick="loadStats('yearly')">سالانه</button>
+                    </div>
+                </div>
+                <div><canvas id="statsChart" style="width:100%; max-height:400px;"></canvas></div>
+                <div class="flex" style="margin-top:20px;" id="totalStats">
+                    <div class="stat-card"><div class="stat-label">💰 جمع کل فروش</div><div class="stat-number" id="totalAmount">0</div><div class="stat-label">تومان</div></div>
+                    <div class="stat-card"><div class="stat-label">📊 تعداد تراکنش‌ها</div><div class="stat-number" id="totalTransactions">0</div></div>
+                    <div class="stat-card"><div class="stat-label">🆕 خرید جدید</div><div class="stat-number" id="totalPurchases">0</div></div>
+                    <div class="stat-card"><div class="stat-label">🔄 تمدید</div><div class="stat-number" id="totalRenewals">0</div></div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">📋 تاریخچه تراکنش‌ها</span>
+                    <div class="flex">
+                        <select id="transFilterStatus" onchange="loadTransactions(1)"><option value="">همه وضعیت‌ها</option><option value="approved">تأیید شده</option><option value="rejected">رد شده</option><option value="pending">در انتظار</option></select>
+                        <select id="transFilterType" onchange="loadTransactions(1)"><option value="">همه نوع‌ها</option><option value="purchase">خرید جدید</option><option value="renewal">تمدید</option></select>
+                    </div>
+                </div>
+                <div id="transactionsList" class="table-responsive"><div class="loading">در حال بارگذاری...</div></div>
+                <div id="transactionsPagination" style="margin-top:20px; text-align:center;"></div>
+            </div>
+        </div>
+
+        <!-- ==================== SETTINGS TAB ==================== -->
+        <div id="settings" class="tab-content">
+            <div class="card">
+                <div class="card-header"><span class="card-title">📚 تنظیمات راهنما</span></div>
+                <form id="helpForm">
+                    <div class="form-group"><label>متن راهنما</label><textarea name="description"></textarea></div>
+                    <div class="form-group"><label>لینک پشتیبانی</label><input type="text" name="link"></div>
+                    <div class="form-group"><label>🔗 لینک راهنمای نصب</label><input type="text" name="install_link" placeholder="https://example.com/install-guide"></div>
+                    <button type="submit">💾 ذخیره تنظیمات</button>
+                </form>
+            </div>
+            <div class="card">
+                <div class="card-header"><span class="card-title">⚠️ پیام هشدار اپراتور</span></div>
+                <form id="warningForm">
+                    <div class="form-group"><label>متن هشدار</label><textarea name="message"></textarea></div>
+                    <button type="submit">💾 ذخیره</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for fullscreen image -->
+    <div id="imageModal" onclick="closeModal()"><img id="modalImage" src=""></div>
+
+    <script>
+        let currentPanelId = null;
+        let statsChart = null;
+        let currentPage = 1;
+        let totalPages = 1;
+
+        // ===== CHANGE: Auto-refresh variables =====
+        let autoRefreshInterval = null;
+        let refreshIntervalSeconds = 30;
+        let lastUpdateTime = null;
+
+        // ==================== LOAD DATA ====================
+        async function loadData() {
+            await loadPanels();
+            await loadServices();
+            await loadPaymentLinks();
+            await loadPendingReceipts();
+            await loadHelpSettings();
+            await loadWarningMessage();
+            await populateSelects();
+            await loadStats('daily');
+            await loadTransactions(1);
+            
+            // ===== CHANGE: Start auto-refresh if receipts tab is active =====
+            const receiptsTab = document.getElementById('receipts');
+            if (receiptsTab && receiptsTab.classList.contains('active')) {
+                startAutoRefresh();
+            }
+        }
+
+        // ==================== POPULATE SELECTS ====================
+        async function populateSelects() {
+            try {
+                const servicesRes = await fetch('/admin/api/services');
+                const services = await servicesRes.json();
+                const serviceSelect = document.getElementById('serviceSelect');
+                serviceSelect.innerHTML = '<option value="">انتخاب کنید</option>';
+                services.forEach(s => { serviceSelect.innerHTML += `<option value="${s.id}">${s.name} - ${s.traffic_gb}GB - ${s.price_toman}تومان</option>`; });
+            } catch(e) { console.error(e); }
+            try {
+                const panelsRes = await fetch('/admin/api/panels');
+                const panels = await panelsRes.json();
+                const panelSelect = document.getElementById('panelSelect');
+                panelSelect.innerHTML = '<option value="">انتخاب کنید</option>';
+                panels.forEach(p => { panelSelect.innerHTML += `<option value="${p.id}">${p.name}</option>`; });
+            } catch(e) { console.error(e); }
+        }
+
+        // ==================== PANELS ====================
+        async function loadPanels() {
+            try {
+                const res = await fetch('/admin/api/panels');
+                const panels = await res.json();
+                const container = document.getElementById('panelsList');
+                if (!panels.length) { container.innerHTML = '<div class="loading">هیچ پنلی یافت نشد.</div>'; return; }
+                let html = '<table><thead><tr><th>نام</th><th>آدرس</th><th>آدرس ساب</th><th>ظرفیت</th><th>نمایش</th><th>عملیات</th></tr></thead><tbody>';
+                for (const panel of panels) {
+                    let activeCount = 0;
+                    try { const countRes = await fetch(`/admin/api/panels/${panel.id}/active_count`); const countData = await countRes.json(); activeCount = countData.count || 0; } catch(e) {}
+                    const maxSlots = panel.max_slots || 0;
+                    let capacityHtml = maxSlots === 0 ? '<span class="capacity-badge capacity-available">∞</span>' : (() => {
+                        let cls = activeCount >= maxSlots ? 'capacity-full' : (activeCount >= maxSlots * 0.8 ? 'capacity-warning' : 'capacity-available');
+                        return `<span class="capacity-badge ${cls}">${activeCount}/${maxSlots}</span>`;
+                    })();
+                    html += `<tr><td>${escapeHtml(panel.name)}</td><td style="font-size:12px; word-break:break-all;">${escapeHtml(panel.url)}</td><td style="font-size:12px;">${escapeHtml(panel.sub_url || '—')}</td><td>${capacityHtml}</td><td class="text-center"><input type="checkbox" ${panel.show_in_bot ? 'checked' : ''} onchange="togglePanelShow(${panel.id}, this.checked)"></td>`;
+                    html += `<td><div class="flex" style="gap:5px;"><button class="btn-small" onclick="editPanel(${panel.id})">✏️</button><button class="btn-small btn-warning" onclick="editMaxSlots(${panel.id}, ${maxSlots})">⚙️</button><button class="btn-small btn-success" onclick="manageInbounds(${panel.id})">📡</button><button class="btn-small btn-danger" onclick="deletePanel(${panel.id})">🗑️</button></div></td></tr>`;
+                }
+                html += '</tbody></table>';
+                container.innerHTML = html;
+            } catch(e) { document.getElementById('panelsList').innerHTML = `<div class="error">خطا: ${e.message}</div>`; }
+        }
+
+        async function editPanel(panelId) {
+            const res = await fetch('/admin/api/panels');
+            const panels = await res.json();
+            const panel = panels.find(p => p.id === panelId);
+            if (!panel) { alert('پنل یافت نشد!'); return; }
+            const newName = prompt('نام جدید پنل:', panel.name);
+            if (newName === null) return;
+            const newUrl = prompt('آدرس URL جدید:', panel.url);
+            if (newUrl === null) return;
+            const newUsername = prompt('نام کاربری جدید:', panel.username);
+            if (newUsername === null) return;
+            const newPassword = prompt('رمز عبور جدید:', panel.password);
+            if (newPassword === null) return;
+            const newSubUrl = prompt('آدرس سابسکریپشن جدید:', panel.sub_url || '');
+            await fetch(`/admin/api/panels/${panelId}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: newName, url: newUrl, username: newUsername, password: newPassword, sub_url: newSubUrl }) });
+            await loadPanels();
+        }
+
+        async function deletePanel(id) { if (confirm('حذف شود؟')) { await fetch(`/admin/api/panels/${id}`, { method: 'DELETE' }); await loadPanels(); await populateSelects(); } }
+        async function togglePanelShow(id, checked) { await fetch(`/admin/api/panels/${id}/toggle`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ show_in_bot: checked }) }); }
+        async function editMaxSlots(panelId, current) { const newMax = prompt('حداکثر تعداد کاربر:', current); if (newMax !== null) { await fetch(`/admin/api/panels/${panelId}/max_slots`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ max_slots: parseInt(newMax) || 0 }) }); await loadPanels(); } }
+
+        async function manageInbounds(panelId) {
+            currentPanelId = panelId;
+            document.getElementById('inboundsSection').style.display = 'block';
+            const res = await fetch(`/admin/api/panels/${panelId}/inbounds`);
+            const data = await res.json();
+            const container = document.getElementById('inboundsList');
+            container.innerHTML = '<h4>اینباندها:</h4>';
+            if (data.inbounds?.length) {
+                data.inbounds.forEach(ib => { const checked = data.selected?.includes(ib.id); container.innerHTML += `<label><input type="checkbox" value="${ib.id}" class="inbound-checkbox" ${checked ? 'checked' : ''}> ${ib.remark} (${ib.protocol})</label><br>`; });
+            } else { container.innerHTML += '<p>هیچ اینباندی یافت نشد.</p>'; }
+        }
+        function closeInboundsPanel() { document.getElementById('inboundsSection').style.display = 'none'; currentPanelId = null; }
+        async function saveSelectedInbounds() {
+            const checkboxes = document.querySelectorAll('.inbound-checkbox');
+            const selected = Array.from(checkboxes).filter(cb => cb.checked).map(cb => parseInt(cb.value));
+            await fetch(`/admin/api/panels/${currentPanelId}/inbounds`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ selected_inbounds: selected }) });
+            alert('ذخیره شد!'); closeInboundsPanel();
+        }
+
+        // ==================== SERVICES ====================
+        async function loadServices() {
+            try {
+                const res = await fetch('/admin/api/services');
+                const services = await res.json();
+                const container = document.getElementById('servicesList');
+                if (!services.length) { container.innerHTML = '<div class="loading">هیچ سرویسی یافت نشد.</div>'; return; }
+                let html = '<table><thead><tr><th>نام</th><th>حجم</th><th>قیمت</th><th>اعتبار</th><th>عملیات</th></tr></thead><tbody>';
+                services.forEach(s => { html += `<tr><td>${escapeHtml(s.name)}</td><td>${s.traffic_gb} GB</td><td>${s.price_toman.toLocaleString()} تومان</td><td>${s.expiry_days} روز</td><td><button class="btn-small" onclick="editService(${s.id})">✏️</button><button class="btn-small btn-danger" onclick="deleteService(${s.id})">🗑️</button></td></tr>`; });
+                html += '</tbody></table>';
+                container.innerHTML = html;
+            } catch(e) { document.getElementById('servicesList').innerHTML = `<div class="error">خطا: ${e.message}</div>`; }
+        }
+
+        async function editService(serviceId) {
+            const res = await fetch('/admin/api/services');
+            const services = await res.json();
+            const service = services.find(s => s.id === serviceId);
+            if (!service) { alert('سرویس یافت نشد!'); return; }
+            const newName = prompt('نام جدید سرویس:', service.name);
+            if (newName === null) return;
+            const newTraffic = prompt('حجم جدید (GB):', service.traffic_gb);
+            if (newTraffic === null) return;
+            const newPrice = prompt('قیمت جدید (تومان):', service.price_toman);
+            if (newPrice === null) return;
+            const newExpiry = prompt('مدت اعتبار جدید (روز):', service.expiry_days);
+            if (newExpiry === null) return;
+            const newOrder = prompt('ترتیب نمایش جدید:', service.sort_order || 0);
+            await fetch(`/admin/api/services/${serviceId}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: newName, traffic_gb: parseInt(newTraffic), price_toman: parseInt(newPrice), expiry_days: parseInt(newExpiry), sort_order: parseInt(newOrder) || 0 }) });
+            await loadServices(); await populateSelects();
+        }
+
+        async function deleteService(id) { if (confirm('حذف شود؟')) { await fetch(`/admin/api/services/${id}`, { method: 'DELETE' }); await loadServices(); await populateSelects(); } }
+
+        // ==================== PAYMENT LINKS ====================
+        async function loadPaymentLinks() {
+            try {
+                const res = await fetch('/admin/api/payment-links');
+                const links = await res.json();
+                const container = document.getElementById('paymentLinksList');
+                if (!links.length) { container.innerHTML = '<div class="loading">هیچ لینک پرداختی یافت نشد.</div>'; return; }
+                let html = '<div class="table-responsive"><table><thead><tr><th>سرویس</th><th>پنل</th><th>اینباند</th><th>قیمت</th><th>لینک</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody>';
+                for (const l of links) {
+                    let panelName = `پنل ${l.panel_id}`;
+                    try { const panelRes = await fetch(`/admin/api/panels/${l.panel_id}`); const panel = await panelRes.json(); if (panel?.name) panelName = panel.name; } catch(e) {}
+                    html += `<tr><td>${escapeHtml(l.service_name)}</td><td>${escapeHtml(panelName)}</td><td class="text-center">${l.inbound_id}</td><td>${l.price_toman.toLocaleString()} تومان</td><td><a href="${escapeHtml(l.link)}" target="_blank">لینک</a></td><td class="text-center"><input type="checkbox" ${l.is_active ? 'checked' : ''} onchange="togglePaymentLink(${l.id}, this.checked)"></td>`;
+                    html += `<td><div class="flex" style="gap:5px;"><button class="btn-small" onclick="editPaymentLink(${l.id})">✏️</button><button class="btn-small btn-danger" onclick="deletePaymentLink(${l.id})">🗑️</button></div></td></tr>`;
+                }
+                html += '</tbody></table></div>';
+                container.innerHTML = html;
+            } catch(e) { document.getElementById('paymentLinksList').innerHTML = `<div class="error">خطا: ${e.message}</div>`; }
+        }
+
+        async function editPaymentLink(linkId) {
+            const linksRes = await fetch('/admin/api/payment-links');
+            const links = await linksRes.json();
+            const link = links.find(l => l.id === linkId);
+            if (!link) { alert('لینک یافت نشد!'); return; }
+            const panelsRes = await fetch('/admin/api/panels');
+            const panels = await panelsRes.json();
+            let panelListMsg = 'پنل‌های موجود:\n' + panels.map(p => `${p.id} - ${p.name}`).join('\n');
+            const newPanelId = prompt(`${panelListMsg}\nشناسه پنل جدید:`, link.panel_id);
+            if (newPanelId === null) return;
+            const newInboundId = prompt('شناسه اینباند جدید:', link.inbound_id);
+            if (newInboundId === null) return;
+            const newServiceId = prompt('شناسه سرویس جدید:', link.service_id);
+            if (newServiceId === null) return;
+            const newServiceName = prompt('نام سرویس جدید:', link.service_name);
+            if (newServiceName === null) return;
+            const newLink = prompt('لینک پرداخت جدید:', link.link);
+            if (newLink === null) return;
+            const newPrice = prompt('قیمت جدید (تومان):', link.price_toman);
+            if (newPrice === null) return;
+            await fetch(`/admin/api/payment-links/${linkId}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ service_id: parseInt(newServiceId), service_name: newServiceName, panel_id: parseInt(newPanelId), inbound_id: parseInt(newInboundId), link: newLink, price_toman: parseInt(newPrice) }) });
+            await loadPaymentLinks();
+        }
+
+        async function deletePaymentLink(id) { if (confirm('حذف شود؟')) { await fetch(`/admin/api/payment-links/${id}`, { method: 'DELETE' }); await loadPaymentLinks(); } }
+        async function togglePaymentLink(id, checked) { await fetch(`/admin/api/payment-links/${id}/toggle`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ is_active: checked }) }); await loadPaymentLinks(); }
+
+        // ==================== RECEIPTS ====================
+        async function loadPendingReceipts() {
+            try {
+                const res = await fetch('/admin/api/receipts/pending');
+                const receipts = await res.json();
+                const container = document.getElementById('receiptsList');
+                
+                // ===== CHANGE: Update last refresh time =====
+                lastUpdateTime = new Date();
+                document.getElementById('refreshStatus').innerHTML = `🔄 آخرین بروزرسانی: ${lastUpdateTime.toLocaleTimeString()}`;
+                
+                if (!receipts.length) { container.innerHTML = '<div class="loading">✅ هیچ رسید در انتظار بررسی وجود ندارد.</div>'; return; }
+                let html = '';
+                for (const r of receipts) {
+                    const userMention = r.username ? `<a href="https://t.me/${r.username}" target="_blank">@${r.username}</a>` : `کاربر ${r.user_id}`;
+                    html += `<div class="card" style="display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap;"><div style="flex:2;"><div><strong>👤 کاربر:</strong> ${userMention}</div><div><strong>🆔 آیدی:</strong> ${r.user_id}</div><div><strong>📦 سرویس:</strong> ${r.service_name || 'نامشخص'}</div><div><strong>📊 حجم:</strong> ${r.service_traffic || 'نامشخص'} GB</div><div><strong>💰 مبلغ:</strong> ${r.service_price ? r.service_price.toLocaleString() : 'نامشخص'} تومان</div><div><strong>⏰ مدت:</strong> ${r.service_expiry || 'نامشخص'} روز</div><div><strong>🖥️ سرور:</strong> ${r.panel_name || 'نامشخص'}</div><div><strong>🔌 اینباند:</strong> ${r.inbound_name || 'نامشخص'}</div><div><strong>📝 متن رسید:</strong> ${escapeHtml(r.receipt_text || 'بدون متن')}</div><div><strong>📅 تاریخ:</strong> ${new Date(r.created_at).toLocaleString('fa-IR')}</div>`;
+                    html += `<div style="margin-top:10px;"><textarea id="msg_${r.id}" placeholder="پیام برای کاربر" style="width:100%; margin-bottom:10px;"></textarea><div class="flex"><button class="btn-small btn-success" onclick="approveReceipt(${r.id}, 'approved')">✅ تأیید</button><button class="btn-small btn-danger" onclick="approveReceipt(${r.id}, 'rejected')">❌ رد</button></div></div></div>`;
+                    if (r.receipt_image) { html += `<div style="flex:1; text-align:center;"><div><strong>🖼️ رسید:</strong></div><img src="/admin/api/receipts/image/${r.id}" alt="رسید" style="max-width:100%; max-height:150px; border-radius:8px; cursor:pointer; margin-top:10px;" onclick="openModal(this.src)"></div>`; }
+                    html += `</div>`;
+                }
+                container.innerHTML = html;
+            } catch(e) { document.getElementById('receiptsList').innerHTML = `<div class="error">خطا: ${e.message}</div>`; }
+        }
+
+        async function approveReceipt(receiptId, status) {
+            const msg = document.getElementById(`msg_${receiptId}`)?.value || '';
+            const res = await fetch('/admin/api/receipts/approve', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ receipt_id: receiptId, status: status, message: msg }) });
+            const result = await res.json();
+            if (result.success) alert(status === 'approved' ? '✅ تأیید شد!' : '❌ رد شد!');
+            else alert('خطا: ' + result.error);
+            await loadPendingReceipts();
+        }
+
+        // ==================== REPORTS ====================
+        async function loadStats(period) {
+            try {
+                const res = await fetch(`/admin/api/reports/stats?period=${period}`);
+                const data = await res.json();
+                document.getElementById('totalAmount').innerHTML = data.total.amount.toLocaleString() + ' تومان';
+                document.getElementById('totalTransactions').innerHTML = data.total.transactions;
+                document.getElementById('totalPurchases').innerHTML = data.total.purchases;
+                document.getElementById('totalRenewals').innerHTML = data.total.renewals;
+                const labels = data.stats.map(s => s.date);
+                const salesData = data.stats.map(s => s.sales);
+                const amountData = data.stats.map(s => s.amount / 10000);
+                if (statsChart) statsChart.destroy();
+                const ctx = document.getElementById('statsChart').getContext('2d');
+                statsChart = new Chart(ctx, {
+                    type: 'line',
+                    data: { labels: labels, datasets: [{ label: 'تعداد فروش', data: salesData, borderColor: '#48bb78', backgroundColor: 'rgba(72,187,120,0.1)', tension: 0.3, yAxisID: 'y' }, { label: 'مبلغ (ده هزار تومان)', data: amountData, borderColor: '#667eea', backgroundColor: 'rgba(102,126,234,0.1)', tension: 0.3, yAxisID: 'y1' }] },
+                    options: { responsive: true, maintainAspectRatio: true, plugins: { tooltip: { callbacks: { label: function(ctx) { let label = ctx.dataset.label || ''; let val = ctx.raw; return ctx.dataset.label === 'مبلغ (ده هزار تومان)' ? label + ': ' + (val * 10000).toLocaleString() + ' تومان' : label + ': ' + val; } } } }, scales: { y: { title: { display: true, text: 'تعداد فروش' }, beginAtZero: true }, y1: { position: 'right', title: { display: true, text: 'مبلغ (ده هزار تومان)' }, beginAtZero: true } } }
+                });
+            } catch(e) { console.error(e); }
+        }
+
+        async function loadTransactions(page) {
+            currentPage = page;
+            const status = document.getElementById('transFilterStatus').value;
+            const type = document.getElementById('transFilterType').value;
+            try {
+                const res = await fetch(`/admin/api/reports/transactions?page=${page}&limit=20&status=${status}&type=${type}`);
+                const data = await res.json();
+                totalPages = data.pages;
+                let html = '<div class="table-responsive"><table><thead><tr><th>تاریخ</th><th>کاربر</th><th>نوع</th><th>وضعیت</th><th>مبلغ</th><th>سرویس</th><th>پنل</th><th>ایمیل</th></tr></thead><tbody>';
+                for (const t of data.transactions) {
+                    const date = new Date(t.created_at).toLocaleDateString('fa-IR');
+                    const typeText = t.type === 'purchase' ? '🆕 خرید' : (t.type === 'renewal' ? '🔄 تمدید' : t.type);
+                    let statusClass = '', statusText = '';
+                    if (t.status === 'approved') { statusClass = 'badge-approved'; statusText = '✅ تأیید'; }
+                    else if (t.status === 'rejected') { statusClass = 'badge-rejected'; statusText = '❌ رد'; }
+                    else { statusClass = 'badge-pending'; statusText = '⏳ انتظار'; }
+                    html += `<tr><td>${date}</td><td>${t.user_username ? `@${t.user_username}` : t.user_id}</td><td>${typeText}<td><td><span class="badge ${statusClass}">${statusText}</span></td><td>${t.amount.toLocaleString()} تومان</td><td>${t.package_name || '-'}</td><td>${t.panel_name || '-'}</td><td>${t.email || '-'}</td></tr>`;
+                }
+                html += '</tbody></table></div>';
+                if (data.transactions.length === 0) html = '<div class="loading">هیچ تراکنشی یافت نشد.</div>';
+                document.getElementById('transactionsList').innerHTML = html;
+                let pagHtml = '';
+                if (totalPages > 1) {
+                    pagHtml += '<div class="flex" style="justify-content:center; gap:10px; margin-top:20px;">';
+                    if (currentPage > 1) pagHtml += `<button class="btn-small" onclick="loadTransactions(${currentPage - 1})">قبلی</button>`;
+                    pagHtml += `<span>صفحه ${currentPage} از ${totalPages}</span>`;
+                    if (currentPage < totalPages) pagHtml += `<button class="btn-small" onclick="loadTransactions(${currentPage + 1})">بعدی</button>`;
+                    pagHtml += '</div>';
+                }
+                document.getElementById('transactionsPagination').innerHTML = pagHtml;
+            } catch(e) { document.getElementById('transactionsList').innerHTML = `<div class="error">خطا: ${e.message}</div>`; }
+        }
+
+        // ==================== SETTINGS ====================
+        async function loadHelpSettings() {
+            try { const res = await fetch('/admin/api/help'); const data = await res.json(); document.querySelector('#helpForm [name="description"]').value = data.description || ''; document.querySelector('#helpForm [name="link"]').value = data.link || ''; document.querySelector('#helpForm [name="install_link"]').value = data.install_link || ''; } catch(e) { console.error(e); } }
+        async function loadWarningMessage() { try { const res = await fetch('/admin/api/warning'); const data = await res.json(); document.querySelector('#warningForm [name="message"]').value = data.message || ''; } catch(e) { console.error(e); } }
+
+        // ==================== MODAL ====================
+        function openModal(src) { const modal = document.getElementById('imageModal'); modal.style.display = 'flex'; document.getElementById('modalImage').src = src; }
+        function closeModal() { document.getElementById('imageModal').style.display = 'none'; document.getElementById('modalImage').src = ''; }
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+        document.addEventListener('DOMContentLoaded', () => { closeModal(); });
+
+        // ==================== UTILITIES ====================
+        function escapeHtml(text) { if (!text) return ''; return text.replace(/[&<>]/g, function(m) { if (m === '&') return '&amp;'; if (m === '<') return '&lt;'; if (m === '>') return '&gt;'; return m; }); }
+
+        // ==================== AUTO REFRESH FUNCTIONS ====================
+        // ===== CHANGE: New auto-refresh functions =====
+        function startAutoRefresh() {
+            if (autoRefreshInterval) {
+                clearInterval(autoRefreshInterval);
+            }
+            autoRefreshInterval = setInterval(() => {
+                const receiptsTab = document.getElementById('receipts');
+                if (receiptsTab && receiptsTab.classList.contains('active')) {
+                    console.log('🔄 Auto-refreshing receipts at:', new Date().toLocaleTimeString());
+                    loadPendingReceipts();
+                }
+            }, refreshIntervalSeconds * 1000);
+            document.getElementById('refreshStatus').innerHTML = `⏳ رفرش هر ${refreshIntervalSeconds} ثانیه`;
+        }
+
+        function stopAutoRefresh() {
+            if (autoRefreshInterval) {
+                clearInterval(autoRefreshInterval);
+                autoRefreshInterval = null;
+            }
+            document.getElementById('refreshStatus').innerHTML = '⏹️ توقف شده';
+        }
+
+        function setRefreshInterval(seconds) {
+            refreshIntervalSeconds = seconds;
+            startAutoRefresh();
+        }
+
+        // ==================== FORM SUBMISSIONS ====================
+        document.getElementById('addPanelForm').addEventListener('submit', async (e) => {
+            e.preventDefault(); const data = Object.fromEntries(new FormData(e.target)); data.max_slots = parseInt(data.max_slots) || 0;
+            await fetch('/admin/api/panels', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+            e.target.reset(); await loadPanels(); await populateSelects();
+        });
+        document.getElementById('addServiceForm').addEventListener('submit', async (e) => {
+            e.preventDefault(); const data = Object.fromEntries(new FormData(e.target)); data.traffic_gb = parseInt(data.traffic_gb); data.price_toman = parseInt(data.price_toman); data.expiry_days = parseInt(data.expiry_days); data.sort_order = parseInt(data.sort_order) || 0;
+            await fetch('/admin/api/services', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+            e.target.reset(); await loadServices(); await populateSelects();
+        });
+        document.getElementById('addPaymentLinkForm').addEventListener('submit', async (e) => {
+            e.preventDefault(); const data = Object.fromEntries(new FormData(e.target)); data.service_id = parseInt(data.service_id); data.panel_id = parseInt(data.panel_id); data.inbound_id = parseInt(data.inbound_id); data.price_toman = parseInt(data.price_toman);
+            await fetch('/admin/api/payment-links', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+            e.target.reset(); await loadPaymentLinks();
+        });
+        document.getElementById('helpForm').addEventListener('submit', async (e) => {
+            e.preventDefault(); const data = { description: document.querySelector('#helpForm [name="description"]').value, link: document.querySelector('#helpForm [name="link"]').value, install_link: document.querySelector('#helpForm [name="install_link"]').value };
+            await fetch('/admin/api/help', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+            alert('تنظیمات راهنما ذخیره شد!');
+        });
+        document.getElementById('warningForm').addEventListener('submit', async (e) => {
+            e.preventDefault(); const data = { description: document.querySelector('#warningForm [name="message"]').value };
+            await fetch('/admin/api/warning', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+            alert('پیام هشدار ذخیره شد!');
+        });
+
+        // ==================== TAB SWITCHING ====================
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+                btn.classList.add('active');
+                const tabId = btn.dataset.tab;
+                document.getElementById(tabId).classList.add('active');
+                
+                // ===== CHANGE: Handle auto-refresh for receipts tab =====
+                if (tabId === 'receipts') {
+                    startAutoRefresh();
+                    loadPendingReceipts();
+                } else {
+                    stopAutoRefresh();
+                }
+                
+                if (tabId === 'reports') { loadStats('daily'); loadTransactions(1); }
+                if (tabId === 'payment-links') loadPaymentLinks();
+            });
+        });
+
+        loadData();
+    </script>
+</body>
+</html>

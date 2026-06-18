@@ -1,0 +1,15 @@
+services:
+  telegram-bot:
+    build: .
+    container_name: telegram-vpn-bot
+    restart: unless-stopped
+    network_mode: "host"
+    ports:
+      - "8000:8000"
+    environment:
+      - TZ=Asia/Tehran
+      - DB_PATH=/app/data/bot_data.db
+    volumes:
+      - ./data:/app/data
+      - ./.env:/app/.env
+      - ./admin_panel.info:/app/admin_panel.info
