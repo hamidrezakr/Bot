@@ -1,0 +1,180 @@
+
+/* ============ Reset & Base ============ */
+body {
+    font-family: 'Vazir', 'Tahoma', sans-serif;
+    background: #f8f9fa;
+    direction: rtl;
+}
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+/* ============ Sidebar ============ */
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    min-height: 100vh;
+    background: #1a1a2e;
+    color: #fff;
+    transition: all 0.3s;
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: #16213e;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+#sidebar .sidebar-header h4 {
+    margin: 0;
+    font-weight: 700;
+}
+
+#sidebar ul li {
+    padding: 0;
+    margin: 5px 0;
+}
+
+#sidebar ul li a {
+    padding: 12px 20px;
+    display: block;
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+#sidebar ul li a:hover {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+}
+
+#sidebar ul li.active a {
+    background: #0f3460;
+    color: #fff;
+    border-right: 3px solid #e94560;
+}
+
+#sidebar ul li a i {
+    margin-left: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+.sidebar-footer {
+    position: absolute;
+    bottom: 0;
+    width: 250px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar-footer a {
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+}
+
+.sidebar-footer a:hover {
+    color: #fff;
+}
+
+/* ============ Content ============ */
+#content {
+    width: 100%;
+    padding: 0;
+    min-height: 100vh;
+    transition: all 0.3s;
+}
+
+/* ============ Cards ============ */
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+}
+
+.card-header {
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    padding: 15px 20px;
+    border-radius: 12px 12px 0 0;
+}
+
+.card-header h5 {
+    font-weight: 600;
+    color: #1a1a2e;
+}
+
+/* ============ Tables ============ */
+.table th {
+    font-weight: 600;
+    color: #1a1a2e;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+/* ============ Buttons ============ */
+.btn-primary {
+    background: #0f3460;
+    border-color: #0f3460;
+}
+
+.btn-primary:hover {
+    background: #1a1a2e;
+    border-color: #1a1a2e;
+}
+
+.btn-success {
+    background: #2ecc71;
+    border-color: #2ecc71;
+}
+
+.btn-danger {
+    background: #e74c3c;
+    border-color: #e74c3c;
+}
+
+/* ============ Badges ============ */
+.badge-active {
+    background: #2ecc71;
+    color: #fff;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.badge-inactive {
+    background: #e74c3c;
+    color: #fff;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.badge-pending {
+    background: #f39c12;
+    color: #fff;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+/* ============ Responsive ============ */
+@media (max-width: 768px) {
+    #sidebar {
+        margin-right: -250px;
+    }
+    #sidebar.active {
+        margin-right: 0;
+    }
+    #content {
+        width: 100%;
+    }
+}

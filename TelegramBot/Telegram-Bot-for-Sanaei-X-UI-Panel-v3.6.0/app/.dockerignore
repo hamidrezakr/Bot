@@ -1,0 +1,85 @@
+# =============================================
+# .dockerignore - Files to exclude from Docker
+# =============================================
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual Environment
+.venv/
+venv/
+ENV/
+env/
+
+# Environment files
+.env.local
+.env.production
+.env.test
+*.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Logs
+*.log
+logs/
+*.pid
+*.seed
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Test
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+*.cover
+*.py,cover
+
+# Node (if any)
+node_modules/
+npm-debug.log*
+
+# Temp
+tmp/
+temp/
+*.tmp
+
+# Docs
+README.md
+CHANGELOG.md
+CONTRIBUTING.md
+
+# CI/CD
+.github/
+.gitlab/
+.travis.yml
+
+# Misc
+*.bak
+*.backup

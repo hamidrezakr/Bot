@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}مدیریت پنل‌ها{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-server"></i> مدیریت پنل‌های X-UI</h5>
+            </div>
+            <div class="card-body">
+                <!-- فرم افزودن پنل -->
+                <form id="addPanelForm" class="row g-3 mb-4">
+                    <div class="col-md-4">
+                        <label class="form-label">نام پنل</label>
+                        <input type="text" id="panelName" class="form-control" placeholder="مثال: ایران-تهران" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">آدرس URL</label>
+                        <input type="url" id="panelUrl" class="form-control" placeholder="https://panel.example.com" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Token API</label>
+                        <input type="text" id="panelToken" class="form-control" placeholder="API Token" required>
+                    </div>
+                    <div class="col-md-1 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-plus"></i> افزودن
+                        </button>
+                    </div>
+                </form>
+                
+                <hr>
+                
+                <!-- لیست پنل‌ها -->
+                <div id="panelsList">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>نام پنل</th>
+                                <th>URL</th>
+                                <th>وضعیت</th>
+                                <th>تعداد کاربران</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="panelsTableBody">
+                            <!-- پنل‌ها توسط JavaScript بارگذاری می‌شوند -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/panels.js"></script>
+{% endblock %}

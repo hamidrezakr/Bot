@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=E:\My Project\Fast API\Telegram Bot for Sanaei X-UI Panel\.venv
+set VIRTUAL_ENV=E:\My Project\Fast API\Bot\TelegramBot\Telegram-Bot-for-Sanaei-X-UI-Panel-v3.6.0\.venv
 
 if not defined PROMPT set PROMPT=$P$G
 
