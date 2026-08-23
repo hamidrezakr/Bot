@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row mb-3">
+        <div class="col"><h1 class="page-title">📊 گزارشات</h1><p class="page-subtitle">گزارشات مالی و آماری سیستم</p></div>
+        <div class="col-auto"><button class="btn-primary-glass"><i class="bi bi-download"></i> خروجی PDF</button></div>
+    </div>
+    <div class="row g-3 mb-3">
+        <div class="col-xl-3 col-lg-6"><div class="stat-card"><p class="label">کل فروش</p><p class="number">15,240,000</p><small class="sub">تومان</small></div></div>
+        <div class="col-xl-3 col-lg-6"><div class="stat-card"><p class="label">تعداد تراکنش</p><p class="number">1,247</p><small class="sub">تراکنش</small></div></div>
+        <div class="col-xl-3 col-lg-6"><div class="stat-card"><p class="label">میانگین هر تراکنش</p><p class="number">12,280</p><small class="sub">تومان</small></div></div>
+        <div class="col-xl-3 col-lg-6"><div class="stat-card"><p class="label">نرخ رشد</p><p class="number">+18.5%</p><small class="sub">نسبت به ماه قبل</small></div></div>
+    </div>
+    <div class="glass-card"><h5 class="mb-3"><i class="bi bi-bar-chart"></i> تحلیل فروش</h5><div style="height:200px;"><canvas id="reportChart"></canvas></div></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var ctx = document.getElementById('reportChart');
+    if (ctx) {
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['هفته 1', 'هفته 2', 'هفته 3', 'هفته 4'],
+                datasets: [{
+                    label: 'فروش',
+                    data: [50, 80, 120, 95],
+                    backgroundColor: ['rgba(102,126,234,0.6)','rgba(79,172,254,0.6)','rgba(67,233,123,0.6)','rgba(245,87,108,0.6)']
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#ffffff' } } }, scales: { y: { ticks: { color: 'rgba(255,255,255,0.5)' } }, x: { ticks: { color: 'rgba(255,255,255,0.5)' } } } }
+        });
+    }
+});
+</script>
+{% endblock %}

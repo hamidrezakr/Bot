@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row mb-3"><div class="col"><h1 class="page-title">🧾 مدیریت رسیدها</h1><p class="page-subtitle">همه رسیدهای پرداخت کاربران</p></div></div>
+    <div class="table-wrap">
+        <div class="table-responsive">
+            <table>
+                <thead><tr><th>شماره</th><th>کاربر</th><th>مبلغ</th><th>تاریخ</th><th>وضعیت</th><th>عملیات</th></tr></thead>
+                <tbody>
+                    <tr><td colspan="6"><div class="empty-state"><span class="icon">🧾</span><h5>هیچ رسیدی ثبت نشده است</h5></div></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

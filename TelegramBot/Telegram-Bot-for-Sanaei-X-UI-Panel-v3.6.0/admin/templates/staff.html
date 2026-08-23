@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row mb-3 align-items-center">
+        <div class="col"><h1 class="page-title">👥 مدیریت کارکنان</h1><p class="page-subtitle">لیست و مدیریت پرسنل و دسترسی‌ها</p></div>
+        <div class="col-auto"><button class="btn-success-glass"><i class="bi bi-person-plus"></i> افزودن کارمند</button></div>
+    </div>
+    <div class="table-wrap">
+        <div class="table-responsive">
+            <table>
+                <thead><tr><th>شناسه</th><th>نام</th><th>نقش</th><th>ایمیل</th><th>وضعیت</th><th>عملیات</th></tr></thead>
+                <tbody>
+                    <tr><td colspan="6"><div class="empty-state"><span class="icon">👥</span><h5>هیچ کارمندی ثبت نشده است</h5></div></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,117 @@
+<!-- admin/templates/dashboard.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col">
+            <h1 class="page-title">📊 داشبورد مدیریت</h1>
+            <p class="page-subtitle">خلاصه وضعیت سیستم و آمار کلی</p>
+        </div>
+        <div class="col-auto">
+            <button class="btn-glass" onclick="location.reload()"><i class="bi bi-arrow-clockwise"></i> بروزرسانی</button>
+        </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="row g-3 mb-4">
+        <div class="col-xl-3 col-lg-6 col-md-6">
+            <div class="stat-card">
+                <div class="d-flex justify-content-between">
+                    <div><p class="label">کل کاربران</p><p class="number">1247</p><small class="sub">⬆️ 12% رشد</small></div>
+                    <span class="icon">👤</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6">
+            <div class="stat-card">
+                <div class="d-flex justify-content-between">
+                    <div><p class="label">سرویس‌های فعال</p><p class="number">892</p><small class="sub">✅ 71.5%</small></div>
+                    <span class="icon">📡</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6">
+            <div class="stat-card">
+                <div class="d-flex justify-content-between">
+                    <div><p class="label">درآمد امروز</p><p class="number">1,845,000</p><small class="sub">📈 12.3%</small></div>
+                    <span class="icon">💰</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6">
+            <div class="stat-card">
+                <div class="d-flex justify-content-between">
+                    <div><p class="label">در انتظار تأیید</p><p class="number">3</p><small class="sub">⏳ نیاز به بررسی</small></div>
+                    <span class="icon">📋</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="row g-3">
+        <div class="col-xl-8">
+            <div class="glass-card">
+                <h5 class="mb-3"><i class="bi bi-graph-up-arrow"></i> آمار فروش ماهانه</h5>
+                <div style="height:200px;"><canvas id="salesChart"></canvas></div>
+            </div>
+        </div>
+        <div class="col-xl-4">
+            <div class="glass-card">
+                <h5 class="mb-3"><i class="bi bi-clock-history"></i> فعالیت‌های اخیر</h5>
+                <div class="recent">
+                    <div class="d-flex gap-2 py-1 border-bottom border-secondary border-opacity-10">
+                        <span class="badge-pastel green">✅</span>
+                        <div><p class="mb-0 small">کاربر جدید: علی رضایی</p><small class="text-muted">۵ دقیقه پیش</small></div>
+                    </div>
+                    <div class="d-flex gap-2 py-1 border-bottom border-secondary border-opacity-10">
+                        <span class="badge-pastel blue">🛒</span>
+                        <div><p class="mb-0 small">خرید جدید: 30GB - 1 ماه</p><small class="text-muted">۱۲ دقیقه پیش</small></div>
+                    </div>
+                    <div class="d-flex gap-2 py-1 border-bottom border-secondary border-opacity-10">
+                        <span class="badge-pastel yellow">💰</span>
+                        <div><p class="mb-0 small">رسید جدید نیاز به تأیید</p><small class="text-muted">۳۰ دقیقه پیش</small></div>
+                    </div>
+                    <div class="d-flex gap-2 py-1">
+                        <span class="badge-pastel purple">📡</span>
+                        <div><p class="mb-0 small">پنل جدید اضافه شد: پنل اروپا</p><small class="text-muted">۱ ساعت پیش</small></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var ctx = document.getElementById('salesChart');
+    if (ctx) {
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر'],
+                datasets: [{
+                    label: 'فروش (تومان)',
+                    data: [120000, 150000, 200000, 180000, 250000, 300000, 280000],
+                    borderColor: 'rgba(102, 126, 234, 1)',
+                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { labels: { color: '#ffffff' } } },
+                scales: {
+                    y: { ticks: { color: 'rgba(255,255,255,0.5)' } },
+                    x: { ticks: { color: 'rgba(255,255,255,0.5)' } }
+                }
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

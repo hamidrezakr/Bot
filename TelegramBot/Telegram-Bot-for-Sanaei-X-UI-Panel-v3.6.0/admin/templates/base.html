@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Space Gate</title>
+    <!-- فقط Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            background: #0b0e1a;
+            color: #fff;
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+        }
+        .sidebar {
+            background: rgba(11, 14, 26, 0.95);
+            min-height: 100vh;
+            border-left: 1px solid rgba(255,255,255,0.05);
+        }
+        .sidebar .nav-link {
+            color: rgba(255,255,255,0.6);
+            border-radius: 10px;
+            padding: 10px 16px;
+            margin: 4px 8px;
+        }
+        .sidebar .nav-link:hover {
+            background: rgba(255,255,255,0.05);
+            color: #fff;
+        }
+        .sidebar .nav-link.active {
+            background: rgba(102,126,234,0.15);
+            color: #fff;
+        }
+        .sidebar .nav-link i { margin-left: 10px; }
+        .main-content { padding: 20px; }
+        .glass-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 16px;
+        }
+        .stat-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 16px 20px;
+        }
+        .stat-card .number {
+            font-size: 24px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .page-title {
+            font-weight: 900;
+            font-size: 24px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .btn-glass {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 10px;
+        }
+        .btn-glass:hover { background: rgba(255,255,255,0.12); color: #fff; }
+        .btn-primary-glass {
+            background: rgba(102,126,234,0.2);
+            border: 1px solid rgba(102,126,234,0.2);
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 10px;
+        }
+        .btn-primary-glass:hover { background: rgba(102,126,234,0.35); color: #fff; }
+        .btn-success-glass {
+            background: rgba(40,167,69,0.15);
+            border: 1px solid rgba(40,167,69,0.2);
+            color: #28a745;
+            padding: 8px 20px;
+            border-radius: 10px;
+        }
+        .btn-success-glass:hover { background: rgba(40,167,69,0.25); color: #28a745; }
+        @media (max-width: 768px) {
+            .sidebar { min-height: auto; }
+            .main-content { padding: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-md-3 col-lg-2 d-md-block sidebar" style="position:sticky;top:0;height:100vh;overflow-y:auto;">
+                <div class="text-center py-3 border-bottom border-secondary border-opacity-10">
+                    <h4>🚀 Space Gate</h4>
+                    <small class="text-muted">مدیریت پنل</small>
+                </div>
+                <div class="nav flex-column mt-3">
+                    <a class="nav-link {% if active == 'dashboard' %}active{% endif %}" href="/admin/dashboard">
+                        <i class="bi bi-speedometer2"></i> داشبورد
+                    </a>
+                    <a class="nav-link {% if active == 'panels' %}active{% endif %}" href="/admin/panels">
+                        <i class="bi bi-hdd-stack"></i> پنل‌ها
+                    </a>
+		    <a class="nav-link {% if active == 'categories' %}active{% endif %}" href="/admin/categories">
+    		       <i class="bi bi-tags"></i> دسته‌بندی
+		    </a>
+                    <a class="nav-link {% if active == 'services' %}active{% endif %}" href="/admin/services">
+                        <i class="bi bi-box-seam"></i> سرویس‌ها
+                    </a>
+                    <a class="nav-link {% if active == 'receipts' %}active{% endif %}" href="/admin/receipts">
+                        <i class="bi bi-receipt"></i> رسیدها
+                    </a>
+                    <a class="nav-link {% if active == 'reports' %}active{% endif %}" href="/admin/reports">
+                        <i class="bi bi-bar-chart"></i> گزارشات
+                    </a>
+                    <a class="nav-link {% if active == 'staff' %}active{% endif %}" href="/admin/staff">
+                        <i class="bi bi-people"></i> کارکنان
+                    </a>
+                    <a class="nav-link {% if active == 'settings' %}active{% endif %}" href="/admin/settings">
+                        <i class="bi bi-gear"></i> تنظیمات
+                    </a>
+                </div>
+                <div class="text-center text-muted small mt-5 pt-3 border-top border-secondary border-opacity-10">
+                    v1.0 ❤️
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="col-md-9 col-lg-10 main-content">
+                {% block content %}{% endblock %}
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row mb-3"><div class="col"><h1 class="page-title">⚙️ تنظیمات</h1><p class="page-subtitle">تنظیمات عمومی سیستم</p></div></div>
+    <div class="row g-3">
+        <div class="col-xl-6">
+            <div class="glass-card">
+                <h5 class="mb-3"><i class="bi bi-globe"></i> تنظیمات عمومی</h5>
+                <div class="mb-2"><label class="form-label text-muted">نام سیستم</label><input type="text" class="form-control" value="Space Gate" style="background:rgba(255,255,255,0.05);border:1px solid var(--glass-border);color:#fff;border-radius:10px;padding:8px 12px;width:100%;"></div>
+                <div class="mb-2"><label class="form-label text-muted">دامنه سایت</label><input type="url" class="form-control" value="https://spacegate.ir" style="background:rgba(255,255,255,0.05);border:1px solid var(--glass-border);color:#fff;border-radius:10px;padding:8px 12px;width:100%;"></div>
+                <button class="btn-primary-glass"><i class="bi bi-save"></i> ذخیره تنظیمات</button>
+            </div>
+        </div>
+        <div class="col-xl-6">
+            <div class="glass-card">
+                <h5 class="mb-3"><i class="bi bi-robot"></i> تنظیمات ربات</h5>
+                <div class="mb-2"><label class="form-label text-muted">توکن ربات</label><input type="text" class="form-control" value="********************************" readonly style="background:rgba(255,255,255,0.05);border:1px solid var(--glass-border);color:#fff;border-radius:10px;padding:8px 12px;width:100%;"></div>
+                <div class="mb-2"><label class="form-label text-muted">آدرس Webhook</label><input type="url" class="form-control" value="https://bot.spacegate.ir/webhook" readonly style="background:rgba(255,255,255,0.05);border:1px solid var(--glass-border);color:#fff;border-radius:10px;padding:8px 12px;width:100%;"></div>
+                <button class="btn-danger-glass"><i class="bi bi-arrow-counterclockwise"></i> بازنشانی Webhook</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

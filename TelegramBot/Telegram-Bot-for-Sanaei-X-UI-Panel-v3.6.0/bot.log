@@ -1,0 +1,1411 @@
+2026-08-20 13:43:56 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-20 13:43:56 - telegram_bot - INFO - Debug mode: True
+2026-08-20 13:43:56 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-20 13:43:56 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-20 13:43:56 - telegram_bot - INFO - Received webhook update: 21524050
+2026-08-20 13:43:56 - telegram_bot - ERROR - Error processing webhook: This Application was not initialized via `Application.initialize`!
+2026-08-20 13:43:56 - telegram_bot - INFO - Received webhook update: 21524050
+2026-08-20 13:43:56 - telegram_bot - ERROR - Error processing webhook: This Application was not initialized via `Application.initialize`!
+2026-08-20 13:43:58 - telegram_bot - INFO - Received webhook update: 21524050
+2026-08-20 13:43:58 - telegram_bot - ERROR - Error processing webhook: This Application was not initialized via `Application.initialize`!
+2026-08-20 13:44:00 - telegram_bot - INFO - Received webhook update: 21524051
+2026-08-20 13:44:00 - telegram_bot - ERROR - Error processing webhook: This Application was not initialized via `Application.initialize`!
+2026-08-20 13:44:00 - telegram_bot - INFO - Received webhook update: 21524051
+2026-08-20 13:44:00 - telegram_bot - ERROR - Error processing webhook: This Application was not initialized via `Application.initialize`!
+2026-08-20 13:44:02 - telegram_bot - INFO - Received webhook update: 21524051
+2026-08-20 13:44:02 - telegram_bot - ERROR - Error processing webhook: This Application was not initialized via `Application.initialize`!
+2026-08-20 13:44:02 - telegram_bot - INFO - Received webhook update: 21524050
+2026-08-20 13:44:02 - telegram_bot - ERROR - Error processing webhook: This Application was not initialized via `Application.initialize`!
+2026-08-20 13:44:03 - telegram_bot - INFO - Shutting down application...
+2026-08-20 13:44:03 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-20 13:44:03 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-20 13:45:07 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-20 13:45:07 - telegram_bot - INFO - Debug mode: True
+2026-08-20 13:45:07 - telegram_bot - INFO - Telegram application initialized
+2026-08-20 13:45:07 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-20 13:45:07 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-20 13:45:07 - telegram_bot - INFO - Received webhook update: 21524050
+2026-08-20 13:45:07 - telegram_bot - INFO - User started the bot: 444111495 - Shell_man
+2026-08-20 13:45:07 - telegram_bot - INFO - User registered: 444111495
+2026-08-20 13:45:07 - telegram_bot - INFO - Main menu sent to user: 444111495
+2026-08-20 13:45:07 - telegram_bot - INFO - Received webhook update: 21524051
+2026-08-20 13:46:03 - telegram_bot - INFO - Shutting down application...
+2026-08-20 13:46:03 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-20 13:46:03 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-20 13:46:03 - telegram_bot - INFO - Telegram application shut down
+2026-08-20 13:46:23 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-20 13:46:23 - telegram_bot - INFO - Debug mode: True
+2026-08-20 13:46:23 - telegram_bot - INFO - Telegram application initialized
+2026-08-20 13:46:23 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-20 13:46:23 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-20 13:46:27 - telegram_bot - INFO - Received webhook update: 21524052
+2026-08-20 13:46:27 - telegram_bot - INFO - Callback received from user 444111495: status
+2026-08-20 13:46:28 - telegram_bot - INFO - Status requested for user: 444111495
+2026-08-20 13:46:28 - telegram_bot - ERROR - Error getting user status for 444111495: User 444111495 not found
+2026-08-20 13:46:28 - telegram_bot - ERROR - Error in handle_status: User 444111495 not found
+2026-08-20 13:46:31 - telegram_bot - INFO - Received webhook update: 21524053
+2026-08-20 13:46:31 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-20 13:46:31 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-20 13:46:35 - telegram_bot - INFO - Received webhook update: 21524054
+2026-08-20 13:46:35 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-20 13:46:35 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-20 13:46:37 - telegram_bot - INFO - Received webhook update: 21524055
+2026-08-20 13:46:37 - telegram_bot - INFO - Callback received from user 444111495: test_account
+2026-08-20 13:46:37 - telegram_bot - INFO - Test account requested by user: 444111495
+2026-08-20 13:46:41 - telegram_bot - INFO - Received webhook update: 21524056
+2026-08-20 13:46:41 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-20 13:46:41 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-20 13:46:42 - telegram_bot - INFO - Received webhook update: 21524057
+2026-08-20 13:46:42 - telegram_bot - INFO - Callback received from user 444111495: subordinates
+2026-08-20 13:46:42 - telegram_bot - INFO - Subordinates requested by user: 444111495
+2026-08-20 13:46:42 - telegram_bot - INFO - Found 0 subordinates for user 444111495
+2026-08-20 13:46:44 - telegram_bot - INFO - Received webhook update: 21524058
+2026-08-20 13:46:44 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-20 13:46:44 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-20 13:46:44 - telegram_bot - INFO - Received webhook update: 21524059
+2026-08-20 13:46:44 - telegram_bot - INFO - Callback received from user 444111495: support
+2026-08-20 13:46:44 - telegram_bot - INFO - Support requested by user: 444111495
+2026-08-20 13:46:46 - telegram_bot - INFO - Received webhook update: 21524060
+2026-08-20 13:46:46 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-20 13:46:46 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-20 13:46:47 - telegram_bot - INFO - Received webhook update: 21524061
+2026-08-20 13:46:47 - telegram_bot - INFO - Callback received from user 444111495: help
+2026-08-20 13:46:47 - telegram_bot - INFO - Help requested by user: 444111495
+2026-08-20 13:46:48 - telegram_bot - INFO - Received webhook update: 21524062
+2026-08-20 13:46:48 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-20 13:46:48 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-20 13:46:49 - telegram_bot - INFO - Received webhook update: 21524063
+2026-08-20 13:46:49 - telegram_bot - INFO - Callback received from user 444111495: renew_service
+2026-08-20 13:46:49 - telegram_bot - INFO - Renew service requested by user: 444111495
+2026-08-20 13:46:51 - telegram_bot - INFO - Received webhook update: 21524064
+2026-08-20 13:46:51 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-20 13:46:51 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-20 13:46:52 - telegram_bot - INFO - Received webhook update: 21524065
+2026-08-20 13:46:52 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-20 13:46:52 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-20 13:46:53 - telegram_bot - INFO - Received webhook update: 21524066
+2026-08-20 13:46:53 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-20 13:46:53 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-20 13:48:33 - telegram_bot - INFO - Shutting down application...
+2026-08-20 13:48:33 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-20 13:48:33 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-20 13:48:33 - telegram_bot - INFO - Telegram application shut down
+2026-08-20 13:49:17 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-20 13:49:17 - telegram_bot - INFO - Debug mode: True
+2026-08-20 13:49:17 - telegram_bot - INFO - Telegram application initialized
+2026-08-20 13:49:17 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-20 13:49:17 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-20 13:49:20 - telegram_bot - INFO - Received webhook update: 21524067
+2026-08-20 13:49:20 - telegram_bot - INFO - Callback received from user 444111495: status
+2026-08-20 13:49:20 - telegram_bot - INFO - Status requested for user: 444111495
+2026-08-20 13:49:20 - telegram_bot - ERROR - Error getting user status for 444111495: User 444111495 not found
+2026-08-20 13:49:20 - telegram_bot - ERROR - Error in handle_status: User 444111495 not found
+2026-08-20 13:49:22 - telegram_bot - INFO - Received webhook update: 21524068
+2026-08-20 13:49:22 - telegram_bot - INFO - User started the bot: 444111495 - Shell_man
+2026-08-20 13:49:22 - telegram_bot - INFO - User registered: 444111495
+2026-08-20 13:49:22 - telegram_bot - INFO - Main menu sent to user: 444111495
+2026-08-20 13:49:26 - telegram_bot - INFO - Received webhook update: 21524069
+2026-08-20 13:49:26 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-20 13:49:26 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-20 13:49:27 - telegram_bot - INFO - Received webhook update: 21524070
+2026-08-20 13:49:27 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-20 13:49:27 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-20 13:59:59 - telegram_bot - INFO - Shutting down application...
+2026-08-20 14:00:00 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-20 14:00:00 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-20 14:00:00 - telegram_bot - INFO - Telegram application shut down
+2026-08-20 14:06:28 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-20 14:06:28 - telegram_bot - INFO - Debug mode: True
+2026-08-20 14:06:28 - telegram_bot - INFO - Telegram application initialized
+2026-08-20 14:06:28 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-20 14:06:28 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-20 14:06:28 - telegram_bot - INFO - Received webhook update: 21524071
+2026-08-20 14:06:28 - telegram_bot - INFO - User started the bot: 444111495 - Shell_man
+2026-08-20 14:06:28 - telegram_bot - INFO - User registered: 444111495
+2026-08-20 14:06:28 - telegram_bot - INFO - Main menu sent to user: 444111495
+2026-08-20 14:06:30 - telegram_bot - INFO - Received webhook update: 21524072
+2026-08-20 14:06:30 - telegram_bot - INFO - User started the bot: 444111495 - Shell_man
+2026-08-20 14:06:30 - telegram_bot - ERROR - Error registering user 444111495: "User" object has no field "last_seen"
+2026-08-20 14:06:30 - telegram_bot - ERROR - Error in handle_start: "User" object has no field "last_seen"
+2026-08-20 14:06:33 - telegram_bot - INFO - Received webhook update: 21524073
+2026-08-20 14:06:33 - telegram_bot - INFO - Callback received from user 444111495: status
+2026-08-20 14:06:33 - telegram_bot - INFO - Status requested for user: 444111495
+2026-08-20 14:06:33 - telegram_bot - ERROR - Error in handle_status: Can't parse entities: can't find end of the entity starting at byte offset 100
+2026-08-20 14:06:35 - telegram_bot - INFO - Received webhook update: 21524074
+2026-08-20 14:06:35 - telegram_bot - INFO - Callback received from user 444111495: renew_service
+2026-08-20 14:06:35 - telegram_bot - INFO - Renew service requested by user: 444111495
+2026-08-20 14:06:37 - telegram_bot - INFO - Received webhook update: 21524075
+2026-08-20 14:06:37 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-20 14:06:38 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-20 14:06:39 - telegram_bot - INFO - Received webhook update: 21524076
+2026-08-20 14:06:39 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-20 14:06:39 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-20 14:06:42 - telegram_bot - INFO - Received webhook update: 21524077
+2026-08-20 14:06:42 - telegram_bot - INFO - Callback received from user 444111495: duration_1
+2026-08-20 14:06:42 - telegram_bot - INFO - User 444111495 selected 1 month(s)
+2026-08-20 14:06:53 - telegram_bot - INFO - Received webhook update: 21524078
+2026-08-20 14:06:53 - telegram_bot - INFO - Callback received from user 444111495: back_to_durations
+2026-08-20 14:06:53 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-20 14:06:54 - telegram_bot - INFO - Received webhook update: 21524079
+2026-08-20 14:06:54 - telegram_bot - INFO - Callback received from user 444111495: duration_2
+2026-08-20 14:06:54 - telegram_bot - INFO - User 444111495 selected 2 month(s)
+2026-08-20 14:06:55 - telegram_bot - INFO - Received webhook update: 21524080
+2026-08-20 14:06:55 - telegram_bot - INFO - Callback received from user 444111495: back_to_durations
+2026-08-20 14:06:55 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-20 14:06:56 - telegram_bot - INFO - Received webhook update: 21524081
+2026-08-20 14:06:56 - telegram_bot - INFO - Callback received from user 444111495: duration_3
+2026-08-20 14:06:57 - telegram_bot - INFO - User 444111495 selected 3 month(s)
+2026-08-20 14:06:59 - telegram_bot - INFO - Received webhook update: 21524082
+2026-08-20 14:06:59 - telegram_bot - INFO - Callback received from user 444111495: back_to_durations
+2026-08-20 14:06:59 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-20 14:07:00 - telegram_bot - INFO - Received webhook update: 21524083
+2026-08-20 14:07:00 - telegram_bot - INFO - Callback received from user 444111495: duration_4
+2026-08-20 14:07:00 - telegram_bot - INFO - User 444111495 selected 4 month(s)
+2026-08-20 14:07:01 - telegram_bot - INFO - Received webhook update: 21524084
+2026-08-20 14:07:01 - telegram_bot - INFO - Callback received from user 444111495: back_to_durations
+2026-08-20 14:07:01 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-20 14:07:02 - telegram_bot - INFO - Received webhook update: 21524085
+2026-08-20 14:07:02 - telegram_bot - INFO - Callback received from user 444111495: duration_1
+2026-08-20 14:07:02 - telegram_bot - INFO - User 444111495 selected 1 month(s)
+2026-08-20 14:07:03 - telegram_bot - INFO - Received webhook update: 21524086
+2026-08-20 14:07:03 - telegram_bot - INFO - Callback received from user 444111495: back_to_durations
+2026-08-20 14:07:03 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-20 14:07:04 - telegram_bot - INFO - Received webhook update: 21524087
+2026-08-20 14:07:04 - telegram_bot - INFO - Callback received from user 444111495: duration_2
+2026-08-20 14:07:04 - telegram_bot - INFO - User 444111495 selected 2 month(s)
+2026-08-20 14:07:07 - telegram_bot - INFO - Received webhook update: 21524088
+2026-08-20 14:07:07 - telegram_bot - INFO - Callback received from user 444111495: noop
+2026-08-20 14:07:13 - telegram_bot - INFO - Received webhook update: 21524089
+2026-08-20 14:07:13 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-20 14:07:13 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-20 14:07:15 - telegram_bot - INFO - Received webhook update: 21524090
+2026-08-20 14:07:15 - telegram_bot - INFO - Callback received from user 444111495: duration_1
+2026-08-20 14:07:15 - telegram_bot - INFO - User 444111495 selected 1 month(s)
+2026-08-20 14:07:34 - telegram_bot - INFO - Received webhook update: 21524091
+2026-08-20 14:07:34 - telegram_bot - INFO - Callback received from user 444111495: noop
+2026-08-20 14:07:35 - telegram_bot - INFO - Received webhook update: 21524092
+2026-08-20 14:07:35 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-20 14:07:35 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-20 14:07:36 - telegram_bot - INFO - Received webhook update: 21524093
+2026-08-20 14:07:36 - telegram_bot - INFO - Callback received from user 444111495: plan_10gb_1m
+2026-08-20 14:07:36 - telegram_bot - ERROR - Error handling callback plan_10gb_1m: invalid literal for int() with base 10: '10gb'
+2026-08-20 14:07:39 - telegram_bot - INFO - Received webhook update: 21524094
+2026-08-20 14:07:39 - telegram_bot - INFO - Callback received from user 444111495: plan_20gb_1m
+2026-08-20 14:07:39 - telegram_bot - ERROR - Error handling callback plan_20gb_1m: invalid literal for int() with base 10: '20gb'
+2026-08-20 14:07:40 - telegram_bot - INFO - Received webhook update: 21524095
+2026-08-20 14:07:40 - telegram_bot - INFO - Callback received from user 444111495: duration_1
+2026-08-20 14:07:40 - telegram_bot - INFO - User 444111495 selected 1 month(s)
+2026-08-20 14:07:42 - telegram_bot - INFO - Received webhook update: 21524096
+2026-08-20 14:07:42 - telegram_bot - INFO - Callback received from user 444111495: back_to_durations
+2026-08-20 14:07:42 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-20 14:07:43 - telegram_bot - INFO - Received webhook update: 21524097
+2026-08-20 14:07:43 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-20 14:07:43 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-20 14:08:43 - telegram_bot - INFO - Shutting down application...
+2026-08-20 14:08:43 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-20 14:08:43 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-20 14:08:43 - telegram_bot - INFO - Telegram application shut down
+2026-08-20 15:43:59 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-20 15:43:59 - telegram_bot - INFO - Debug mode: True
+2026-08-20 15:43:59 - telegram_bot - INFO - Telegram application initialized
+2026-08-20 15:43:59 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-20 15:43:59 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-20 15:44:05 - telegram_bot - INFO - Received webhook update: 21524098
+2026-08-20 15:44:05 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-20 15:44:05 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-20 15:44:11 - telegram_bot - INFO - Received webhook update: 21524099
+2026-08-20 15:44:11 - telegram_bot - INFO - Callback received from user 444111495: duration_1
+2026-08-20 15:44:11 - telegram_bot - INFO - User 444111495 selected 1 month(s)
+2026-08-20 15:44:14 - telegram_bot - INFO - Received webhook update: 21524100
+2026-08-20 15:44:14 - telegram_bot - INFO - Callback received from user 444111495: back_to_durations
+2026-08-20 15:44:15 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-20 15:44:16 - telegram_bot - INFO - Received webhook update: 21524101
+2026-08-20 15:44:16 - telegram_bot - INFO - Callback received from user 444111495: duration_2
+2026-08-20 15:44:16 - telegram_bot - INFO - User 444111495 selected 2 month(s)
+2026-08-20 15:44:17 - telegram_bot - INFO - Received webhook update: 21524102
+2026-08-20 15:44:17 - telegram_bot - INFO - Callback received from user 444111495: back_to_durations
+2026-08-20 15:44:17 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-20 15:44:19 - telegram_bot - INFO - Received webhook update: 21524103
+2026-08-20 15:44:19 - telegram_bot - INFO - Callback received from user 444111495: duration_3
+2026-08-20 15:44:19 - telegram_bot - INFO - User 444111495 selected 3 month(s)
+2026-08-20 15:44:20 - telegram_bot - INFO - Received webhook update: 21524104
+2026-08-20 15:44:20 - telegram_bot - INFO - Callback received from user 444111495: back_to_durations
+2026-08-20 15:44:20 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-20 15:44:21 - telegram_bot - INFO - Received webhook update: 21524105
+2026-08-20 15:44:21 - telegram_bot - INFO - Callback received from user 444111495: duration_4
+2026-08-20 15:44:21 - telegram_bot - INFO - User 444111495 selected 4 month(s)
+2026-08-20 15:44:22 - telegram_bot - INFO - Received webhook update: 21524106
+2026-08-20 15:44:22 - telegram_bot - INFO - Callback received from user 444111495: back_to_durations
+2026-08-20 15:44:22 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-20 15:46:00 - telegram_bot - INFO - Received webhook update: 21524107
+2026-08-20 15:46:00 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-20 15:46:00 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-20 15:48:19 - telegram_bot - INFO - Received webhook update: 21524108
+2026-08-20 15:48:19 - telegram_bot - INFO - Callback received from user 444111495: renew_service
+2026-08-20 15:48:19 - telegram_bot - INFO - Renew service requested by user: 444111495
+2026-08-20 15:48:23 - telegram_bot - INFO - Received webhook update: 21524109
+2026-08-20 15:48:23 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-20 15:48:24 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-20 15:48:25 - telegram_bot - INFO - Received webhook update: 21524110
+2026-08-20 15:48:25 - telegram_bot - INFO - User started the bot: 444111495 - Shell_man
+2026-08-20 15:48:25 - telegram_bot - INFO - User registered: 444111495
+2026-08-20 15:48:25 - telegram_bot - INFO - Main menu sent to user: 444111495
+2026-08-20 15:48:26 - telegram_bot - INFO - Received webhook update: 21524111
+2026-08-20 15:48:26 - telegram_bot - INFO - Callback received from user 444111495: renew_service
+2026-08-20 15:48:26 - telegram_bot - INFO - Renew service requested by user: 444111495
+2026-08-20 15:48:29 - telegram_bot - INFO - Received webhook update: 21524112
+2026-08-20 15:48:29 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-20 15:48:29 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-20 15:48:31 - telegram_bot - INFO - Received webhook update: 21524113
+2026-08-20 15:48:31 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-20 15:48:31 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-20 15:48:32 - telegram_bot - INFO - Received webhook update: 21524114
+2026-08-20 15:48:32 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-20 15:48:32 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-20 15:48:33 - telegram_bot - INFO - Received webhook update: 21524115
+2026-08-20 15:48:33 - telegram_bot - INFO - Callback received from user 444111495: subordinates
+2026-08-20 15:48:33 - telegram_bot - INFO - Subordinates requested by user: 444111495
+2026-08-20 15:48:33 - telegram_bot - INFO - Found 0 subordinates for user 444111495
+2026-08-20 15:48:34 - telegram_bot - INFO - Received webhook update: 21524116
+2026-08-20 15:48:34 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-20 15:48:34 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-20 15:48:36 - telegram_bot - INFO - Received webhook update: 21524117
+2026-08-20 15:48:36 - telegram_bot - INFO - Callback received from user 444111495: test_account
+2026-08-20 15:48:36 - telegram_bot - INFO - Test account requested by user: 444111495
+2026-08-20 15:48:37 - telegram_bot - INFO - Received webhook update: 21524118
+2026-08-20 15:48:37 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-20 15:48:37 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-20 15:48:38 - telegram_bot - INFO - Received webhook update: 21524119
+2026-08-20 15:48:38 - telegram_bot - INFO - Callback received from user 444111495: support
+2026-08-20 15:48:38 - telegram_bot - INFO - Support requested by user: 444111495
+2026-08-20 15:48:39 - telegram_bot - INFO - Received webhook update: 21524120
+2026-08-20 15:48:39 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-20 15:48:39 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-20 15:48:40 - telegram_bot - INFO - Received webhook update: 21524121
+2026-08-20 15:48:40 - telegram_bot - INFO - Callback received from user 444111495: help
+2026-08-20 15:48:40 - telegram_bot - INFO - Help requested by user: 444111495
+2026-08-20 15:48:41 - telegram_bot - INFO - Received webhook update: 21524122
+2026-08-20 15:48:41 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-20 15:48:41 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-20 15:50:01 - telegram_bot - INFO - Shutting down application...
+2026-08-20 15:50:01 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-20 15:50:01 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-20 15:50:01 - telegram_bot - INFO - Telegram application shut down
+2026-08-20 15:52:10 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-20 15:52:10 - telegram_bot - INFO - Debug mode: True
+2026-08-20 15:52:10 - telegram_bot - INFO - Telegram application initialized
+2026-08-20 15:52:10 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-20 15:52:10 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-20 15:52:15 - telegram_bot - INFO - Received webhook update: 21524123
+2026-08-20 15:52:15 - telegram_bot - INFO - Callback received from user 444111495: status
+2026-08-20 15:52:16 - telegram_bot - INFO - Status requested for user: 444111495
+2026-08-20 15:52:16 - telegram_bot - ERROR - Error getting user status for 444111495: User 444111495 not found
+2026-08-20 15:52:16 - telegram_bot - ERROR - Error in handle_status: User 444111495 not found
+2026-08-20 15:52:17 - telegram_bot - INFO - Received webhook update: 21524124
+2026-08-20 15:52:17 - telegram_bot - INFO - User started the bot: 444111495 - Shell_man
+2026-08-20 15:52:17 - telegram_bot - INFO - User registered: 444111495
+2026-08-20 15:52:17 - telegram_bot - ERROR - Error in handle_start: 'InlineKeyboardBuilder' object has no attribute 'as_markup'
+2026-08-20 15:52:22 - telegram_bot - INFO - Received webhook update: 21524125
+2026-08-20 15:52:22 - telegram_bot - INFO - User started the bot: 444111495 - Shell_man
+2026-08-20 15:52:22 - telegram_bot - ERROR - Error registering user 444111495: "User" object has no field "last_seen"
+2026-08-20 15:52:22 - telegram_bot - ERROR - Error in handle_start: "User" object has no field "last_seen"
+2026-08-20 15:52:45 - telegram_bot - INFO - Shutting down application...
+2026-08-20 15:52:45 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-20 15:52:45 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-20 15:52:45 - telegram_bot - INFO - Telegram application shut down
+2026-08-20 15:57:05 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-20 15:57:05 - telegram_bot - INFO - Debug mode: True
+2026-08-20 15:57:06 - telegram_bot - INFO - Telegram application initialized
+2026-08-20 15:57:06 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-20 15:57:06 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-20 15:57:08 - telegram_bot - INFO - Received webhook update: 21524126
+2026-08-20 15:57:08 - telegram_bot - INFO - User started the bot: 444111495 - Shell_man
+2026-08-20 15:57:08 - telegram_bot - INFO - User registered: 444111495
+2026-08-20 15:57:08 - telegram_bot - INFO - Main menu sent to user: 444111495
+2026-08-20 15:57:18 - telegram_bot - INFO - Received webhook update: 21524127
+2026-08-20 15:57:18 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-20 15:57:18 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-20 15:57:21 - telegram_bot - INFO - Received webhook update: 21524128
+2026-08-20 15:57:21 - telegram_bot - INFO - User started the bot: 444111495 - Shell_man
+2026-08-20 15:57:21 - telegram_bot - INFO - User updated: 444111495
+2026-08-20 15:57:21 - telegram_bot - INFO - Main menu sent to user: 444111495
+2026-08-20 15:58:27 - telegram_bot - INFO - Shutting down application...
+2026-08-20 15:58:27 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-20 15:58:27 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-20 15:58:27 - telegram_bot - INFO - Telegram application shut down
+2026-08-20 15:59:49 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-20 15:59:49 - telegram_bot - INFO - Debug mode: True
+2026-08-20 15:59:49 - telegram_bot - INFO - Telegram application initialized
+2026-08-20 15:59:49 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-20 15:59:49 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-20 15:59:53 - telegram_bot - INFO - Received webhook update: 21524129
+2026-08-20 15:59:53 - telegram_bot - INFO - User started the bot: 444111495 - Shell_man
+2026-08-20 15:59:53 - telegram_bot - INFO - User registered: 444111495
+2026-08-20 15:59:54 - telegram_bot - INFO - Main menu sent to user: 444111495
+2026-08-20 15:59:55 - telegram_bot - INFO - Received webhook update: 21524130
+2026-08-20 15:59:55 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-20 15:59:56 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-20 15:59:57 - telegram_bot - INFO - Received webhook update: 21524131
+2026-08-20 15:59:57 - telegram_bot - INFO - Callback received from user 444111495: duration_1
+2026-08-20 15:59:57 - telegram_bot - INFO - User 444111495 selected 1 month(s)
+2026-08-20 15:59:59 - telegram_bot - INFO - Received webhook update: 21524132
+2026-08-20 15:59:59 - telegram_bot - INFO - Callback received from user 444111495: plan_1m_10gb
+2026-08-20 15:59:59 - telegram_bot - INFO - User 444111495 selected: 1 month, 10GB - 82000 Toman
+2026-08-20 15:59:59 - telegram_bot - ERROR - Error handling callback plan_1m_10gb: 'KeyboardBuilder' object has no attribute 'STYLE_SUCCESS'
+2026-08-20 16:00:01 - telegram_bot - INFO - Received webhook update: 21524133
+2026-08-20 16:00:01 - telegram_bot - INFO - Callback received from user 444111495: plan_1m_20gb
+2026-08-20 16:00:01 - telegram_bot - INFO - User 444111495 selected: 1 month, 20GB - 151000 Toman
+2026-08-20 16:00:01 - telegram_bot - ERROR - Error handling callback plan_1m_20gb: 'KeyboardBuilder' object has no attribute 'STYLE_SUCCESS'
+2026-08-20 16:00:02 - telegram_bot - INFO - Received webhook update: 21524134
+2026-08-20 16:00:02 - telegram_bot - INFO - Callback received from user 444111495: back_to_durations
+2026-08-20 16:00:02 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-20 16:01:52 - telegram_bot - INFO - Shutting down application...
+2026-08-20 16:01:53 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-20 16:01:53 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-20 16:01:53 - telegram_bot - INFO - Telegram application shut down
+2026-08-20 16:02:59 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-20 16:02:59 - telegram_bot - INFO - Debug mode: True
+2026-08-20 16:03:00 - telegram_bot - INFO - Telegram application initialized
+2026-08-20 16:03:00 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-20 16:03:00 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-20 16:03:01 - telegram_bot - INFO - Received webhook update: 21524135
+2026-08-20 16:03:01 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-20 16:03:02 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-20 16:03:02 - telegram_bot - ERROR - Error handling callback main_menu: InlineKeyboardButton.__init__() got an unexpected keyword argument 'style'
+2026-08-20 16:03:04 - telegram_bot - INFO - Received webhook update: 21524136
+2026-08-20 16:03:04 - telegram_bot - INFO - User started the bot: 444111495 - Shell_man
+2026-08-20 16:03:04 - telegram_bot - INFO - User registered: 444111495
+2026-08-20 16:03:04 - telegram_bot - ERROR - Error in handle_start: InlineKeyboardButton.__init__() got an unexpected keyword argument 'style'
+2026-08-20 16:03:36 - telegram_bot - INFO - Shutting down application...
+2026-08-20 16:03:36 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-20 16:03:36 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-20 16:03:36 - telegram_bot - INFO - Telegram application shut down
+2026-08-20 16:03:46 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-20 16:03:46 - telegram_bot - INFO - Debug mode: True
+2026-08-20 16:03:47 - telegram_bot - INFO - Telegram application initialized
+2026-08-20 16:03:47 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-20 16:03:47 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-20 16:03:48 - telegram_bot - INFO - Received webhook update: 21524137
+2026-08-20 16:03:48 - telegram_bot - INFO - User started the bot: 444111495 - Shell_man
+2026-08-20 16:03:48 - telegram_bot - INFO - User registered: 444111495
+2026-08-20 16:03:48 - telegram_bot - INFO - Main menu sent to user: 444111495
+2026-08-20 16:03:58 - telegram_bot - INFO - Shutting down application...
+2026-08-20 16:03:58 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-20 16:03:58 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-20 16:03:58 - telegram_bot - INFO - Telegram application shut down
+2026-08-20 16:06:09 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-20 16:06:09 - telegram_bot - INFO - Debug mode: True
+2026-08-20 16:06:09 - telegram_bot - INFO - Telegram application initialized
+2026-08-20 16:06:09 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-20 16:06:09 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-20 16:06:11 - telegram_bot - INFO - Received webhook update: 21524138
+2026-08-20 16:06:11 - telegram_bot - INFO - User started the bot: 444111495 - Shell_man
+2026-08-20 16:06:11 - telegram_bot - INFO - User registered: 444111495
+2026-08-20 16:06:11 - telegram_bot - INFO - Main menu sent to user: 444111495
+2026-08-20 16:06:42 - telegram_bot - INFO - Received webhook update: 21524139
+2026-08-20 16:06:42 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-20 16:06:43 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-20 16:07:14 - telegram_bot - INFO - Received webhook update: 21524140
+2026-08-20 16:07:14 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-20 16:07:14 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-20 16:07:18 - telegram_bot - INFO - Received webhook update: 21524141
+2026-08-20 16:07:18 - telegram_bot - INFO - Callback received from user 444111495: renew_service
+2026-08-20 16:07:18 - telegram_bot - INFO - Renew service requested by user: 444111495
+2026-08-20 16:07:20 - telegram_bot - INFO - Received webhook update: 21524142
+2026-08-20 16:07:20 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-20 16:07:20 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-20 16:07:21 - telegram_bot - INFO - Received webhook update: 21524143
+2026-08-20 16:07:21 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-20 16:07:21 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-20 16:07:23 - telegram_bot - INFO - Received webhook update: 21524144
+2026-08-20 16:07:23 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-20 16:07:23 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-20 16:07:24 - telegram_bot - INFO - Received webhook update: 21524145
+2026-08-20 16:07:24 - telegram_bot - INFO - Callback received from user 444111495: test_account
+2026-08-20 16:07:24 - telegram_bot - INFO - Test account requested by user: 444111495
+2026-08-20 16:07:25 - telegram_bot - INFO - Received webhook update: 21524146
+2026-08-20 16:07:25 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-20 16:07:25 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-20 16:07:26 - telegram_bot - INFO - Received webhook update: 21524147
+2026-08-20 16:07:26 - telegram_bot - INFO - Callback received from user 444111495: support
+2026-08-20 16:07:26 - telegram_bot - INFO - Support requested by user: 444111495
+2026-08-20 16:07:27 - telegram_bot - INFO - Received webhook update: 21524148
+2026-08-20 16:07:27 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-20 16:07:27 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-20 16:07:28 - telegram_bot - INFO - Received webhook update: 21524149
+2026-08-20 16:07:28 - telegram_bot - INFO - Callback received from user 444111495: help
+2026-08-20 16:07:28 - telegram_bot - INFO - Help requested by user: 444111495
+2026-08-20 16:07:29 - telegram_bot - INFO - Received webhook update: 21524150
+2026-08-20 16:07:29 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-20 16:07:29 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-20 16:07:32 - telegram_bot - INFO - Shutting down application...
+2026-08-20 16:07:32 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-20 16:07:32 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-20 16:07:32 - telegram_bot - INFO - Telegram application shut down
+2026-08-21 07:52:33 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-21 07:52:33 - telegram_bot - INFO - Debug mode: True
+2026-08-21 07:52:33 - telegram_bot - INFO - Telegram application initialized
+2026-08-21 07:52:33 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-21 07:52:33 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-21 07:52:35 - telegram_bot - INFO - Received webhook update: 21524154
+2026-08-21 07:52:35 - telegram_bot - INFO - Callback received from user 444111495: status
+2026-08-21 07:52:35 - telegram_bot - INFO - Status requested for user: 444111495
+2026-08-21 07:52:35 - telegram_bot - ERROR - Error getting user status for 444111495: User 444111495 not found
+2026-08-21 07:52:35 - telegram_bot - ERROR - Error in handle_status: User 444111495 not found
+2026-08-21 07:52:36 - telegram_bot - INFO - Received webhook update: 21524155
+2026-08-21 07:52:36 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-21 07:52:36 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-21 07:52:44 - telegram_bot - INFO - Received webhook update: 21524156
+2026-08-21 07:52:44 - telegram_bot - INFO - Callback received from user 444111495: duration_1
+2026-08-21 07:52:44 - telegram_bot - INFO - User 444111495 selected 1 month(s)
+2026-08-21 07:52:48 - telegram_bot - INFO - Received webhook update: 21524157
+2026-08-21 07:52:48 - telegram_bot - INFO - Callback received from user 444111495: plan_1m_10gb
+2026-08-21 07:52:48 - telegram_bot - INFO - User 444111495 selected: 1 month, 10GB - 82000 Toman
+2026-08-21 07:52:48 - telegram_bot - ERROR - Error handling callback plan_1m_10gb: 'KeyboardBuilder' object has no attribute 'STYLE_SUCCESS'
+2026-08-21 07:52:52 - telegram_bot - INFO - Received webhook update: 21524158
+2026-08-21 07:52:52 - telegram_bot - INFO - Callback received from user 444111495: plan_1m_20gb
+2026-08-21 07:52:52 - telegram_bot - INFO - User 444111495 selected: 1 month, 20GB - 151000 Toman
+2026-08-21 07:52:52 - telegram_bot - ERROR - Error handling callback plan_1m_20gb: 'KeyboardBuilder' object has no attribute 'STYLE_SUCCESS'
+2026-08-21 07:52:54 - telegram_bot - INFO - Received webhook update: 21524159
+2026-08-21 07:52:54 - telegram_bot - INFO - Callback received from user 444111495: plan_1m_30gb
+2026-08-21 07:52:54 - telegram_bot - INFO - User 444111495 selected: 1 month, 30GB - 218000 Toman
+2026-08-21 07:52:54 - telegram_bot - ERROR - Error handling callback plan_1m_30gb: 'KeyboardBuilder' object has no attribute 'STYLE_SUCCESS'
+2026-08-21 07:53:23 - telegram_bot - INFO - Received webhook update: 21524160
+2026-08-21 07:53:23 - telegram_bot - INFO - Callback received from user 444111495: change_duration
+2026-08-21 07:53:23 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-21 07:53:27 - telegram_bot - INFO - Received webhook update: 21524161
+2026-08-21 07:53:27 - telegram_bot - INFO - Callback received from user 444111495: duration_1
+2026-08-21 07:53:27 - telegram_bot - INFO - User 444111495 selected 1 month(s)
+2026-08-21 07:53:31 - telegram_bot - INFO - Received webhook update: 21524162
+2026-08-21 07:53:31 - telegram_bot - INFO - Callback received from user 444111495: change_duration
+2026-08-21 07:53:31 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-21 07:53:32 - telegram_bot - INFO - Received webhook update: 21524163
+2026-08-21 07:53:32 - telegram_bot - INFO - Callback received from user 444111495: duration_2
+2026-08-21 07:53:32 - telegram_bot - INFO - User 444111495 selected 2 month(s)
+2026-08-21 07:53:33 - telegram_bot - INFO - Received webhook update: 21524164
+2026-08-21 07:53:33 - telegram_bot - INFO - Callback received from user 444111495: change_duration
+2026-08-21 07:53:33 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-21 07:53:34 - telegram_bot - INFO - Received webhook update: 21524165
+2026-08-21 07:53:34 - telegram_bot - INFO - Callback received from user 444111495: duration_3
+2026-08-21 07:53:34 - telegram_bot - INFO - User 444111495 selected 3 month(s)
+2026-08-21 07:53:35 - telegram_bot - INFO - Received webhook update: 21524166
+2026-08-21 07:53:35 - telegram_bot - INFO - Callback received from user 444111495: change_duration
+2026-08-21 07:53:35 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-21 07:53:36 - telegram_bot - INFO - Received webhook update: 21524167
+2026-08-21 07:53:36 - telegram_bot - INFO - Callback received from user 444111495: duration_4
+2026-08-21 07:53:36 - telegram_bot - INFO - User 444111495 selected 4 month(s)
+2026-08-21 07:53:37 - telegram_bot - INFO - Received webhook update: 21524168
+2026-08-21 07:53:37 - telegram_bot - INFO - Callback received from user 444111495: change_duration
+2026-08-21 07:53:37 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-21 07:53:45 - telegram_bot - INFO - Received webhook update: 21524169
+2026-08-21 07:53:45 - telegram_bot - INFO - Callback received from user 444111495: duration_1
+2026-08-21 07:53:45 - telegram_bot - INFO - User 444111495 selected 1 month(s)
+2026-08-21 07:53:48 - telegram_bot - INFO - Received webhook update: 21524170
+2026-08-21 07:53:48 - telegram_bot - INFO - Callback received from user 444111495: change_duration
+2026-08-21 07:53:48 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-21 07:53:49 - telegram_bot - INFO - Received webhook update: 21524171
+2026-08-21 07:53:49 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-21 07:53:49 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-21 07:53:51 - telegram_bot - INFO - Received webhook update: 21524172
+2026-08-21 07:53:51 - telegram_bot - INFO - Callback received from user 444111495: test_account
+2026-08-21 07:53:51 - telegram_bot - INFO - Test account requested by user: 444111495
+2026-08-21 07:53:52 - telegram_bot - INFO - Received webhook update: 21524173
+2026-08-21 07:53:52 - telegram_bot - INFO - Callback received from user 444111495: wallet
+2026-08-21 07:53:52 - telegram_bot - INFO - Wallet requested by user: 444111495
+2026-08-21 07:53:53 - telegram_bot - INFO - Received webhook update: 21524174
+2026-08-21 07:53:53 - telegram_bot - INFO - Callback received from user 444111495: support
+2026-08-21 07:53:53 - telegram_bot - INFO - Support requested by user: 444111495
+2026-08-21 07:53:54 - telegram_bot - INFO - Received webhook update: 21524175
+2026-08-21 07:53:54 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-21 07:53:54 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-21 07:53:56 - telegram_bot - INFO - Received webhook update: 21524176
+2026-08-21 07:53:56 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-21 07:53:56 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-21 07:54:18 - telegram_bot - INFO - Shutting down application...
+2026-08-21 07:54:18 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-21 07:54:18 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-21 07:54:18 - telegram_bot - INFO - Telegram application shut down
+2026-08-21 07:58:28 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-21 07:58:28 - telegram_bot - INFO - Debug mode: True
+2026-08-21 07:58:28 - telegram_bot - INFO - Telegram application initialized
+2026-08-21 07:58:28 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-21 07:58:28 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-21 07:58:30 - telegram_bot - INFO - Received webhook update: 21524177
+2026-08-21 07:58:30 - telegram_bot - INFO - User started the bot: 444111495 - Shell_man
+2026-08-21 07:58:30 - telegram_bot - INFO - User registered: 444111495
+2026-08-21 07:58:30 - telegram_bot - INFO - Main menu sent to user: 444111495
+2026-08-21 07:58:33 - telegram_bot - INFO - Received webhook update: 21524178
+2026-08-21 07:58:33 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-21 07:58:33 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-21 07:58:37 - telegram_bot - INFO - Received webhook update: 21524179
+2026-08-21 07:58:37 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-21 07:58:37 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-21 07:58:40 - telegram_bot - INFO - Received webhook update: 21524180
+2026-08-21 07:58:40 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-21 07:58:40 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-21 07:58:42 - telegram_bot - INFO - Received webhook update: 21524181
+2026-08-21 07:58:42 - telegram_bot - INFO - Callback received from user 444111495: plan_1m_10gb
+2026-08-21 07:58:42 - telegram_bot - INFO - User 444111495 selected: 1 month, 10GB - 82000 Toman
+2026-08-21 07:58:42 - telegram_bot - ERROR - Error handling callback plan_1m_10gb: 'KeyboardBuilder' object has no attribute 'STYLE_SUCCESS'
+2026-08-21 07:58:44 - telegram_bot - INFO - Received webhook update: 21524182
+2026-08-21 07:58:44 - telegram_bot - INFO - Callback received from user 444111495: duration_2
+2026-08-21 07:58:44 - telegram_bot - INFO - User 444111495 selected 2 month(s)
+2026-08-21 07:58:57 - telegram_bot - INFO - Received webhook update: 21524183
+2026-08-21 07:58:57 - telegram_bot - INFO - Callback received from user 444111495: change_duration
+2026-08-21 07:58:57 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-21 07:58:59 - telegram_bot - INFO - Received webhook update: 21524184
+2026-08-21 07:58:59 - telegram_bot - INFO - Callback received from user 444111495: duration_2
+2026-08-21 07:58:59 - telegram_bot - INFO - User 444111495 selected 2 month(s)
+2026-08-21 07:59:00 - telegram_bot - INFO - Received webhook update: 21524185
+2026-08-21 07:59:00 - telegram_bot - INFO - Callback received from user 444111495: change_duration
+2026-08-21 07:59:00 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-21 07:59:01 - telegram_bot - INFO - Received webhook update: 21524186
+2026-08-21 07:59:01 - telegram_bot - INFO - Callback received from user 444111495: duration_1
+2026-08-21 07:59:01 - telegram_bot - INFO - User 444111495 selected 1 month(s)
+2026-08-21 07:59:03 - telegram_bot - INFO - Received webhook update: 21524187
+2026-08-21 07:59:03 - telegram_bot - INFO - Callback received from user 444111495: change_duration
+2026-08-21 07:59:03 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-21 07:59:12 - telegram_bot - INFO - Received webhook update: 21524188
+2026-08-21 07:59:12 - telegram_bot - INFO - Callback received from user 444111495: duration_1
+2026-08-21 07:59:13 - telegram_bot - INFO - User 444111495 selected 1 month(s)
+2026-08-21 07:59:15 - telegram_bot - INFO - Received webhook update: 21524189
+2026-08-21 07:59:15 - telegram_bot - INFO - Callback received from user 444111495: change_duration
+2026-08-21 07:59:15 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-21 07:59:17 - telegram_bot - INFO - Received webhook update: 21524190
+2026-08-21 07:59:17 - telegram_bot - INFO - Callback received from user 444111495: duration_2
+2026-08-21 07:59:17 - telegram_bot - INFO - User 444111495 selected 2 month(s)
+2026-08-21 07:59:19 - telegram_bot - INFO - Received webhook update: 21524191
+2026-08-21 07:59:19 - telegram_bot - INFO - Callback received from user 444111495: change_duration
+2026-08-21 07:59:19 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-21 07:59:20 - telegram_bot - INFO - Received webhook update: 21524192
+2026-08-21 07:59:20 - telegram_bot - INFO - Callback received from user 444111495: duration_3
+2026-08-21 07:59:20 - telegram_bot - INFO - User 444111495 selected 3 month(s)
+2026-08-21 07:59:21 - telegram_bot - INFO - Received webhook update: 21524193
+2026-08-21 07:59:21 - telegram_bot - INFO - Callback received from user 444111495: change_duration
+2026-08-21 07:59:21 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-21 07:59:22 - telegram_bot - INFO - Received webhook update: 21524194
+2026-08-21 07:59:22 - telegram_bot - INFO - Callback received from user 444111495: duration_4
+2026-08-21 07:59:23 - telegram_bot - INFO - User 444111495 selected 4 month(s)
+2026-08-21 07:59:24 - telegram_bot - INFO - Received webhook update: 21524195
+2026-08-21 07:59:24 - telegram_bot - INFO - Callback received from user 444111495: change_duration
+2026-08-21 07:59:24 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-21 07:59:31 - telegram_bot - INFO - Shutting down application...
+2026-08-21 07:59:31 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-21 07:59:31 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-21 07:59:31 - telegram_bot - INFO - Telegram application shut down
+2026-08-21 08:35:09 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-21 08:35:09 - telegram_bot - INFO - Debug mode: True
+2026-08-21 08:35:09 - telegram_bot - INFO - Telegram application initialized
+2026-08-21 08:35:09 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-21 08:35:09 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-21 08:38:25 - telegram_bot - INFO - Shutting down application...
+2026-08-21 08:38:25 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-21 08:38:25 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-21 08:38:25 - telegram_bot - INFO - Telegram application shut down
+2026-08-21 08:40:33 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-21 08:40:33 - telegram_bot - INFO - Debug mode: True
+2026-08-21 08:40:33 - telegram_bot - INFO - Telegram application initialized
+2026-08-21 08:40:33 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-21 08:40:33 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-21 08:41:32 - telegram_bot - INFO - Shutting down application...
+2026-08-21 08:41:32 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-21 08:41:32 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-21 08:41:32 - telegram_bot - INFO - Telegram application shut down
+2026-08-21 08:43:52 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-21 08:43:52 - telegram_bot - INFO - Debug mode: True
+2026-08-21 08:43:52 - telegram_bot - INFO - Telegram application initialized
+2026-08-21 08:43:52 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-21 08:43:52 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-21 08:43:58 - telegram_bot - INFO - Shutting down application...
+2026-08-21 08:43:58 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-21 08:43:58 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-21 08:43:58 - telegram_bot - INFO - Telegram application shut down
+2026-08-21 08:44:22 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-21 08:44:22 - telegram_bot - INFO - Debug mode: True
+2026-08-21 08:44:22 - telegram_bot - INFO - Telegram application initialized
+2026-08-21 08:44:22 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-21 08:44:22 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-21 08:45:30 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-21 08:47:25 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-21 08:47:51 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-21 08:47:52 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-21 08:47:54 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-21 08:47:55 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-21 08:47:56 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-21 08:47:58 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-21 08:47:59 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-21 08:48:00 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-21 08:48:02 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-21 08:48:03 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-21 08:48:06 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-21 08:48:07 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-21 08:48:35 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-21 08:48:50 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-21 08:48:52 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-21 08:48:54 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-21 08:49:20 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-21 08:49:28 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 09:11:42 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-21 09:43:43 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 09:45:07 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 09:51:02 - telegram_bot - INFO - Shutting down application...
+2026-08-21 09:51:02 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-21 09:51:02 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-21 09:51:02 - telegram_bot - INFO - Telegram application shut down
+2026-08-21 09:57:24 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-21 09:57:24 - telegram_bot - INFO - Debug mode: True
+2026-08-21 09:57:24 - telegram_bot - INFO - Telegram application initialized
+2026-08-21 09:57:24 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-21 09:57:24 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-21 09:57:28 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 09:59:25 - telegram_bot - INFO - Shutting down application...
+2026-08-21 09:59:25 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-21 09:59:25 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-21 09:59:25 - telegram_bot - INFO - Telegram application shut down
+2026-08-21 10:01:29 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-21 10:01:29 - telegram_bot - INFO - Debug mode: True
+2026-08-21 10:01:29 - telegram_bot - INFO - Telegram application initialized
+2026-08-21 10:01:29 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-21 10:01:29 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-21 10:01:32 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-21 10:01:34 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:02:40 - telegram_bot - INFO - Shutting down application...
+2026-08-21 10:02:40 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-21 10:02:40 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-21 10:02:40 - telegram_bot - INFO - Telegram application shut down
+2026-08-21 10:19:27 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-21 10:19:27 - telegram_bot - INFO - Debug mode: True
+2026-08-21 10:19:27 - telegram_bot - INFO - Telegram application initialized
+2026-08-21 10:19:27 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-21 10:19:27 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-21 10:19:28 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:19:35 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:19:37 - telegram_bot - INFO - Admin services page accessed
+2026-08-21 10:19:41 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-21 10:19:43 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:20:14 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:20:36 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:20:45 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:21:56 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:22:02 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:22:06 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:24:39 - telegram_bot - INFO - Shutting down application...
+2026-08-21 10:24:39 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-21 10:24:39 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-21 10:24:39 - telegram_bot - INFO - Telegram application shut down
+2026-08-21 10:31:01 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-21 10:31:01 - telegram_bot - INFO - Debug mode: True
+2026-08-21 10:31:01 - telegram_bot - INFO - Telegram application initialized
+2026-08-21 10:31:01 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-21 10:31:01 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-21 10:31:03 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:34:30 - telegram_bot - INFO - Shutting down application...
+2026-08-21 10:34:30 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-21 10:34:30 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-21 10:34:30 - telegram_bot - INFO - Telegram application shut down
+2026-08-21 10:35:15 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-21 10:35:15 - telegram_bot - INFO - Debug mode: True
+2026-08-21 10:35:15 - telegram_bot - INFO - Telegram application initialized
+2026-08-21 10:35:15 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-21 10:35:15 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-21 10:35:16 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:35:55 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:36:18 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:37:59 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:38:08 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:38:58 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:39:07 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-21 10:39:08 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:39:54 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:42:05 - telegram_bot - INFO - Shutting down application...
+2026-08-21 10:42:05 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-21 10:42:05 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-21 10:42:05 - telegram_bot - INFO - Telegram application shut down
+2026-08-21 10:42:32 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-21 10:42:32 - telegram_bot - INFO - Debug mode: True
+2026-08-21 10:42:32 - telegram_bot - INFO - Telegram application initialized
+2026-08-21 10:42:32 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-21 10:42:32 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-21 10:42:32 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:42:50 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:42:52 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:42:52 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:42:52 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:42:52 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:42:53 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:42:53 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:42:53 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:43:05 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:43:14 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:44:35 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:46:13 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:46:18 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:46:22 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:46:43 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:47:00 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:49:06 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:50:49 - telegram_bot - INFO - Shutting down application...
+2026-08-21 10:50:49 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-21 10:50:49 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-21 10:50:49 - telegram_bot - INFO - Telegram application shut down
+2026-08-21 10:52:04 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-21 10:52:04 - telegram_bot - INFO - Debug mode: True
+2026-08-21 10:52:04 - telegram_bot - INFO - Telegram application initialized
+2026-08-21 10:52:04 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-21 10:52:04 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-21 10:52:07 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:53:26 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:55:14 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:56:18 - telegram_bot - INFO - Shutting down application...
+2026-08-21 10:56:18 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-21 10:56:18 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-21 10:56:18 - telegram_bot - INFO - Telegram application shut down
+2026-08-21 10:57:41 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-21 10:57:41 - telegram_bot - INFO - Debug mode: True
+2026-08-21 10:57:41 - telegram_bot - INFO - Telegram application initialized
+2026-08-21 10:57:41 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-21 10:57:41 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-21 10:57:44 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 10:58:06 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 11:03:31 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 11:04:41 - telegram_bot - INFO - Shutting down application...
+2026-08-21 11:04:41 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-21 11:04:41 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-21 11:04:41 - telegram_bot - INFO - Telegram application shut down
+2026-08-21 11:05:43 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-21 11:05:43 - telegram_bot - INFO - Debug mode: True
+2026-08-21 11:05:43 - telegram_bot - INFO - Telegram application initialized
+2026-08-21 11:05:43 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-21 11:05:43 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-21 11:05:44 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 11:06:08 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 11:10:02 - telegram_bot - INFO - Shutting down application...
+2026-08-21 11:10:02 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-21 11:10:02 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-21 11:10:02 - telegram_bot - INFO - Telegram application shut down
+2026-08-21 11:18:40 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-21 11:18:40 - telegram_bot - INFO - Debug mode: True
+2026-08-21 11:18:40 - telegram_bot - INFO - Telegram application initialized
+2026-08-21 11:18:40 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-21 11:18:40 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-21 11:18:41 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 11:18:46 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-21 11:18:49 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 11:19:18 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 11:19:36 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 11:20:16 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 11:20:44 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 11:20:45 - telegram_bot - INFO - Admin services page accessed
+2026-08-21 11:20:47 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-21 11:20:48 - telegram_bot - INFO - Admin services page accessed
+2026-08-21 11:20:51 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-21 11:20:52 - telegram_bot - INFO - Admin reports page accessed
+2026-08-21 11:20:53 - telegram_bot - INFO - Admin staff page accessed
+2026-08-21 11:20:54 - telegram_bot - INFO - Admin settings page accessed
+2026-08-21 11:20:58 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 11:20:59 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-21 11:21:00 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 11:21:02 - telegram_bot - INFO - Admin services page accessed
+2026-08-21 11:21:03 - telegram_bot - INFO - Admin panels page accessed
+2026-08-21 11:32:58 - telegram_bot - INFO - Shutting down application...
+2026-08-21 11:32:58 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-21 11:32:58 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-21 11:32:58 - telegram_bot - INFO - Telegram application shut down
+2026-08-22 17:08:36 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-22 17:08:36 - telegram_bot - INFO - Debug mode: True
+2026-08-22 17:08:36 - telegram_bot - INFO - Telegram application initialized
+2026-08-22 17:08:36 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-22 17:08:36 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-22 17:08:38 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 17:08:55 - telegram_bot - INFO - Admin services page accessed
+2026-08-22 17:08:56 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-22 17:08:57 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 17:10:26 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-22 17:10:34 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 17:12:37 - telegram_bot - INFO - Admin services page accessed
+2026-08-22 17:18:08 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-22 17:39:35 - telegram_bot - INFO - Shutting down application...
+2026-08-22 17:39:35 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-22 17:39:35 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-22 17:39:35 - telegram_bot - INFO - Telegram application shut down
+2026-08-22 18:02:31 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-22 18:02:31 - telegram_bot - INFO - Debug mode: True
+2026-08-22 18:02:31 - telegram_bot - INFO - Telegram application initialized
+2026-08-22 18:02:31 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-22 18:02:31 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-22 18:02:33 - telegram_bot - INFO - Admin services page accessed
+2026-08-22 18:03:00 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 18:03:07 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 18:17:48 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-22 18:17:58 - telegram_bot - INFO - Admin categories page accessed
+2026-08-22 18:18:00 - telegram_bot - INFO - Admin services page accessed
+2026-08-22 18:18:01 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-22 18:18:03 - telegram_bot - INFO - Admin reports page accessed
+2026-08-22 18:18:05 - telegram_bot - INFO - Admin staff page accessed
+2026-08-22 18:18:06 - telegram_bot - INFO - Admin settings page accessed
+2026-08-22 18:18:08 - telegram_bot - INFO - Admin staff page accessed
+2026-08-22 18:20:42 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-22 18:20:45 - telegram_bot - INFO - Admin reports page accessed
+2026-08-22 18:20:56 - telegram_bot - INFO - Admin staff page accessed
+2026-08-22 18:20:58 - telegram_bot - INFO - Admin settings page accessed
+2026-08-22 18:26:37 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 18:39:17 - telegram_bot - INFO - Shutting down application...
+2026-08-22 18:39:17 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-22 18:39:17 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-22 18:39:17 - telegram_bot - INFO - Telegram application shut down
+2026-08-22 18:45:29 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-22 18:45:29 - telegram_bot - INFO - Debug mode: True
+2026-08-22 18:45:29 - telegram_bot - INFO - Telegram application initialized
+2026-08-22 18:45:29 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-22 18:45:29 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-22 18:45:35 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 18:46:58 - telegram_bot - ERROR - Error fetching inbounds: cannot import name 'PanelError' from 'core.exceptions' (/root/Bot/TelegramBot/Telegram-Bot-for-Sanaei-X-UI-Panel-v3.6.0/core/exceptions.py)
+2026-08-22 18:47:24 - telegram_bot - ERROR - Error fetching inbounds: cannot import name 'PanelError' from 'core.exceptions' (/root/Bot/TelegramBot/Telegram-Bot-for-Sanaei-X-UI-Panel-v3.6.0/core/exceptions.py)
+2026-08-22 18:47:28 - telegram_bot - ERROR - Error fetching clients: Client error '404 Not Found' for url 'https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/clients/list'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2026-08-22 18:48:12 - telegram_bot - ERROR - Error fetching inbounds: cannot import name 'PanelError' from 'core.exceptions' (/root/Bot/TelegramBot/Telegram-Bot-for-Sanaei-X-UI-Panel-v3.6.0/core/exceptions.py)
+2026-08-22 18:48:21 - telegram_bot - ERROR - Error fetching inbounds: cannot import name 'PanelError' from 'core.exceptions' (/root/Bot/TelegramBot/Telegram-Bot-for-Sanaei-X-UI-Panel-v3.6.0/core/exceptions.py)
+2026-08-22 18:49:28 - telegram_bot - ERROR - Error fetching inbounds: cannot import name 'PanelError' from 'core.exceptions' (/root/Bot/TelegramBot/Telegram-Bot-for-Sanaei-X-UI-Panel-v3.6.0/core/exceptions.py)
+2026-08-22 19:09:37 - telegram_bot - INFO - Shutting down application...
+2026-08-22 19:09:37 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-22 19:09:37 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-22 19:09:37 - telegram_bot - INFO - Telegram application shut down
+2026-08-22 19:14:03 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-22 19:14:03 - telegram_bot - INFO - Debug mode: True
+2026-08-22 19:14:04 - telegram_bot - INFO - Telegram application initialized
+2026-08-22 19:14:04 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-22 19:14:04 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-22 19:14:16 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 19:15:53 - telegram_bot - ERROR - Error creating panel: 'sub_url' is an invalid keyword argument for PanelDB
+2026-08-22 19:20:55 - telegram_bot - INFO - Shutting down application...
+2026-08-22 19:20:55 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-22 19:20:55 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-22 19:20:55 - telegram_bot - INFO - Telegram application shut down
+2026-08-22 19:46:28 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-22 19:46:28 - telegram_bot - INFO - Debug mode: True
+2026-08-22 19:46:28 - telegram_bot - INFO - Telegram application initialized
+2026-08-22 19:46:28 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-22 19:46:28 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-22 19:56:20 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 19:56:23 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 19:59:44 - telegram_bot - ERROR - Error creating panel: 'sub_url' is an invalid keyword argument for PanelDB
+2026-08-22 20:00:34 - telegram_bot - ERROR - Error creating panel: 'sub_url' is an invalid keyword argument for PanelDB
+2026-08-22 20:01:52 - telegram_bot - INFO - Shutting down application...
+2026-08-22 20:01:53 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-22 20:01:53 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-22 20:01:53 - telegram_bot - INFO - Telegram application shut down
+2026-08-22 20:02:08 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-22 20:02:08 - telegram_bot - INFO - Debug mode: True
+2026-08-22 20:02:08 - telegram_bot - INFO - Telegram application initialized
+2026-08-22 20:02:08 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-22 20:02:08 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-22 20:02:10 - telegram_bot - ERROR - Error creating panel: 'sub_url' is an invalid keyword argument for PanelDB
+2026-08-22 20:02:13 - telegram_bot - ERROR - Error creating panel: 'sub_url' is an invalid keyword argument for PanelDB
+2026-08-22 20:02:15 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 20:02:56 - telegram_bot - ERROR - Error creating panel: 'sub_url' is an invalid keyword argument for PanelDB
+2026-08-22 20:02:58 - telegram_bot - ERROR - Error creating panel: 'sub_url' is an invalid keyword argument for PanelDB
+2026-08-22 20:02:59 - telegram_bot - ERROR - Error creating panel: 'sub_url' is an invalid keyword argument for PanelDB
+2026-08-22 20:03:07 - telegram_bot - INFO - Shutting down application...
+2026-08-22 20:03:07 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-22 20:03:07 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-22 20:03:07 - telegram_bot - INFO - Telegram application shut down
+2026-08-22 20:14:01 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-22 20:14:01 - telegram_bot - INFO - Debug mode: True
+2026-08-22 20:14:01 - telegram_bot - INFO - Telegram application initialized
+2026-08-22 20:14:01 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-22 20:14:01 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-22 20:14:07 - telegram_bot - ERROR - Error creating panel: 'capacity' is an invalid keyword argument for PanelDB
+2026-08-22 20:15:16 - telegram_bot - INFO - Shutting down application...
+2026-08-22 20:15:16 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-22 20:15:16 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-22 20:15:16 - telegram_bot - INFO - Telegram application shut down
+2026-08-22 20:15:25 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-22 20:15:25 - telegram_bot - INFO - Debug mode: True
+2026-08-22 20:15:25 - telegram_bot - INFO - Telegram application initialized
+2026-08-22 20:15:25 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-22 20:15:25 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-22 20:15:28 - telegram_bot - ERROR - Error creating panel: 'capacity' is an invalid keyword argument for PanelDB
+2026-08-22 20:15:30 - telegram_bot - ERROR - Error creating panel: 'capacity' is an invalid keyword argument for PanelDB
+2026-08-22 20:15:31 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 20:16:05 - telegram_bot - ERROR - Error creating panel: 'capacity' is an invalid keyword argument for PanelDB
+2026-08-22 20:16:21 - telegram_bot - INFO - Shutting down application...
+2026-08-22 20:16:21 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-22 20:16:21 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-22 20:16:21 - telegram_bot - INFO - Telegram application shut down
+2026-08-22 20:19:57 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-22 20:19:57 - telegram_bot - INFO - Debug mode: True
+2026-08-22 20:19:57 - telegram_bot - INFO - Telegram application initialized
+2026-08-22 20:19:57 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-22 20:19:57 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-22 20:19:57 - telegram_bot - ERROR - Error creating panel: (sqlite3.OperationalError) no such column: panels.version
+[SQL: SELECT panels.id AS panels_id, panels.name AS panels_name, panels.url AS panels_url, panels.api_token AS panels_api_token, panels.sub_url AS panels_sub_url, panels.inbound_ids AS panels_inbound_ids, panels.status AS panels_status, panels.version AS panels_version, panels.total_sent AS panels_total_sent, panels.total_recv AS panels_total_recv, panels.users_count AS panels_users_count, panels.capacity AS panels_capacity, panels.is_full AS panels_is_full, panels.is_active AS panels_is_active, panels.created_at AS panels_created_at, panels.updated_at AS panels_updated_at, panels.last_check AS panels_last_check 
+FROM panels 
+WHERE panels.name = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('آلمان', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-08-22 20:20:00 - telegram_bot - ERROR - Error creating panel: (sqlite3.OperationalError) no such column: panels.version
+[SQL: SELECT panels.id AS panels_id, panels.name AS panels_name, panels.url AS panels_url, panels.api_token AS panels_api_token, panels.sub_url AS panels_sub_url, panels.inbound_ids AS panels_inbound_ids, panels.status AS panels_status, panels.version AS panels_version, panels.total_sent AS panels_total_sent, panels.total_recv AS panels_total_recv, panels.users_count AS panels_users_count, panels.capacity AS panels_capacity, panels.is_full AS panels_is_full, panels.is_active AS panels_is_active, panels.created_at AS panels_created_at, panels.updated_at AS panels_updated_at, panels.last_check AS panels_last_check 
+FROM panels 
+WHERE panels.name = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('آلمان', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-08-22 20:20:08 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 20:20:08 - telegram_bot - ERROR - Error getting panels: (sqlite3.OperationalError) no such column: panels.version
+[SQL: SELECT panels.id AS panels_id, panels.name AS panels_name, panels.url AS panels_url, panels.api_token AS panels_api_token, panels.sub_url AS panels_sub_url, panels.inbound_ids AS panels_inbound_ids, panels.status AS panels_status, panels.version AS panels_version, panels.total_sent AS panels_total_sent, panels.total_recv AS panels_total_recv, panels.users_count AS panels_users_count, panels.capacity AS panels_capacity, panels.is_full AS panels_is_full, panels.is_active AS panels_is_active, panels.created_at AS panels_created_at, panels.updated_at AS panels_updated_at, panels.last_check AS panels_last_check 
+FROM panels]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-08-22 20:20:10 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 20:20:10 - telegram_bot - ERROR - Error getting panels: (sqlite3.OperationalError) no such column: panels.version
+[SQL: SELECT panels.id AS panels_id, panels.name AS panels_name, panels.url AS panels_url, panels.api_token AS panels_api_token, panels.sub_url AS panels_sub_url, panels.inbound_ids AS panels_inbound_ids, panels.status AS panels_status, panels.version AS panels_version, panels.total_sent AS panels_total_sent, panels.total_recv AS panels_total_recv, panels.users_count AS panels_users_count, panels.capacity AS panels_capacity, panels.is_full AS panels_is_full, panels.is_active AS panels_is_active, panels.created_at AS panels_created_at, panels.updated_at AS panels_updated_at, panels.last_check AS panels_last_check 
+FROM panels]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-08-22 20:20:36 - telegram_bot - INFO - Shutting down application...
+2026-08-22 20:20:36 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-22 20:20:36 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-22 20:20:36 - telegram_bot - INFO - Telegram application shut down
+2026-08-22 20:21:00 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-22 20:21:00 - telegram_bot - INFO - Debug mode: True
+2026-08-22 20:21:00 - telegram_bot - INFO - Telegram application initialized
+2026-08-22 20:21:00 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-22 20:21:00 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-22 20:21:25 - telegram_bot - INFO - Panel created: آلمان (ID: 1)
+2026-08-22 20:23:28 - telegram_bot - INFO - Shutting down application...
+2026-08-22 20:23:28 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-22 20:23:28 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-22 20:23:28 - telegram_bot - INFO - Telegram application shut down
+2026-08-22 20:30:53 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-22 20:30:53 - telegram_bot - INFO - Debug mode: True
+2026-08-22 20:30:53 - telegram_bot - INFO - Telegram application initialized
+2026-08-22 20:30:53 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-22 20:30:53 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-22 20:30:55 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 20:30:58 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 20:31:04 - telegram_bot - INFO - Panel deleted: ID 1
+2026-08-22 20:31:18 - telegram_bot - INFO - Panel created: آلمان (ID: 1)
+2026-08-22 20:31:19 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 1.5942940873280969, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 841015296, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5581762560, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 65541}, 'diskTraffic': {'read': 1188972544, 'write': 180932020224}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1749592, 'loads': [0.04, 0.04, 0.05], 'tcpCount': 126, 'udpCount': 34, 'netIO': {'up': 78755, 'down': 75773, 'pktUp': 55, 'pktDown': 62}, 'netTraffic': {'sent': 193782056313, 'recv': 192990053378, 'pktSent': 125936107, 'pktRecv': 171332762}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 27, 'mem': 136364032, 'uptime': 215616}}}
+2026-08-22 20:31:32 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 20:31:33 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 1.271148728592534, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 841015296, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5581762560, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 151644}, 'diskTraffic': {'read': 1188972544, 'write': 180935567360}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1749606, 'loads': [0.03, 0.04, 0.05], 'tcpCount': 123, 'udpCount': 33, 'netIO': {'up': 79041, 'down': 76197, 'pktUp': 59, 'pktDown': 67}, 'netTraffic': {'sent': 193783831755, 'recv': 192991811065, 'pktSent': 125937357, 'pktRecv': 171334082}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 28, 'mem': 137506816, 'uptime': 215630}}}
+2026-08-22 20:31:35 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 1.6388677804267586, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 841027584, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5581762560, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 86000}, 'diskTraffic': {'read': 1188972544, 'write': 180935739392}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1749608, 'loads': [0.03, 0.04, 0.05], 'tcpCount': 124, 'udpCount': 33, 'netIO': {'up': 186342, 'down': 181889, 'pktUp': 138, 'pktDown': 132}, 'netTraffic': {'sent': 193784204507, 'recv': 192992174908, 'pktSent': 125937635, 'pktRecv': 171334347}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 29, 'mem': 137506816, 'uptime': 215632}}}
+2026-08-22 20:34:13 - telegram_bot - INFO - Shutting down application...
+2026-08-22 20:34:13 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-22 20:34:13 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-22 20:34:13 - telegram_bot - INFO - Telegram application shut down
+2026-08-22 20:36:20 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-22 20:36:20 - telegram_bot - INFO - Debug mode: True
+2026-08-22 20:36:20 - telegram_bot - INFO - Telegram application initialized
+2026-08-22 20:36:20 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-22 20:36:20 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-22 20:36:21 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 20:39:10 - telegram_bot - INFO - Shutting down application...
+2026-08-22 20:39:10 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-22 20:39:10 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-22 20:39:10 - telegram_bot - INFO - Telegram application shut down
+2026-08-22 20:41:44 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-22 20:41:44 - telegram_bot - INFO - Debug mode: True
+2026-08-22 20:41:44 - telegram_bot - INFO - Telegram application initialized
+2026-08-22 20:41:44 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-22 20:41:44 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-22 20:41:45 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 20:41:55 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 20:41:57 - telegram_bot - ERROR - HTTP error fetching inbounds: Client error '404 Not Found' for url 'https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2026-08-22 20:42:08 - telegram_bot - ERROR - HTTP error fetching inbounds: Client error '404 Not Found' for url 'https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2026-08-22 20:42:11 - telegram_bot - ERROR - HTTP error fetching inbounds: Client error '404 Not Found' for url 'https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2026-08-22 20:42:56 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 20:43:00 - telegram_bot - INFO - Panel deleted: ID 1
+2026-08-22 20:43:17 - telegram_bot - INFO - Panel created: آلمان (ID: 1)
+2026-08-22 20:43:18 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 3.0773880696172036, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 828870656, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5581930496, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 176114}, 'diskTraffic': {'read': 1188972544, 'write': 181031208960}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1750312, 'loads': [0.08, 0.05, 0.03], 'tcpCount': 219, 'udpCount': 76, 'netIO': {'up': 188131, 'down': 186362, 'pktUp': 169, 'pktDown': 188}, 'netTraffic': {'sent': 193962025239, 'recv': 193166869822, 'pktSent': 126086489, 'pktRecv': 171529190}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 30, 'mem': 133451776, 'uptime': 216336}}}
+2026-08-22 20:43:27 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 2.3448208245549362, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 830099456, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5581934592, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 73697}, 'diskTraffic': {'read': 1188972544, 'write': 181031643136}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1750320, 'loads': [0.08, 0.05, 0.03], 'tcpCount': 215, 'udpCount': 75, 'netIO': {'up': 232113, 'down': 225156, 'pktUp': 187, 'pktDown': 238}, 'netTraffic': {'sent': 193963668508, 'recv': 193168478870, 'pktSent': 126087774, 'pktRecv': 171530721}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 35, 'mem': 133672960, 'uptime': 216344}}}
+2026-08-22 20:43:28 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 2.203172329997444, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 830873600, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5581934592, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 1542981}, 'diskTraffic': {'read': 1188972544, 'write': 181034731520}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1750322, 'loads': [0.07, 0.05, 0.03], 'tcpCount': 208, 'udpCount': 75, 'netIO': {'up': 191959, 'down': 189125, 'pktUp': 122, 'pktDown': 132}, 'netTraffic': {'sent': 193964052729, 'recv': 193168857417, 'pktSent': 126088019, 'pktRecv': 171530987}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 31, 'mem': 133672960, 'uptime': 216346}}}
+2026-08-22 20:43:30 - telegram_bot - ERROR - HTTP error fetching inbounds: Client error '404 Not Found' for url 'https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2026-08-22 20:43:34 - telegram_bot - ERROR - HTTP error fetching inbounds: Client error '404 Not Found' for url 'https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2026-08-22 20:45:16 - telegram_bot - INFO - Shutting down application...
+2026-08-22 20:45:16 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-22 20:45:16 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-22 20:45:16 - telegram_bot - INFO - Telegram application shut down
+2026-08-22 20:48:47 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-22 20:48:47 - telegram_bot - INFO - Debug mode: True
+2026-08-22 20:48:47 - telegram_bot - INFO - Telegram application initialized
+2026-08-22 20:48:47 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-22 20:48:47 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-22 20:48:48 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 20:49:04 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 2.2802683517826847, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 841502720, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5581946880, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 36877}, 'diskTraffic': {'read': 1188972544, 'write': 181086103552}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1750658, 'loads': [0.08, 0.05, 0.02], 'tcpCount': 177, 'udpCount': 68, 'netIO': {'up': 334581, 'down': 332699, 'pktUp': 152, 'pktDown': 350}, 'netTraffic': {'sent': 194079338040, 'recv': 193281925446, 'pktSent': 126176701, 'pktRecv': 171653361}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 26, 'mem': 121700352, 'uptime': 216682}}}
+2026-08-22 20:49:12 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 20:49:15 - telegram_bot - INFO - Fetching inbounds from: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 20:49:15 - telegram_bot - WARNING - Inbounds endpoint not found: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 20:49:22 - telegram_bot - INFO - Fetching inbounds from: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 20:49:22 - telegram_bot - WARNING - Inbounds endpoint not found: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 20:49:37 - telegram_bot - INFO - Fetching inbounds from: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 20:49:58 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 1.187107331731922, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 841125888, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5581963264, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 81888}, 'diskTraffic': {'read': 1188972544, 'write': 181094033408}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1750712, 'loads': [0.03, 0.04, 0.02], 'tcpCount': 184, 'udpCount': 64, 'netIO': {'up': 273780, 'down': 258454, 'pktUp': 246, 'pktDown': 330}, 'netTraffic': {'sent': 194101156884, 'recv': 193303340045, 'pktSent': 126191443, 'pktRecv': 171675027}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 30, 'mem': 135426048, 'uptime': 216736}}}
+2026-08-22 20:51:49 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 20:52:45 - telegram_bot - INFO - Fetching inbounds from: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 20:52:45 - telegram_bot - WARNING - Inbounds endpoint not found: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 20:52:46 - telegram_bot - INFO - Fetching inbounds from: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 20:52:46 - telegram_bot - WARNING - Inbounds endpoint not found: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 20:53:00 - telegram_bot - INFO - Fetching inbounds from: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 20:55:12 - telegram_bot - INFO - Shutting down application...
+2026-08-22 20:55:12 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-22 20:55:12 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-22 20:55:12 - telegram_bot - INFO - Telegram application shut down
+2026-08-22 20:56:40 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-22 20:56:40 - telegram_bot - INFO - Debug mode: True
+2026-08-22 20:56:40 - telegram_bot - INFO - Telegram application initialized
+2026-08-22 20:56:40 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-22 20:56:40 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-22 20:56:42 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 20:56:45 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 20:56:55 - telegram_bot - INFO - Fetching inbounds from: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 20:57:23 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 20:57:39 - telegram_bot - INFO - Fetching inbounds from: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 20:57:49 - telegram_bot - INFO - Admin categories page accessed
+2026-08-22 20:57:50 - telegram_bot - INFO - Admin services page accessed
+2026-08-22 20:57:51 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 20:58:05 - telegram_bot - INFO - Fetching inbounds from: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 20:58:12 - telegram_bot - INFO - Shutting down application...
+2026-08-22 20:58:12 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-22 20:58:12 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-22 20:58:12 - telegram_bot - INFO - Telegram application shut down
+2026-08-22 21:00:48 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-22 21:00:48 - telegram_bot - INFO - Debug mode: True
+2026-08-22 21:00:48 - telegram_bot - INFO - Telegram application initialized
+2026-08-22 21:00:48 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-22 21:00:48 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-22 21:00:51 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 21:01:13 - telegram_bot - INFO - Fetching inbounds from: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 21:01:38 - telegram_bot - INFO - Admin categories page accessed
+2026-08-22 21:01:39 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 21:01:41 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 21:01:52 - telegram_bot - INFO - Fetching inbounds from: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 21:02:38 - telegram_bot - INFO - Shutting down application...
+2026-08-22 21:02:38 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-22 21:02:38 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-22 21:02:38 - telegram_bot - INFO - Telegram application shut down
+2026-08-22 21:03:22 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-22 21:03:22 - telegram_bot - INFO - Debug mode: True
+2026-08-22 21:03:22 - telegram_bot - INFO - Telegram application initialized
+2026-08-22 21:03:22 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-22 21:03:22 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-22 21:03:31 - telegram_bot - INFO - Fetching inbounds from: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 21:03:35 - telegram_bot - INFO - Panel created: آلمان (ID: 1)
+2026-08-22 21:03:37 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 2.21547815107449, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 870420480, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5582508032, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 94196}, 'diskTraffic': {'read': 1188972544, 'write': 181351065600}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1751530, 'loads': [0.25, 0.22, 0.09], 'tcpCount': 227, 'udpCount': 87, 'netIO': {'up': 376786, 'down': 374668, 'pktUp': 280, 'pktDown': 387}, 'netTraffic': {'sent': 194415187287, 'recv': 193612834878, 'pktSent': 126416298, 'pktRecv': 172001815}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 32, 'mem': 134316032, 'uptime': 217554}}}
+2026-08-22 21:03:42 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 21:03:46 - telegram_bot - INFO - Shutting down application...
+2026-08-22 21:03:46 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-22 21:03:46 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-22 21:03:46 - telegram_bot - INFO - Telegram application shut down
+2026-08-22 21:13:01 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-22 21:13:01 - telegram_bot - INFO - Debug mode: True
+2026-08-22 21:13:01 - telegram_bot - INFO - Telegram application initialized
+2026-08-22 21:13:01 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-22 21:13:01 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-22 21:13:01 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 21:13:03 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 21:13:04 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 21:13:06 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 21:13:15 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 21:13:18 - telegram_bot - INFO - Admin services page accessed
+2026-08-22 21:13:19 - telegram_bot - INFO - Admin categories page accessed
+2026-08-22 21:13:20 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-22 21:13:21 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 21:13:28 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 21:13:29 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 21:13:29 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 21:13:30 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 21:13:30 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 21:13:31 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 21:13:45 - telegram_bot - INFO - Fetching inbounds from: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 21:18:22 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-22 21:18:22 - telegram_bot - INFO - Debug mode: True
+2026-08-22 21:18:22 - telegram_bot - INFO - Telegram application initialized
+2026-08-22 21:18:22 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-22 21:18:22 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-22 21:18:22 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 21:18:30 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 3.8465172367208993, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 817008640, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5582704640, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 61406}, 'diskTraffic': {'read': 1188988928, 'write': 181477345280}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1752424, 'loads': [0.12, 0.08, 0.08], 'tcpCount': 113, 'udpCount': 37, 'netIO': {'up': 179383, 'down': 178936, 'pktUp': 179, 'pktDown': 221}, 'netTraffic': {'sent': 194684908538, 'recv': 193878133217, 'pktSent': 126634691, 'pktRecv': 172288101}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 26, 'mem': 119771136, 'uptime': 218448}}}
+2026-08-22 21:18:31 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 3.8465172367208993, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 817008640, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5582704640, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 61406}, 'diskTraffic': {'read': 1188988928, 'write': 181477345280}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1752424, 'loads': [0.12, 0.08, 0.08], 'tcpCount': 113, 'udpCount': 37, 'netIO': {'up': 179383, 'down': 178936, 'pktUp': 179, 'pktDown': 221}, 'netTraffic': {'sent': 194684908538, 'recv': 193878133217, 'pktSent': 126634691, 'pktRecv': 172288101}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 26, 'mem': 119771136, 'uptime': 218448}}}
+2026-08-22 21:20:13 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 1.9749546121624704, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 838361088, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5582725120, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 32797}, 'diskTraffic': {'read': 1188988928, 'write': 181485611008}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1752526, 'loads': [0.02, 0.06, 0.07], 'tcpCount': 158, 'udpCount': 38, 'netIO': {'up': 609690, 'down': 589353, 'pktUp': 489, 'pktDown': 592}, 'netTraffic': {'sent': 194725278951, 'recv': 193918113876, 'pktSent': 126664295, 'pktRecv': 172330146}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 28, 'mem': 136212480, 'uptime': 218550}}}
+2026-08-22 21:20:14 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 2.172932469417117, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 838615040, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5582725120, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 131091}, 'diskTraffic': {'read': 1188988928, 'write': 181485873152}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1752528, 'loads': [0.02, 0.05, 0.07], 'tcpCount': 172, 'udpCount': 46, 'netIO': {'up': 265049, 'down': 253820, 'pktUp': 307, 'pktDown': 367}, 'netTraffic': {'sent': 194725808972, 'recv': 193918621441, 'pktSent': 126664910, 'pktRecv': 172330881}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 29, 'mem': 136372224, 'uptime': 218552}}}
+2026-08-22 21:20:52 - telegram_bot - INFO - Shutting down application...
+2026-08-22 21:20:52 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-22 21:20:52 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-22 21:20:52 - telegram_bot - INFO - Telegram application shut down
+2026-08-22 21:31:35 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-22 21:31:35 - telegram_bot - INFO - Debug mode: True
+2026-08-22 21:31:35 - telegram_bot - INFO - Telegram application initialized
+2026-08-22 21:31:36 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-22 21:31:36 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-22 21:31:36 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 21:31:39 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 21:31:43 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 3.6829786632056165, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 850526208, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5582848000, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 65542}, 'diskTraffic': {'read': 1188988928, 'write': 181579106304}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1753216, 'loads': [0.05, 0.06, 0.05], 'tcpCount': 137, 'udpCount': 58, 'netIO': {'up': 308164, 'down': 298542, 'pktUp': 222, 'pktDown': 295}, 'netTraffic': {'sent': 194985438379, 'recv': 194173815573, 'pktSent': 126854884, 'pktRecv': 172596953}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 26, 'mem': 129187840, 'uptime': 219240}}}
+2026-08-22 21:31:45 - telegram_bot - INFO - Fetching inbounds from: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 21:31:45 - telegram_bot - WARNING - Inbounds endpoint not found: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 21:31:46 - telegram_bot - INFO - Fetching inbounds from: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 21:31:46 - telegram_bot - WARNING - Inbounds endpoint not found: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 21:31:54 - telegram_bot - INFO - Fetching inbounds from: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 21:32:08 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 2.093602967039888, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 834560000, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5582860288, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 409760}, 'diskTraffic': {'read': 1188988928, 'write': 181581531136}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1753242, 'loads': [0.03, 0.05, 0.05], 'tcpCount': 155, 'udpCount': 55, 'netIO': {'up': 236556, 'down': 225180, 'pktUp': 237, 'pktDown': 249}, 'netTraffic': {'sent': 194991807468, 'recv': 194180078440, 'pktSent': 126859736, 'pktRecv': 172603023}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 29, 'mem': 129560576, 'uptime': 219266}}}
+2026-08-22 21:32:11 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 1.95547182567164, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 834785280, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5582860288, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 98250}, 'diskTraffic': {'read': 1188988928, 'write': 181581727744}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1753244, 'loads': [0.03, 0.05, 0.05], 'tcpCount': 159, 'udpCount': 56, 'netIO': {'up': 268844, 'down': 268384, 'pktUp': 225, 'pktDown': 307}, 'netTraffic': {'sent': 194992345451, 'recv': 194180615503, 'pktSent': 126860187, 'pktRecv': 172603638}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 30, 'mem': 129560576, 'uptime': 219268}}}
+2026-08-22 21:32:12 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 1.933447592901139, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 824320000, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5582860288, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 135218}, 'diskTraffic': {'read': 1188988928, 'write': 181581998080}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1753246, 'loads': [0.03, 0.05, 0.05], 'tcpCount': 161, 'udpCount': 53, 'netIO': {'up': 345453, 'down': 335071, 'pktUp': 271, 'pktDown': 323}, 'netTraffic': {'sent': 194993036102, 'recv': 194181285397, 'pktSent': 126860730, 'pktRecv': 172604284}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 31, 'mem': 129560576, 'uptime': 219270}}}
+2026-08-22 21:32:15 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 21:32:17 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 1.9864582571949123, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 824598528, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5582860288, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 24556}, 'diskTraffic': {'read': 1188988928, 'write': 181582268416}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1753250, 'loads': [0.03, 0.05, 0.05], 'tcpCount': 169, 'udpCount': 53, 'netIO': {'up': 202823, 'down': 197023, 'pktUp': 148, 'pktDown': 176}, 'netTraffic': {'sent': 194995078558, 'recv': 194183274373, 'pktSent': 126862362, 'pktRecv': 172606424}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 39, 'mem': 129560576, 'uptime': 219274}}}
+2026-08-22 21:32:41 - telegram_bot - INFO - Fetching inbounds from: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 21:32:43 - telegram_bot - INFO - Panel created: آلمان12 (ID: 2)
+2026-08-22 21:32:44 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 1.4784955356991747, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 824504320, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5582868480, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 180241}, 'diskTraffic': {'read': 1188988928, 'write': 181588453376}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1753278, 'loads': [0.07, 0.06, 0.05], 'tcpCount': 172, 'udpCount': 50, 'netIO': {'up': 262506, 'down': 255163, 'pktUp': 170, 'pktDown': 223}, 'netTraffic': {'sent': 195004651535, 'recv': 194192602861, 'pktSent': 126869443, 'pktRecv': 172615981}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 33, 'mem': 133140480, 'uptime': 219302}}}
+2026-08-22 21:33:58 - telegram_bot - INFO - Shutting down application...
+2026-08-22 21:33:58 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-22 21:33:58 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-22 21:33:58 - telegram_bot - INFO - Telegram application shut down
+2026-08-22 21:42:40 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-22 21:42:40 - telegram_bot - INFO - Debug mode: True
+2026-08-22 21:42:40 - telegram_bot - INFO - Telegram application initialized
+2026-08-22 21:42:40 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-22 21:42:40 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-22 21:42:52 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 21:42:56 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 1.6793480387049065, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 814645248, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5583048704, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 28676}, 'diskTraffic': {'read': 1188988928, 'write': 181673535488}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1753890, 'loads': [0.07, 0.04, 0.02], 'tcpCount': 119, 'udpCount': 48, 'netIO': {'up': 56226, 'down': 55285, 'pktUp': 44, 'pktDown': 75}, 'netTraffic': {'sent': 195186347083, 'recv': 194369118742, 'pktSent': 127012025, 'pktRecv': 172812941}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 29, 'mem': 131067904, 'uptime': 219914}}}
+2026-08-22 21:42:57 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 1.6793480387049065, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 814645248, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5583048704, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 28676}, 'diskTraffic': {'read': 1188988928, 'write': 181673535488}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1753890, 'loads': [0.07, 0.04, 0.02], 'tcpCount': 119, 'udpCount': 48, 'netIO': {'up': 56226, 'down': 55285, 'pktUp': 44, 'pktDown': 75}, 'netTraffic': {'sent': 195186347083, 'recv': 194369118742, 'pktSent': 127012025, 'pktRecv': 172812941}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 29, 'mem': 131067904, 'uptime': 219914}}}
+2026-08-22 21:42:58 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 1.7778020963531582, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 814866432, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5583056896, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 315581}, 'diskTraffic': {'read': 1188988928, 'write': 181674166272}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1753892, 'loads': [0.06, 0.04, 0.02], 'tcpCount': 125, 'udpCount': 49, 'netIO': {'up': 131555, 'down': 124446, 'pktUp': 129, 'pktDown': 197}, 'netTraffic': {'sent': 195186610037, 'recv': 194369367486, 'pktSent': 127012283, 'pktRecv': 172813335}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 28, 'mem': 131395584, 'uptime': 219916}}}
+2026-08-22 21:42:59 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 1.7778020963531582, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 814866432, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5583056896, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 315581}, 'diskTraffic': {'read': 1188988928, 'write': 181674166272}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1753892, 'loads': [0.06, 0.04, 0.02], 'tcpCount': 125, 'udpCount': 49, 'netIO': {'up': 131555, 'down': 124446, 'pktUp': 129, 'pktDown': 197}, 'netTraffic': {'sent': 195186610037, 'recv': 194369367486, 'pktSent': 127012283, 'pktRecv': 172813335}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 28, 'mem': 131395584, 'uptime': 219916}}}
+2026-08-22 21:43:00 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 1.695589286996083, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 815353856, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5583056896, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 200605}, 'diskTraffic': {'read': 1188988928, 'write': 181674567680}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1753894, 'loads': [0.06, 0.04, 0.02], 'tcpCount': 132, 'udpCount': 47, 'netIO': {'up': 115188, 'down': 108945, 'pktUp': 131, 'pktDown': 159}, 'netTraffic': {'sent': 195186840527, 'recv': 194369585485, 'pktSent': 127012547, 'pktRecv': 172813655}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 30, 'mem': 131395584, 'uptime': 219918}}}
+2026-08-22 21:43:01 - telegram_bot - INFO - Fetching inbounds from: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 21:43:02 - telegram_bot - WARNING - Inbounds endpoint not found: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 21:43:03 - telegram_bot - INFO - Fetching inbounds from: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 21:43:03 - telegram_bot - WARNING - Inbounds endpoint not found: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 21:43:06 - telegram_bot - INFO - Panel updated: آلمان (ID: 1)
+2026-08-22 21:43:37 - telegram_bot - INFO - Panel deleted: ID 1
+2026-08-22 21:43:39 - telegram_bot - INFO - Panel deleted: ID 2
+2026-08-22 21:43:49 - telegram_bot - INFO - Fetching inbounds from: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 21:43:52 - telegram_bot - INFO - Panel created: آلمان (ID: 1)
+2026-08-22 21:43:53 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 0.9411532887976191, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 832118784, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5583069184, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 81904}, 'diskTraffic': {'read': 1188988928, 'write': 181682710528}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1753946, 'loads': [0.02, 0.03, 0.02], 'tcpCount': 183, 'udpCount': 46, 'netIO': {'up': 186316, 'down': 179429, 'pktUp': 146, 'pktDown': 232}, 'netTraffic': {'sent': 195191692597, 'recv': 194374239473, 'pktSent': 127017462, 'pktRecv': 172820499}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 37, 'mem': 133464064, 'uptime': 219970}}}
+2026-08-22 21:48:43 - telegram_bot - INFO - Panel deleted: ID 1
+2026-08-22 21:48:54 - telegram_bot - INFO - Fetching inbounds from: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 21:48:56 - telegram_bot - INFO - Panel created: آلمان (ID: 1)
+2026-08-22 21:48:57 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 0.6791552975420376, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 821960704, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5582856192, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 69612}, 'diskTraffic': {'read': 1188988928, 'write': 181717960704}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1754250, 'loads': [0.01, 0.02, 0], 'tcpCount': 129, 'udpCount': 40, 'netIO': {'up': 182762, 'down': 177159, 'pktUp': 104, 'pktDown': 204}, 'netTraffic': {'sent': 195234923492, 'recv': 194415615046, 'pktSent': 127056382, 'pktRecv': 172875749}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 30, 'mem': 124604416, 'uptime': 220274}}}
+2026-08-22 21:51:55 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 21:52:02 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 21:52:11 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 21:52:59 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 21:53:08 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 21:53:14 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 21:54:03 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 21:55:54 - telegram_bot - INFO - Fetching inbounds from: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 21:56:58 - telegram_bot - INFO - Shutting down application...
+2026-08-22 21:56:58 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-22 21:56:58 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-22 21:56:58 - telegram_bot - INFO - Telegram application shut down
+2026-08-22 21:57:59 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-22 21:57:59 - telegram_bot - INFO - Debug mode: True
+2026-08-22 21:57:59 - telegram_bot - INFO - Telegram application initialized
+2026-08-22 21:57:59 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-22 21:57:59 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-22 21:58:02 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 21:58:37 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 21:59:55 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 22:00:36 - telegram_bot - INFO - Shutting down application...
+2026-08-22 22:00:36 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-22 22:00:36 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-22 22:00:36 - telegram_bot - INFO - Telegram application shut down
+2026-08-22 22:02:49 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-22 22:02:49 - telegram_bot - INFO - Debug mode: True
+2026-08-22 22:02:49 - telegram_bot - INFO - Telegram application initialized
+2026-08-22 22:02:50 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-22 22:02:50 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-22 22:02:53 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 22:02:57 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 22:05:11 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 22:05:13 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 22:05:14 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 22:05:14 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 22:05:15 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 22:05:57 - telegram_bot - INFO - Fetching inbounds from: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 22:06:42 - telegram_bot - INFO - Shutting down application...
+2026-08-22 22:06:42 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-22 22:06:42 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-22 22:06:42 - telegram_bot - INFO - Telegram application shut down
+2026-08-22 22:07:36 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-22 22:07:36 - telegram_bot - INFO - Debug mode: True
+2026-08-22 22:07:36 - telegram_bot - INFO - Telegram application initialized
+2026-08-22 22:07:36 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-22 22:07:36 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-22 22:07:37 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 22:07:46 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 22:07:50 - telegram_bot - INFO - Panel deleted: ID 1
+2026-08-22 22:08:01 - telegram_bot - INFO - Fetching inbounds from: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 22:08:03 - telegram_bot - INFO - Panel created: آلمان (ID: 1)
+2026-08-22 22:08:04 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 0.7571879865998501, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 853417984, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5591441408, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 106485}, 'diskTraffic': {'read': 1188988928, 'write': 181857150976}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1755398, 'loads': [0.13, 0.04, 0.01], 'tcpCount': 177, 'udpCount': 64, 'netIO': {'up': 5146, 'down': 3439, 'pktUp': 25, 'pktDown': 25}, 'netTraffic': {'sent': 195649653610, 'recv': 194822149032, 'pktSent': 127244645, 'pktRecv': 173144160}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 27, 'mem': 139948032, 'uptime': 221422}}}
+2026-08-22 22:11:19 - telegram_bot - INFO - Shutting down application...
+2026-08-22 22:11:19 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-22 22:11:19 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-22 22:11:19 - telegram_bot - INFO - Telegram application shut down
+2026-08-22 22:12:01 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-22 22:12:01 - telegram_bot - INFO - Debug mode: True
+2026-08-22 22:12:01 - telegram_bot - INFO - Telegram application initialized
+2026-08-22 22:12:01 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-22 22:12:01 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-22 22:12:04 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 6.113059080728759, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 825573376, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5591465984, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 8190}, 'diskTraffic': {'read': 1188988928, 'write': 181884200960}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1755638, 'loads': [0, 0.01, 0], 'tcpCount': 121, 'udpCount': 36, 'netIO': {'up': 83987, 'down': 80713, 'pktUp': 74, 'pktDown': 112}, 'netTraffic': {'sent': 195671661705, 'recv': 194843202094, 'pktSent': 127258767, 'pktRecv': 173170399}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 26, 'mem': 128212992, 'uptime': 221662}}}
+2026-08-22 22:12:07 - telegram_bot - INFO - Panel deleted: ID 1
+2026-08-22 22:12:15 - telegram_bot - INFO - Fetching inbounds from: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 22:12:18 - telegram_bot - INFO - Panel created: آلمان (ID: 1)
+2026-08-22 22:12:19 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 1.0831407314819321, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 828096512, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5591465984, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 245790}, 'diskTraffic': {'read': 1188988928, 'write': 181885462528}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1755652, 'loads': [0, 0.01, 0], 'tcpCount': 133, 'udpCount': 36, 'netIO': {'up': 8692, 'down': 3588, 'pktUp': 24, 'pktDown': 25}, 'netTraffic': {'sent': 195672777593, 'recv': 194844268845, 'pktSent': 127259525, 'pktRecv': 173171709}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 28, 'mem': 128225280, 'uptime': 221676}}}
+2026-08-22 22:13:46 - telegram_bot - INFO - Shutting down application...
+2026-08-22 22:13:46 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-22 22:13:46 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-22 22:13:46 - telegram_bot - INFO - Telegram application shut down
+2026-08-22 22:14:22 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-22 22:14:22 - telegram_bot - INFO - Debug mode: True
+2026-08-22 22:14:22 - telegram_bot - INFO - Telegram application initialized
+2026-08-22 22:14:22 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-22 22:14:22 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-22 22:14:26 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 22:14:35 - telegram_bot - INFO - Panel deleted: ID 1
+2026-08-22 22:14:44 - telegram_bot - INFO - Fetching inbounds from: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 22:14:46 - telegram_bot - INFO - Panel created: آلمان (ID: 1)
+2026-08-22 22:14:47 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 0.8477210693626434, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 833478656, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5591470080, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 24570}, 'diskTraffic': {'read': 1188988928, 'write': 181903198208}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1755800, 'loads': [0.04, 0.01, 0], 'tcpCount': 128, 'udpCount': 36, 'netIO': {'up': 37369, 'down': 35336, 'pktUp': 67, 'pktDown': 45}, 'netTraffic': {'sent': 195692645898, 'recv': 194863323190, 'pktSent': 127271276, 'pktRecv': 173193594}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 30, 'mem': 130555904, 'uptime': 221824}}}
+2026-08-22 22:15:16 - telegram_bot - INFO - Panel deleted: ID 1
+2026-08-22 22:15:58 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 22:17:20 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 22:17:28 - telegram_bot - INFO - Fetching inbounds from: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 22:17:31 - telegram_bot - INFO - Panel created: آلمان (ID: 1)
+2026-08-22 22:17:32 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 1.428167599357827, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 843780096, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5591490560, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 139264}, 'diskTraffic': {'read': 1188988928, 'write': 181923481600}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1755966, 'loads': [0, 0.01, 0], 'tcpCount': 162, 'udpCount': 51, 'netIO': {'up': 332243, 'down': 325184, 'pktUp': 303, 'pktDown': 430}, 'netTraffic': {'sent': 195713527743, 'recv': 194883332553, 'pktSent': 127285752, 'pktRecv': 173218323}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 27, 'mem': 138108928, 'uptime': 221990}}}
+2026-08-22 22:18:02 - telegram_bot - INFO - Panel deleted: ID 1
+2026-08-22 22:19:38 - telegram_bot - INFO - Panel created: آلمان (ID: 1)
+2026-08-22 22:19:39 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 1.0260713564157724, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 829894656, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5591494656, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 65548}, 'diskTraffic': {'read': 1188988928, 'write': 181937506304}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1756092, 'loads': [0, 0, 0], 'tcpCount': 122, 'udpCount': 52, 'netIO': {'up': 313613, 'down': 287963, 'pktUp': 295, 'pktDown': 437}, 'netTraffic': {'sent': 195731601183, 'recv': 194900682518, 'pktSent': 127297974, 'pktRecv': 173239355}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 26, 'mem': 134754304, 'uptime': 222116}}}
+2026-08-22 22:21:09 - telegram_bot - INFO - Shutting down application...
+2026-08-22 22:21:09 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-22 22:21:09 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-22 22:21:09 - telegram_bot - INFO - Telegram application shut down
+2026-08-22 22:22:22 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-22 22:22:22 - telegram_bot - INFO - Debug mode: True
+2026-08-22 22:22:22 - telegram_bot - INFO - Telegram application initialized
+2026-08-22 22:22:22 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-22 22:22:22 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-22 22:22:24 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 22:22:31 - telegram_bot - INFO - Panel deleted: ID 1
+2026-08-22 22:22:40 - telegram_bot - INFO - Fetching inbounds from: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 22:22:42 - telegram_bot - INFO - Panel created: آلمان (ID: 1)
+2026-08-22 22:22:43 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 0.9539597842141739, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 827813888, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5591511040, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 49116}, 'diskTraffic': {'read': 1188988928, 'write': 181958608896}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1756276, 'loads': [0, 0, 0], 'tcpCount': 112, 'udpCount': 41, 'netIO': {'up': 127475, 'down': 119672, 'pktUp': 101, 'pktDown': 152}, 'netTraffic': {'sent': 195748157296, 'recv': 194916325425, 'pktSent': 127308978, 'pktRecv': 173258736}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 27, 'mem': 131358720, 'uptime': 222300}}}
+2026-08-22 22:26:14 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 22:31:02 - telegram_bot - INFO - Shutting down application...
+2026-08-22 22:31:02 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-22 22:31:02 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-22 22:31:02 - telegram_bot - INFO - Telegram application shut down
+2026-08-22 22:32:52 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-22 22:32:52 - telegram_bot - INFO - Debug mode: True
+2026-08-22 22:32:52 - telegram_bot - INFO - Telegram application initialized
+2026-08-22 22:32:52 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-22 22:32:52 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-22 22:32:54 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 22:32:58 - telegram_bot - INFO - Panel deleted: ID 1
+2026-08-22 22:33:08 - telegram_bot - INFO - Fetching inbounds from: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 22:33:11 - telegram_bot - INFO - Panel created: آلمان (ID: 1)
+2026-08-22 22:33:12 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 0.8518863917144157, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 829202432, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5591547904, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 118750}, 'diskTraffic': {'read': 1188988928, 'write': 182019459072}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1756906, 'loads': [0, 0, 0], 'tcpCount': 83, 'udpCount': 12, 'netIO': {'up': 5073, 'down': 1018, 'pktUp': 10, 'pktDown': 11}, 'netTraffic': {'sent': 195769552445, 'recv': 194935572402, 'pktSent': 127328890, 'pktRecv': 173287517}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 27, 'mem': 136507392, 'uptime': 222930}}}
+2026-08-22 22:35:28 - telegram_bot - INFO - Shutting down application...
+2026-08-22 22:35:28 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-22 22:35:28 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-22 22:35:28 - telegram_bot - INFO - Telegram application shut down
+2026-08-22 22:37:01 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-22 22:37:01 - telegram_bot - INFO - Debug mode: True
+2026-08-22 22:37:01 - telegram_bot - INFO - Telegram application initialized
+2026-08-22 22:37:01 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-22 22:37:01 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-22 22:37:02 - telegram_bot - INFO - Admin panels page accessed
+2026-08-22 22:37:16 - telegram_bot - INFO - Panel deleted: ID 1
+2026-08-22 22:37:25 - telegram_bot - INFO - Fetching inbounds from: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-22 22:37:27 - telegram_bot - INFO - Creating panel with inbound_details: [{'id': 2, 'remark': '🇩🇪GE🚀', 'port': 2087, 'protocol': 'vless', 'active_clients': 15}]
+2026-08-22 22:37:27 - telegram_bot - INFO - Panel created: آلمان (ID: 1)
+2026-08-22 22:37:28 - telegram_bot - INFO - Status response: {'success': True, 'msg': '', 'obj': {'cpu': 0.6306747852048107, 'cpuCores': 4, 'logicalPro': 4, 'cpuSpeedMhz': 2645.03, 'mem': {'current': 839176192, 'total': 6213025792}, 'swap': {'current': 0, 'total': 0}, 'disk': {'current': 5591552000, 'total': 105581297664}, 'diskIO': {'read': 0, 'write': 1432877}, 'diskTraffic': {'read': 1188988928, 'write': 182045288448}, 'xray': {'state': 'running', 'errorMsg': '', 'version': '26.7.28'}, 'panelVersion': '3.6.0', 'panelGuid': '33c0213d-3a07-4b7a-94e2-8f82884797e8', 'uptime': 1757162, 'loads': [0, 0, 0], 'tcpCount': 71, 'udpCount': 5, 'netIO': {'up': 5267, 'down': 1139, 'pktUp': 11, 'pktDown': 13}, 'netTraffic': {'sent': 195770576605, 'recv': 194935952086, 'pktSent': 127331659, 'pktRecv': 173290471}, 'publicIP': {'ipv4': '178.162.240.159', 'ipv6': '2a00:c98:400f:109:1c00:53ff:fe00:935'}, 'appStats': {'threads': 27, 'mem': 144011264, 'uptime': 223186}}}
+2026-08-22 22:58:35 - telegram_bot - INFO - Shutting down application...
+2026-08-22 22:58:35 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-22 22:58:35 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-22 22:58:35 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 12:15:39 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 12:15:39 - telegram_bot - INFO - Debug mode: True
+2026-08-23 12:15:39 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 12:15:39 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 12:15:39 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 12:15:40 - telegram_bot - INFO - Admin services page accessed
+2026-08-23 12:15:44 - telegram_bot - INFO - Admin categories page accessed
+2026-08-23 12:15:53 - telegram_bot - INFO - Category created: حجمی (ID: 1)
+2026-08-23 12:16:11 - telegram_bot - INFO - Category created: نامحدود (ID: 2)
+2026-08-23 12:16:16 - telegram_bot - INFO - Category deleted: ID 1
+2026-08-23 12:16:20 - telegram_bot - INFO - Category deleted: ID 2
+2026-08-23 12:16:30 - telegram_bot - INFO - Category created: حجمی (ID: 1)
+2026-08-23 12:16:38 - telegram_bot - INFO - Category created: نامحدود (ID: 2)
+2026-08-23 12:16:42 - telegram_bot - INFO - Admin services page accessed
+2026-08-23 12:17:39 - telegram_bot - INFO - Service created: 10 گیگ (ID: 1)
+2026-08-23 12:17:44 - telegram_bot - INFO - Admin categories page accessed
+2026-08-23 12:18:00 - telegram_bot - INFO - Admin panels page accessed
+2026-08-23 12:19:42 - telegram_bot - INFO - Shutting down application...
+2026-08-23 12:19:42 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 12:19:42 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 12:19:42 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 12:49:52 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 12:49:52 - telegram_bot - INFO - Debug mode: True
+2026-08-23 12:49:52 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 12:49:52 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 12:49:52 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 12:49:52 - telegram_bot - INFO - Admin panels page accessed
+2026-08-23 12:50:40 - telegram_bot - INFO - Admin panels page accessed
+2026-08-23 12:50:53 - telegram_bot - INFO - Admin panels page accessed
+2026-08-23 12:51:11 - telegram_bot - INFO - Admin categories page accessed
+2026-08-23 12:52:07 - telegram_bot - INFO - Admin panels page accessed
+2026-08-23 12:52:09 - telegram_bot - INFO - Admin categories page accessed
+2026-08-23 12:52:23 - telegram_bot - INFO - Shutting down application...
+2026-08-23 12:52:23 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 12:52:23 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 12:52:23 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 12:57:34 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 12:57:34 - telegram_bot - INFO - Debug mode: True
+2026-08-23 12:57:34 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 12:57:34 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 12:57:34 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 12:57:36 - telegram_bot - INFO - Admin categories page accessed
+2026-08-23 12:58:52 - telegram_bot - INFO - Admin services page accessed
+2026-08-23 12:59:35 - telegram_bot - INFO - Shutting down application...
+2026-08-23 12:59:36 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 12:59:36 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 12:59:36 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 13:01:22 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 13:01:22 - telegram_bot - INFO - Debug mode: True
+2026-08-23 13:01:22 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 13:01:22 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 13:01:22 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 13:01:23 - telegram_bot - INFO - Admin services page accessed
+2026-08-23 13:01:27 - telegram_bot - INFO - Admin services page accessed
+2026-08-23 13:01:31 - telegram_bot - INFO - Shutting down application...
+2026-08-23 13:01:31 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 13:01:31 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 13:01:31 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 13:02:17 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 13:02:17 - telegram_bot - INFO - Debug mode: True
+2026-08-23 13:02:17 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 13:02:17 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 13:02:17 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 13:02:17 - telegram_bot - INFO - Admin services page accessed
+2026-08-23 13:02:42 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-23 13:02:44 - telegram_bot - INFO - Admin categories page accessed
+2026-08-23 13:02:59 - telegram_bot - INFO - Received webhook update: 21524196
+2026-08-23 13:02:59 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 13:02:59 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 13:03:02 - telegram_bot - INFO - Received webhook update: 21524197
+2026-08-23 13:03:02 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 13:03:02 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 13:06:06 - telegram_bot - INFO - Shutting down application...
+2026-08-23 13:06:06 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 13:06:06 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 13:06:06 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 13:27:46 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 13:27:46 - telegram_bot - INFO - Debug mode: True
+2026-08-23 13:27:46 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 13:27:46 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 13:27:46 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 13:27:53 - telegram_bot - INFO - Received webhook update: 21524199
+2026-08-23 13:27:53 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 13:27:53 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 13:28:03 - telegram_bot - INFO - Received webhook update: 21524200
+2026-08-23 13:28:03 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 13:28:03 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 13:28:03 - telegram_bot - ERROR - Error in handle_buy_service: name 'httpx' is not defined
