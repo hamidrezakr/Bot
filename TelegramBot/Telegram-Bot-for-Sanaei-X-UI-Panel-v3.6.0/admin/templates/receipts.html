@@ -1,16 +1,545 @@
 {% extends "base.html" %}
+
 {% block content %}
+<style>
+    .receipt-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 12px;
+        padding: 16px;
+        transition: all 0.3s ease;
+    }
+    .receipt-card:hover {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(255, 255, 255, 0.12);
+    }
+    .receipt-thumbnail {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 2px solid rgba(255, 255, 255, 0.06);
+    }
+    .receipt-thumbnail:hover {
+        transform: scale(1.05);
+        border-color: rgba(102, 126, 234, 0.4);
+        box-shadow: 0 4px 20px rgba(102, 126, 234, 0.2);
+    }
+    .receipt-thumbnail.expanded {
+        width: 100%;
+        max-height: 70vh;
+        object-fit: contain;
+    }
+    .info-label {
+        color: rgba(255, 255, 255, 0.4);
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .info-value {
+        color: #ffffff;
+        font-size: 0.95rem;
+        font-weight: 500;
+    }
+    .status-pending { background: rgba(255, 193, 7, 0.15); color: #ffc107; border: 1px solid rgba(255, 193, 7, 0.2); }
+    .status-approved { background: rgba(40, 167, 69, 0.15); color: #28a745; border: 1px solid rgba(40, 167, 69, 0.2); }
+    .status-rejected { background: rgba(220, 53, 69, 0.15); color: #dc3545; border: 1px solid rgba(220, 53, 69, 0.2); }
+    .badge-status {
+        padding: 4px 14px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        display: inline-block;
+    }
+    .refresh-controls {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .receipt-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+        gap: 16px;
+    }
+    .admin-message-input {
+        width: 100%;
+        min-height: 60px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: #fff;
+        border-radius: 8px;
+        padding: 10px;
+        resize: vertical;
+        font-size: 0.9rem;
+    }
+    .admin-message-input:focus {
+        border-color: rgba(102, 126, 234, 0.4);
+        outline: none;
+        background: rgba(255, 255, 255, 0.08);
+    }
+    .receipt-actions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 12px;
+    }
+    .btn-sm-approve {
+        background: rgba(40, 167, 69, 0.15);
+        color: #28a745;
+        border: 1px solid rgba(40, 167, 69, 0.2);
+        padding: 5px 16px;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .btn-sm-approve:hover {
+        background: rgba(40, 167, 69, 0.25);
+    }
+    .btn-sm-reject {
+        background: rgba(220, 53, 69, 0.15);
+        color: #dc3545;
+        border: 1px solid rgba(220, 53, 69, 0.2);
+        padding: 5px 16px;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .btn-sm-reject:hover {
+        background: rgba(220, 53, 69, 0.25);
+    }
+    .btn-sm-view {
+        background: rgba(13, 110, 253, 0.15);
+        color: #0d6efd;
+        border: 1px solid rgba(13, 110, 253, 0.2);
+        padding: 5px 16px;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .btn-sm-view:hover {
+        background: rgba(13, 110, 253, 0.25);
+    }
+    .badge-auto-refresh {
+        font-size: 0.75rem;
+        padding: 4px 12px;
+        border-radius: 20px;
+    }
+    .empty-state {
+        text-align: center;
+        padding: 40px 20px;
+        color: rgba(255, 255, 255, 0.4);
+    }
+    .empty-state .icon {
+        font-size: 3rem;
+        opacity: 0.3;
+        display: block;
+        margin-bottom: 12px;
+    }
+</style>
+
 <div class="container-fluid">
-    <div class="row mb-3"><div class="col"><h1 class="page-title">🧾 مدیریت رسیدها</h1><p class="page-subtitle">همه رسیدهای پرداخت کاربران</p></div></div>
-    <div class="table-wrap">
-        <div class="table-responsive">
-            <table>
-                <thead><tr><th>شماره</th><th>کاربر</th><th>مبلغ</th><th>تاریخ</th><th>وضعیت</th><th>عملیات</th></tr></thead>
-                <tbody>
-                    <tr><td colspan="6"><div class="empty-state"><span class="icon">🧾</span><h5>هیچ رسیدی ثبت نشده است</h5></div></td></tr>
-                </tbody>
-            </table>
+    <!-- Page Header -->
+    <div class="row mb-3 align-items-center">
+        <div class="col">
+            <h1 class="page-title">🧾 مدیریت رسیدها</h1>
+            <p class="page-subtitle">همه رسیدهای پرداخت کاربران</p>
+        </div>
+        <div class="col-auto">
+            <div class="refresh-controls">
+                <span class="badge badge-auto-refresh bg-secondary" id="refreshStatus">🔄 خودکار: فعال</span>
+                <button class="btn btn-sm btn-outline-success" onclick="toggleAutoRefresh()">
+                    <i class="bi bi-play-circle"></i> <span id="refreshToggleText">توقف</span>
+                </button>
+                <button class="btn btn-sm btn-outline-info" onclick="manualRefresh()">
+                    <i class="bi bi-arrow-clockwise"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="loadArchived()" id="archiveToggle">
+                    <i class="bi bi-archive"></i> آرشیو
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Receipts Grid -->
+    <div id="receiptsContainer">
+        <div class="receipt-grid" id="receiptsGrid">
+            <!-- داده از JS -->
         </div>
     </div>
 </div>
+
+<!-- ===== Modal برای نمایش جزئیات و پردازش رسید ===== -->
+<div class="modal fade" id="receiptModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content" style="background:#0b0e1a;border:1px solid rgba(255,255,255,0.06);">
+            <div class="modal-header border-secondary border-opacity-10">
+                <h5 class="modal-title">🧾 جزئیات رسید</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-4">
+                    <!-- Left: Receipt Image -->
+                    <div class="col-md-6">
+                        <div style="background:rgba(255,255,255,0.03);border-radius:12px;padding:16px;text-align:center;">
+                            <label style="color:rgba(255,255,255,0.4);font-size:0.75rem;text-transform:uppercase;display:block;margin-bottom:10px;">تصویر رسید</label>
+                            <img id="modalReceiptImage" src="" alt="رسید" 
+                                 onclick="toggleModalImageSize()" 
+                                 style="max-width:100%;max-height:60vh;border-radius:8px;cursor:pointer;transition:all 0.3s ease;">
+                            <small class="text-muted d-block mt-2">برای بزرگنمایی کلیک کنید</small>
+                        </div>
+                    </div>
+                    <!-- Right: User & Service Info -->
+                    <div class="col-md-6">
+                        <!-- User Info -->
+                        <div style="background:rgba(255,255,255,0.03);border-radius:12px;padding:14px 16px;margin-bottom:12px;">
+                            <label style="color:rgba(255,255,255,0.4);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.5px;">👤 اطلاعات کاربر</label>
+                            <div class="row mt-1">
+                                <div class="col-6">
+                                    <div style="color:rgba(255,255,255,0.3);font-size:0.7rem;">نام کاربری</div>
+                                    <div style="color:#ffffff;font-weight:500;" id="modalUsername">-</div>
+                                </div>
+                                <div class="col-6">
+                                    <div style="color:rgba(255,255,255,0.3);font-size:0.7rem;">ID کاربر</div>
+                                    <div style="color:#ffffff;font-weight:500;" id="modalUserId">-</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Service Info -->
+                        <div style="background:rgba(255,255,255,0.03);border-radius:12px;padding:14px 16px;margin-bottom:12px;">
+                            <label style="color:rgba(255,255,255,0.4);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.5px;">📦 اطلاعات سرویس</label>
+                            <div class="row mt-1">
+                                <div class="col-6">
+                                    <div style="color:rgba(255,255,255,0.3);font-size:0.7rem;">نام سرویس</div>
+                                    <div style="color:#ffffff;font-weight:500;" id="modalServiceName">-</div>
+                                </div>
+                                <div class="col-6">
+                                    <div style="color:rgba(255,255,255,0.3);font-size:0.7rem;">جزئیات</div>
+                                    <div style="color:#ffffff;font-weight:500;" id="modalServiceDetails">-</div>
+                                </div>
+                            </div>
+                            <div class="row mt-1">
+                                <div class="col-6">
+                                    <div style="color:rgba(255,255,255,0.3);font-size:0.7rem;">قیمت</div>
+                                    <div style="color:#ffffff;font-weight:500;" id="modalServicePrice">-</div>
+                                </div>
+                                <div class="col-6">
+                                    <div style="color:rgba(255,255,255,0.3);font-size:0.7rem;">مدت</div>
+                                    <div style="color:#ffffff;font-weight:500;" id="modalServiceDuration">-</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Status & Message -->
+                        <div style="background:rgba(255,255,255,0.03);border-radius:12px;padding:14px 16px;margin-bottom:12px;">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div style="color:rgba(255,255,255,0.3);font-size:0.7rem;">وضعیت</div>
+                                    <div id="modalStatusDisplay"><span class="badge-status status-pending">⏳ در انتظار</span></div>
+                                </div>
+                                <div class="col-6">
+                                    <div style="color:rgba(255,255,255,0.3);font-size:0.7rem;">تاریخ ارسال</div>
+                                    <div style="color:#ffffff;font-weight:500;" id="modalCreatedAt">-</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Admin Message -->
+                        <div style="background:rgba(255,255,255,0.03);border-radius:12px;padding:14px 16px;">
+                            <label style="color:rgba(255,255,255,0.4);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.5px;">💬 پیام به کاربر</label>
+                            <textarea class="admin-message-input" id="modalAdminMessage" placeholder="پیام خود را برای کاربر بنویسید..."></textarea>
+                            <small class="text-muted">این پیام پس از تأیید/رد برای کاربر ارسال می‌شود</small>
+                        </div>
+                        <!-- Action Buttons -->
+                        <div class="receipt-actions mt-3">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+                            <button type="button" class="btn-sm-reject" onclick="processReceipt('rejected')" id="modalRejectBtn">
+                                <i class="bi bi-x"></i> رد
+                            </button>
+                            <button type="button" class="btn-sm-approve" onclick="processReceipt('approved')" id="modalApproveBtn">
+                                <i class="bi bi-check2"></i> تأیید
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// ===== Global Variables =====
+let receiptsData = [];
+let currentReceiptId = null;
+let autoRefreshInterval = null;
+let isAutoRefresh = true;
+let showArchived = false;
+let isImageFull = false;
+
+// ===== Load Receipts =====
+function loadReceipts() {
+    const url = showArchived ? '/admin/api/receipts?archived=true' : '/admin/api/receipts';
+    fetch(url)
+        .then(r => r.json())
+        .then(res => {
+            if (res.status === 'success') {
+                receiptsData = res.data || [];
+                renderGrid();
+                document.getElementById('archiveToggle').innerHTML = 
+                    showArchived ? '<i class="bi bi-inbox"></i> رسیدهای فعلی' : '<i class="bi bi-archive"></i> آرشیو';
+            }
+        })
+        .catch(err => console.error('Error loading receipts:', err));
+}
+
+// ===== Render Grid =====
+function renderGrid() {
+    const grid = document.getElementById('receiptsGrid');
+    
+    if (!receiptsData || receiptsData.length === 0) {
+        grid.innerHTML = `
+            <div class="empty-state" style="grid-column:1/-1;">
+                <span class="icon">📭</span>
+                <h5 style="color:rgba(255,255,255,0.6);">هیچ رسیدی وجود ندارد</h5>
+                <p>رسیدهای جدید در اینجا نمایش داده می‌شوند</p>
+            </div>
+        `;
+        return;
+    }
+
+    grid.innerHTML = receiptsData.map((r) => {
+        const statusMap = {
+            'pending': '<span class="badge-status status-pending">⏳ در انتظار</span>',
+            'approved': '<span class="badge-status status-approved">✅ تأیید شده</span>',
+            'rejected': '<span class="badge-status status-rejected">❌ رد شده</span>'
+        };
+        const statusBadge = statusMap[r.status] || '<span class="badge-status bg-secondary">نامشخص</span>';
+        
+        const date = r.created_at ? new Date(r.created_at).toLocaleString('fa-IR') : '—';
+        const price = r.service_details?.price ? `${Number(r.service_details.price).toLocaleString()} تومان` : '—';
+        const volume = r.service_details?.volume || '—';
+        const duration = r.service_details?.duration ? `${r.service_details.duration} ماه` : '—';
+        const imagePath = '/' + r.image_path;
+        const isPending = r.status === 'pending';
+        
+        return `
+            <div class="receipt-card">
+                <div class="row g-2">
+                    <!-- Left: Thumbnail -->
+                    <div class="col-4">
+                        <img src="${imagePath}" alt="رسید" 
+                             class="receipt-thumbnail" 
+                             onclick="toggleThumbnail(this)"
+                             style="width:100%;height:auto;max-height:150px;object-fit:cover;">
+                    </div>
+                    <!-- Right: Info -->
+                    <div class="col-8">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="info-label">👤 کاربر</div>
+                                <div class="info-value" style="font-size:0.85rem;">${r.username || 'نامشخص'}</div>
+                                <div style="color:rgba(255,255,255,0.3);font-size:0.7rem;">ID: ${r.user_id}</div>
+                            </div>
+                            <div class="col-6">
+                                <div class="info-label">📦 سرویس</div>
+                                <div class="info-value" style="font-size:0.85rem;">${r.service_name}</div>
+                                <div style="color:rgba(255,255,255,0.3);font-size:0.7rem;">${volume}GB · ${duration}</div>
+                            </div>
+                        </div>
+                        <div class="row mt-1">
+                            <div class="col-6">
+                                <div class="info-label">💰 قیمت</div>
+                                <div class="info-value" style="font-size:0.85rem;">${price}</div>
+                            </div>
+                            <div class="col-6">
+                                <div class="info-label">📅 تاریخ</div>
+                                <div style="color:rgba(255,255,255,0.6);font-size:0.75rem;">${date}</div>
+                            </div>
+                        </div>
+                        <div class="row mt-1 align-items-center">
+                            <div class="col-6">
+                                <div class="info-label">وضعیت</div>
+                                ${statusBadge}
+                            </div>
+                            <div class="col-6 text-end">
+                                ${isPending ? `
+                                    <button class="btn-sm-approve" onclick="viewReceipt(${r.id})">
+                                        <i class="bi bi-check2"></i> بررسی
+                                    </button>
+                                ` : `
+                                    <button class="btn-sm-view" onclick="viewReceipt(${r.id})">
+                                        <i class="bi bi-eye"></i> مشاهده
+                                    </button>
+                                `}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// ===== Toggle Thumbnail =====
+function toggleThumbnail(img) {
+    img.classList.toggle('expanded');
+    if (img.classList.contains('expanded')) {
+        img.style.width = '100%';
+        img.style.maxHeight = '70vh';
+        img.style.objectFit = 'contain';
+    } else {
+        img.style.width = '100%';
+        img.style.maxHeight = '150px';
+        img.style.objectFit = 'cover';
+    }
+}
+
+// ===== View Receipt =====
+function viewReceipt(id) {
+    const receipt = receiptsData.find(r => r.id === id);
+    if (!receipt) return;
+    
+    currentReceiptId = id;
+    
+    // Set image
+    const img = document.getElementById('modalReceiptImage');
+    img.src = '/' + receipt.image_path;
+    img.style.maxWidth = '100%';
+    img.style.maxHeight = '60vh';
+    isImageFull = false;
+    
+    // Set user info
+    document.getElementById('modalUsername').textContent = receipt.username || 'نامشخص';
+    document.getElementById('modalUserId').textContent = receipt.user_id;
+    
+    // Set service info
+    document.getElementById('modalServiceName').textContent = receipt.service_name || '—';
+    const details = receipt.service_details || {};
+    document.getElementById('modalServiceDetails').textContent = `${details.volume || ''} GB`;
+    document.getElementById('modalServicePrice').textContent = details.price ? `${Number(details.price).toLocaleString()} تومان` : '—';
+    document.getElementById('modalServiceDuration').textContent = details.duration ? `${details.duration} ماه` : '—';
+    
+    // Set date
+    document.getElementById('modalCreatedAt').textContent = receipt.created_at ? new Date(receipt.created_at).toLocaleString('fa-IR') : '—';
+    
+    // Set status
+    const statusMap = {
+        'pending': '<span class="badge-status status-pending">⏳ در انتظار</span>',
+        'approved': '<span class="badge-status status-approved">✅ تأیید شده</span>',
+        'rejected': '<span class="badge-status status-rejected">❌ رد شده</span>'
+    };
+    document.getElementById('modalStatusDisplay').innerHTML = statusMap[receipt.status] || '<span class="badge-status bg-secondary">نامشخص</span>';
+    
+    // Set admin message
+    document.getElementById('modalAdminMessage').value = receipt.admin_message || '';
+    
+    // Show/hide action buttons
+    const isPending = receipt.status === 'pending';
+    document.getElementById('modalApproveBtn').style.display = isPending ? 'inline-flex' : 'none';
+    document.getElementById('modalRejectBtn').style.display = isPending ? 'inline-flex' : 'none';
+    
+    new bootstrap.Modal(document.getElementById('receiptModal')).show();
+}
+
+// ===== Toggle Modal Image =====
+function toggleModalImageSize() {
+    const img = document.getElementById('modalReceiptImage');
+    isImageFull = !isImageFull;
+    img.style.maxHeight = isImageFull ? '90vh' : '60vh';
+    img.style.cursor = 'pointer';
+}
+
+// ===== Process Receipt =====
+function processReceipt(status) {
+    const message = document.getElementById('modalAdminMessage').value.trim();
+    const statusText = status === 'approved' ? 'تأیید' : 'رد';
+    
+    // ====== حذف الزام پیام ======
+    let confirmMessage = `آیا از ${statusText} این رسید اطمینان دارید؟`;
+    if (message) {
+        confirmMessage += `\n\nپیام زیر برای کاربر ارسال می‌شود:\n${message}`;
+    } else {
+        confirmMessage += `\n\n⚠️ هیچ پیامی برای کاربر ارسال نمی‌شود.`;
+    }
+    
+    if (!confirm(confirmMessage)) return;
+    
+    fetch(`/admin/api/receipts/${currentReceiptId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+            status: status, 
+            admin_message: message || null  // ← اگر خالی بود null ارسال کن
+        })
+    })
+    .then(r => r.json())
+    .then(res => {
+        if (res.status === 'success') {
+            bootstrap.Modal.getInstance(document.getElementById('receiptModal')).hide();
+            loadReceipts();
+            const msg = message ? ` و پیام به کاربر ارسال گردید` : '';
+            alert(`✅ رسید با موفقیت ${statusText} شد${msg}.`);
+        } else {
+            alert('❌ خطا: ' + res.message);
+        }
+    });
+}
+// ===== Refresh Controls =====
+function toggleAutoRefresh() {
+    isAutoRefresh = !isAutoRefresh;
+    if (isAutoRefresh) {
+        startAutoRefresh();
+        document.getElementById('refreshToggleText').textContent = 'توقف';
+        document.getElementById('refreshStatus').textContent = '🔄 خودکار: فعال';
+    } else {
+        stopAutoRefresh();
+        document.getElementById('refreshToggleText').textContent = 'شروع';
+        document.getElementById('refreshStatus').textContent = '⏸️ خودکار: غیرفعال';
+    }
+}
+
+function startAutoRefresh() {
+    if (autoRefreshInterval) clearInterval(autoRefreshInterval);
+    autoRefreshInterval = setInterval(() => {
+        if (!document.hidden) loadReceipts();
+    }, 10000);
+}
+
+function stopAutoRefresh() {
+    if (autoRefreshInterval) {
+        clearInterval(autoRefreshInterval);
+        autoRefreshInterval = null;
+    }
+}
+
+function manualRefresh() {
+    loadReceipts();
+    document.getElementById('refreshStatus').textContent = '✅ بروزرسانی شد!';
+    setTimeout(() => {
+        document.getElementById('refreshStatus').textContent = isAutoRefresh ? '🔄 خودکار: فعال' : '⏸️ خودکار: غیرفعال';
+    }, 2000);
+}
+
+function loadArchived() {
+    showArchived = !showArchived;
+    loadReceipts();
+}
+
+// ===== Event Listeners =====
+document.addEventListener('DOMContentLoaded', function() {
+    loadReceipts();
+    startAutoRefresh();
+});
+
+document.addEventListener('visibilitychange', function() {
+    if (document.hidden) {
+        stopAutoRefresh();
+    } else {
+        if (isAutoRefresh) startAutoRefresh();
+        loadReceipts();
+    }
+});
+</script>
 {% endblock %}

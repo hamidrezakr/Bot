@@ -84,6 +84,13 @@ else:
     static_dir.mkdir(parents=True, exist_ok=True)
     app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
 
+receipts_dir = Path(__file__).parent / "receipts"
+if receipts_dir.exists():
+    app.mount("/receipts", StaticFiles(directory=str(receipts_dir)), name="receipts")
+else:
+    receipts_dir.mkdir(parents=True, exist_ok=True)
+    app.mount("/receipts", StaticFiles(directory=str(receipts_dir)), name="receipts")
+
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,

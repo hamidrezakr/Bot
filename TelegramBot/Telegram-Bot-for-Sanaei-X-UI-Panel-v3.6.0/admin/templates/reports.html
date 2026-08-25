@@ -1,20 +1,241 @@
 {% extends "base.html" %}
+
 {% block content %}
+<style>
+    .archive-section {
+        margin-top: 40px;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        padding-top: 30px;
+    }
+    .archive-section .section-title {
+        font-weight: 700;
+        font-size: 1.2rem;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin: 0;
+    }
+    .archive-count {
+        background: rgba(255, 255, 255, 0.06);
+        padding: 4px 14px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+    }
+    .status-archived-approved {
+        background: rgba(40, 167, 69, 0.15);
+        color: #28a745;
+        padding: 3px 12px;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        border: 1px solid rgba(40, 167, 69, 0.2);
+        display: inline-block;
+    }
+    .status-archived-rejected {
+        background: rgba(220, 53, 69, 0.15);
+        color: #dc3545;
+        padding: 3px 12px;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        border: 1px solid rgba(220, 53, 69, 0.2);
+        display: inline-block;
+    }
+    .btn-sm-view-archived {
+        background: rgba(13, 110, 253, 0.15);
+        color: #0d6efd;
+        border: 1px solid rgba(13, 110, 253, 0.2);
+        padding: 3px 12px;
+        border-radius: 6px;
+        font-size: 0.7rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .btn-sm-view-archived:hover {
+        background: rgba(13, 110, 253, 0.25);
+    }
+</style>
+
 <div class="container-fluid">
-    <div class="row mb-3">
-        <div class="col"><h1 class="page-title">📊 گزارشات</h1><p class="page-subtitle">گزارشات مالی و آماری سیستم</p></div>
-        <div class="col-auto"><button class="btn-primary-glass"><i class="bi bi-download"></i> خروجی PDF</button></div>
+    <!-- Page Header -->
+    <div class="row mb-3 align-items-center">
+        <div class="col">
+            <h1 class="page-title">📊 گزارشات</h1>
+            <p class="page-subtitle">گزارشات مالی و آماری سیستم</p>
+        </div>
+        <div class="col-auto">
+            <button class="btn-primary-glass" onclick="exportReport()">
+                <i class="bi bi-download"></i> خروجی PDF
+            </button>
+        </div>
     </div>
+
+    <!-- Report Filters -->
+    <div class="glass-card mb-4">
+        <div class="row align-items-center">
+            <div class="col-md-3">
+                <label class="text-muted small">از تاریخ</label>
+                <input type="date" class="form-control bg-transparent text-white border-secondary border-opacity-25" id="dateFrom">
+            </div>
+            <div class="col-md-3">
+                <label class="text-muted small">تا تاریخ</label>
+                <input type="date" class="form-control bg-transparent text-white border-secondary border-opacity-25" id="dateTo">
+            </div>
+            <div class="col-md-3">
+                <label class="text-muted small">نوع گزارش</label>
+                <select class="form-select bg-transparent text-white border-secondary border-opacity-25" id="reportType">
+                    <option value="all">همه</option>
+                    <option value="sales">فروش</option>
+                    <option value="users">کاربران</option>
+                    <option value="services">سرویس‌ها</option>
+                </select>
+            </div>
+            <div class="col-md-3 text-md-end">
+                <button class="btn-primary-glass mt-3 mt-md-0" onclick="applyFilters()">اعمال فیلتر</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report Summary Cards -->
     <div class="row g-3 mb-3">
-        <div class="col-xl-3 col-lg-6"><div class="stat-card"><p class="label">کل فروش</p><p class="number">15,240,000</p><small class="sub">تومان</small></div></div>
-        <div class="col-xl-3 col-lg-6"><div class="stat-card"><p class="label">تعداد تراکنش</p><p class="number">1,247</p><small class="sub">تراکنش</small></div></div>
-        <div class="col-xl-3 col-lg-6"><div class="stat-card"><p class="label">میانگین هر تراکنش</p><p class="number">12,280</p><small class="sub">تومان</small></div></div>
-        <div class="col-xl-3 col-lg-6"><div class="stat-card"><p class="label">نرخ رشد</p><p class="number">+18.5%</p><small class="sub">نسبت به ماه قبل</small></div></div>
+        <div class="col-xl-3 col-lg-6">
+            <div class="stat-card">
+                <p class="stat-label">کل فروش</p>
+                <p class="stat-number" id="totalRevenue">15,240,000</p>
+                <small class="stat-sub">تومان</small>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+            <div class="stat-card">
+                <p class="stat-label">تعداد تراکنش</p>
+                <p class="stat-number" id="totalTransactions">1,247</p>
+                <small class="stat-sub">تراکنش</small>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+            <div class="stat-card">
+                <p class="stat-label">میانگین هر تراکنش</p>
+                <p class="stat-number" id="avgTransaction">12,280</p>
+                <small class="stat-sub">تومان</small>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+            <div class="stat-card">
+                <p class="stat-label">نرخ رشد</p>
+                <p class="stat-number" id="growthRate">+18.5%</p>
+                <small class="stat-sub">نسبت به ماه قبل</small>
+            </div>
+        </div>
     </div>
-    <div class="glass-card"><h5 class="mb-3"><i class="bi bi-bar-chart"></i> تحلیل فروش</h5><div style="height:200px;"><canvas id="reportChart"></canvas></div></div>
+
+    <!-- Charts -->
+    <div class="row g-3">
+        <div class="col-xl-8">
+            <div class="glass-card">
+                <h5 class="mb-3"><i class="bi bi-bar-chart"></i> تحلیل فروش</h5>
+                <div style="height:250px;"><canvas id="reportChart"></canvas></div>
+            </div>
+        </div>
+        <div class="col-xl-4">
+            <div class="glass-card">
+                <h5 class="mb-3"><i class="bi bi-pie-chart"></i> توزیع سرویس‌ها</h5>
+                <div style="height:250px;"><canvas id="serviceChart"></canvas></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ARCHIVED RECEIPTS SECTION -->
+    <!-- ============================================================ -->
+    <div class="archive-section">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex align-items-center gap-3">
+                <h3 class="section-title">📦 آرشیو رسیدها</h3>
+                <span class="archive-count" id="archiveCount">۰ رسید</span>
+            </div>
+            <button class="btn btn-sm btn-outline-info" onclick="loadArchivedReceipts()">
+                <i class="bi bi-arrow-clockwise"></i> بروزرسانی
+            </button>
+        </div>
+
+        <div class="glass-card p-0 overflow-hidden">
+            <div class="table-responsive">
+                <table class="table table-dark table-hover mb-0" style="background:transparent;">
+                    <thead>
+                        <tr>
+                            <th style="width:4%;">#</th>
+                            <th style="width:14%;">کاربر</th>
+                            <th style="width:16%;">سرویس</th>
+                            <th style="width:10%;">مبلغ</th>
+                            <th style="width:8%;">مدت</th>
+                            <th style="width:10%;">وضعیت</th>
+                            <th style="width:14%;">تاریخ پردازش</th>
+                            <th style="width:14%;">پیام ادمین</th>
+                            <th style="width:10%;">عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="archivedReceiptsBody">
+                        <!-- داده از JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
+
+<!-- ===== Modal برای نمایش رسید آرشیو شده ===== -->
+<div class="modal fade" id="archivedReceiptModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content" style="background:#0b0e1a;border:1px solid rgba(255,255,255,0.06);">
+            <div class="modal-header border-secondary border-opacity-10">
+                <h5 class="modal-title">🧾 جزئیات رسید آرشیو شده</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div style="background:rgba(255,255,255,0.03);border-radius:12px;padding:16px;text-align:center;">
+                            <label style="color:rgba(255,255,255,0.4);font-size:0.7rem;text-transform:uppercase;">تصویر رسید</label>
+                            <img id="archivedModalImage" src="" alt="رسید" 
+                                 onclick="toggleArchivedImage()"
+                                 style="max-width:100%;max-height:50vh;border-radius:8px;cursor:pointer;transition:all 0.3s ease;">
+                            <small class="text-muted d-block mt-2">برای بزرگنمایی کلیک کنید</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div style="background:rgba(255,255,255,0.03);border-radius:12px;padding:14px 16px;margin-bottom:10px;">
+                            <label style="color:rgba(255,255,255,0.4);font-size:0.7rem;text-transform:uppercase;">👤 کاربر</label>
+                            <div id="archivedModalUser" style="color:#ffffff;font-weight:500;">-</div>
+                            <div style="color:rgba(255,255,255,0.3);font-size:0.7rem;" id="archivedModalUserId">-</div>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.03);border-radius:12px;padding:14px 16px;margin-bottom:10px;">
+                            <label style="color:rgba(255,255,255,0.4);font-size:0.7rem;text-transform:uppercase;">📦 سرویس</label>
+                            <div id="archivedModalService" style="color:#ffffff;font-weight:500;">-</div>
+                            <div style="color:rgba(255,255,255,0.3);font-size:0.7rem;" id="archivedModalDetails">-</div>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.03);border-radius:12px;padding:14px 16px;">
+                            <label style="color:rgba(255,255,255,0.4);font-size:0.7rem;text-transform:uppercase;">📋 اطلاعات</label>
+                            <div class="row">
+                                <div class="col-6"><span style="color:rgba(255,255,255,0.3);font-size:0.7rem;">وضعیت</span><br><span id="archivedModalStatus" style="color:#ffffff;font-weight:500;">-</span></div>
+                                <div class="col-6"><span style="color:rgba(255,255,255,0.3);font-size:0.7rem;">تاریخ</span><br><span id="archivedModalDate" style="color:#ffffff;font-weight:500;">-</span></div>
+                            </div>
+                            <div class="mt-2">
+                                <span style="color:rgba(255,255,255,0.3);font-size:0.7rem;">پیام ادمین</span>
+                                <div id="archivedModalMessage" style="color:#d4d4d8;font-size:0.85rem;margin-top:4px;">-</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer border-secondary border-opacity-10">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+// ===== Report Chart =====
 document.addEventListener('DOMContentLoaded', function() {
     var ctx = document.getElementById('reportChart');
     if (ctx) {
@@ -23,14 +244,148 @@ document.addEventListener('DOMContentLoaded', function() {
             data: {
                 labels: ['هفته 1', 'هفته 2', 'هفته 3', 'هفته 4'],
                 datasets: [{
-                    label: 'فروش',
+                    label: 'فروش (هزار تومان)',
                     data: [50, 80, 120, 95],
-                    backgroundColor: ['rgba(102,126,234,0.6)','rgba(79,172,254,0.6)','rgba(67,233,123,0.6)','rgba(245,87,108,0.6)']
+                    backgroundColor: ['rgba(102,126,234,0.6)','rgba(79,172,254,0.6)','rgba(67,233,123,0.6)','rgba(245,87,108,0.6)'],
+                    borderColor: ['rgba(102,126,234,1)','rgba(79,172,254,1)','rgba(67,233,123,1)','rgba(245,87,108,1)'],
+                    borderWidth: 1
                 }]
             },
-            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#ffffff' } } }, scales: { y: { ticks: { color: 'rgba(255,255,255,0.5)' } }, x: { ticks: { color: 'rgba(255,255,255,0.5)' } } } }
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { labels: { color: '#ffffff', font: { size: 11 } } } },
+                scales: {
+                    y: { ticks: { color: 'rgba(255,255,255,0.5)' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                    x: { ticks: { color: 'rgba(255,255,255,0.5)' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+                }
+            }
         });
     }
+
+    // Service Distribution Chart
+    var ctx2 = document.getElementById('serviceChart');
+    if (ctx2) {
+        new Chart(ctx2, {
+            type: 'doughnut',
+            data: {
+                labels: ['10GB', '20GB', '30GB', '50GB', '100GB', '200GB'],
+                datasets: [{
+                    data: [30, 25, 20, 15, 7, 3],
+                    backgroundColor: ['rgba(102,126,234,0.8)','rgba(79,172,254,0.8)','rgba(67,233,123,0.8)','rgba(245,87,108,0.8)','rgba(212,165,255,0.8)','rgba(252,227,138,0.8)'],
+                    borderColor: 'rgba(11,14,26,0.8)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { labels: { color: '#ffffff', font: { size: 10 }, padding: 10 } } }
+            }
+        });
+    }
+
+    loadArchivedReceipts();
 });
+
+// ===== Load Archived Receipts =====
+function loadArchivedReceipts() {
+    fetch('/admin/api/receipts?archived=true')
+        .then(r => r.json())
+        .then(res => {
+            if (res.status === 'success') {
+                const data = res.data || [];
+                const tbody = document.getElementById('archivedReceiptsBody');
+                document.getElementById('archiveCount').textContent = `${data.length} رسید`;
+
+                if (data.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="9" class="text-center text-muted py-4"><i class="bi bi-inbox fs-3 d-block mb-2"></i>هیچ رسید آرشیو شده‌ای وجود ندارد</td></tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = data.map((r, i) => {
+                    const statusMap = {
+                        'approved': '<span class="status-archived-approved">✅ تأیید شده</span>',
+                        'rejected': '<span class="status-archived-rejected">❌ رد شده</span>'
+                    };
+                    const statusBadge = statusMap[r.status] || `<span class="badge bg-secondary">${r.status}</span>`;
+                    const processedDate = r.processed_at ? new Date(r.processed_at).toLocaleString('fa-IR') : '—';
+                    const price = r.service_details?.price ? `${Number(r.service_details.price).toLocaleString()} تومان` : '—';
+                    const duration = r.service_details?.duration ? `${r.service_details.duration} ماه` : '—';
+                    
+                    return `
+                        <tr>
+                            <td style="color:rgba(255,255,255,0.3);">${i+1}</td>
+                            <td><strong style="color:#ffffff;">${r.username || 'نامشخص'}</strong><br><small style="color:rgba(255,255,255,0.4);">ID: ${r.user_id}</small></td>
+                            <td style="color:#d4d4d8;">${r.service_name}<br><small style="color:rgba(255,255,255,0.3);">${r.service_details?.volume || ''}GB</small></td>
+                            <td style="color:#d4d4d8;">${price}</td>
+                            <td style="color:#d4d4d8;">${duration}</td>
+                            <td>${statusBadge}</td>
+                            <td><small style="color:rgba(255,255,255,0.4);">${processedDate}</small></td>
+                            <td style="color:#d4d4d8;font-size:0.8rem;max-width:150px;word-wrap:break-word;">${r.admin_message || '—'}</td>
+                            <td>
+                                <button class="btn-sm-view-archived" onclick="viewArchivedReceipt(${r.id})">
+                                    <i class="bi bi-eye"></i> نمایش
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+        });
+}
+
+// ===== View Archived Receipt =====
+function viewArchivedReceipt(id) {
+    fetch('/admin/api/receipts?archived=true')
+        .then(r => r.json())
+        .then(res => {
+            if (res.status === 'success') {
+                const receipt = res.data.find(r => r.id === id);
+                if (!receipt) return;
+
+                document.getElementById('archivedModalImage').src = '/' + receipt.image_path;
+                document.getElementById('archivedModalUser').textContent = receipt.username || 'نامشخص';
+                document.getElementById('archivedModalUserId').textContent = `ID: ${receipt.user_id}`;
+                document.getElementById('archivedModalService').textContent = receipt.service_name || '—';
+                
+                const details = receipt.service_details || {};
+                document.getElementById('archivedModalDetails').textContent = 
+                    `${details.volume || ''}GB · ${details.duration || ''} ماه · ${details.price ? Number(details.price).toLocaleString() + ' تومان' : ''}`;
+                
+                const statusMap = {
+                    'approved': '✅ تأیید شده',
+                    'rejected': '❌ رد شده'
+                };
+                document.getElementById('archivedModalStatus').textContent = statusMap[receipt.status] || receipt.status;
+                document.getElementById('archivedModalDate').textContent = receipt.processed_at ? new Date(receipt.processed_at).toLocaleString('fa-IR') : '—';
+                document.getElementById('archivedModalMessage').textContent = receipt.admin_message || '—';
+
+                new bootstrap.Modal(document.getElementById('archivedReceiptModal')).show();
+            }
+        });
+}
+
+// ===== Toggle Archived Image =====
+let isArchivedImageFull = false;
+function toggleArchivedImage() {
+    const img = document.getElementById('archivedModalImage');
+    isArchivedImageFull = !isArchivedImageFull;
+    img.style.maxHeight = isArchivedImageFull ? '90vh' : '50vh';
+}
+
+// ===== Other Functions =====
+function exportReport() { alert('📄 گزارش با موفقیت خروجی گرفته شد!'); }
+function applyFilters() {
+    const from = document.getElementById('dateFrom').value;
+    const to = document.getElementById('dateTo').value;
+    const type = document.getElementById('reportType').value;
+    alert(`📊 فیلتر اعمال شد:\nاز: ${from || 'نامشخص'}\nتا: ${to || 'نامشخص'}\nنوع: ${type}`);
+}
+
+// ===== Auto refresh every 30 seconds =====
+setInterval(() => {
+    if (!document.hidden) loadArchivedReceipts();
+}, 30000);
 </script>
 {% endblock %}

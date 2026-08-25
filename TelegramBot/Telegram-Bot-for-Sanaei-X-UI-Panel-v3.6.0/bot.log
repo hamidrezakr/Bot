@@ -1409,3 +1409,1526 @@ For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/St
 2026-08-23 13:28:03 - telegram_bot - INFO - Callback received from user 444111495: buy_service
 2026-08-23 13:28:03 - telegram_bot - INFO - Buy service requested by user: 444111495
 2026-08-23 13:28:03 - telegram_bot - ERROR - Error in handle_buy_service: name 'httpx' is not defined
+2026-08-23 14:03:34 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 14:03:34 - telegram_bot - INFO - Debug mode: True
+2026-08-23 14:03:34 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 14:03:34 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 14:03:34 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 14:12:07 - telegram_bot - INFO - Received webhook update: 21524201
+2026-08-23 14:12:07 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 14:12:07 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 14:12:09 - telegram_bot - INFO - Received webhook update: 21524202
+2026-08-23 14:12:09 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 14:12:09 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 14:12:09 - telegram_bot - ERROR - Error in handle_buy_service: name 'httpx' is not defined
+2026-08-23 14:12:13 - telegram_bot - INFO - Received webhook update: 21524203
+2026-08-23 14:12:13 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 14:12:13 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 14:12:16 - telegram_bot - INFO - Received webhook update: 21524204
+2026-08-23 14:12:16 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 14:12:16 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 14:12:16 - telegram_bot - ERROR - Error in handle_buy_service: name 'httpx' is not defined
+2026-08-23 14:13:11 - telegram_bot - INFO - Shutting down application...
+2026-08-23 14:13:11 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 14:13:11 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 14:13:11 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 14:14:00 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 14:14:00 - telegram_bot - INFO - Debug mode: True
+2026-08-23 14:14:00 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 14:14:00 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 14:14:00 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 14:14:03 - telegram_bot - INFO - Received webhook update: 21524205
+2026-08-23 14:14:03 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 14:14:03 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 14:14:04 - telegram_bot - INFO - Received webhook update: 21524206
+2026-08-23 14:14:04 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 14:14:04 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 14:14:04 - telegram_bot - ERROR - Error in handle_buy_service: name 'settings' is not defined
+2026-08-23 14:14:06 - telegram_bot - INFO - Received webhook update: 21524207
+2026-08-23 14:14:06 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 14:14:06 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 14:14:09 - telegram_bot - INFO - Received webhook update: 21524208
+2026-08-23 14:14:09 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 14:14:09 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 14:14:09 - telegram_bot - ERROR - Error in handle_buy_service: name 'settings' is not defined
+2026-08-23 14:14:35 - telegram_bot - INFO - Shutting down application...
+2026-08-23 14:14:35 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 14:14:35 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 14:14:35 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 14:15:32 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 14:15:32 - telegram_bot - INFO - Debug mode: True
+2026-08-23 14:15:32 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 14:15:33 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 14:15:33 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 14:15:34 - telegram_bot - INFO - Received webhook update: 21524209
+2026-08-23 14:15:34 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 14:15:34 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 14:15:35 - telegram_bot - INFO - Received webhook update: 21524210
+2026-08-23 14:15:35 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 14:15:35 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 14:15:35 - telegram_bot - ERROR - Error getting public categories: type object 'CategoryDB' has no attribute 'is_active'
+2026-08-23 14:15:36 - telegram_bot - INFO - Received webhook update: 21524211
+2026-08-23 14:15:36 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 14:15:36 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 14:15:38 - telegram_bot - INFO - Received webhook update: 21524212
+2026-08-23 14:15:38 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 14:15:38 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 14:15:38 - telegram_bot - ERROR - Error getting public categories: type object 'CategoryDB' has no attribute 'is_active'
+2026-08-23 14:16:20 - telegram_bot - INFO - Shutting down application...
+2026-08-23 14:16:20 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 14:16:20 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 14:16:20 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 14:18:06 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 14:18:06 - telegram_bot - INFO - Debug mode: True
+2026-08-23 14:18:06 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 14:18:06 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 14:18:06 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 14:18:10 - telegram_bot - INFO - Received webhook update: 21524213
+2026-08-23 14:18:10 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 14:18:10 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 14:18:11 - telegram_bot - INFO - Received webhook update: 21524214
+2026-08-23 14:18:11 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 14:18:11 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 14:18:11 - telegram_bot - ERROR - Error in handle_buy_service: name 'InlineKeyboardButton' is not defined
+2026-08-23 14:18:25 - telegram_bot - INFO - Shutting down application...
+2026-08-23 14:18:26 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 14:18:26 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 14:18:26 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 14:19:14 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 14:19:14 - telegram_bot - INFO - Debug mode: True
+2026-08-23 14:19:14 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 14:19:14 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 14:19:14 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 14:19:17 - telegram_bot - INFO - Received webhook update: 21524215
+2026-08-23 14:19:17 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 14:19:17 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 14:19:17 - telegram_bot - INFO - Received webhook update: 21524216
+2026-08-23 14:19:17 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 14:19:17 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 14:19:22 - telegram_bot - INFO - Received webhook update: 21524217
+2026-08-23 14:19:22 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 14:19:22 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 14:19:25 - telegram_bot - INFO - Received webhook update: 21524218
+2026-08-23 14:19:25 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 14:19:25 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 14:19:26 - telegram_bot - INFO - Received webhook update: 21524219
+2026-08-23 14:19:26 - telegram_bot - INFO - Callback received from user 444111495: category_2
+2026-08-23 14:19:26 - telegram_bot - INFO - Category 2 selected by user 444111495
+2026-08-23 14:19:30 - telegram_bot - INFO - Received webhook update: 21524220
+2026-08-23 14:19:30 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 14:19:30 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 14:19:33 - telegram_bot - INFO - Received webhook update: 21524221
+2026-08-23 14:19:33 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 14:19:33 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 14:19:37 - telegram_bot - INFO - Received webhook update: 21524222
+2026-08-23 14:19:37 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 14:19:38 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 14:19:40 - telegram_bot - INFO - Admin services page accessed
+2026-08-23 14:20:03 - telegram_bot - INFO - Service created: 1 ماه (ID: 2)
+2026-08-23 14:20:09 - telegram_bot - INFO - Received webhook update: 21524223
+2026-08-23 14:20:09 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 14:20:09 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 14:20:10 - telegram_bot - INFO - Received webhook update: 21524224
+2026-08-23 14:20:10 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 14:20:10 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 14:20:11 - telegram_bot - INFO - Received webhook update: 21524225
+2026-08-23 14:20:11 - telegram_bot - INFO - Callback received from user 444111495: category_2
+2026-08-23 14:20:11 - telegram_bot - INFO - Category 2 selected by user 444111495
+2026-08-23 14:20:27 - telegram_bot - ERROR - Error updating service: Instance <ServiceDB at 0x7b21c48b5610> is not bound to a Session; attribute refresh operation cannot proceed (Background on this error at: https://sqlalche.me/e/20/bhk3)
+2026-08-23 14:20:34 - telegram_bot - ERROR - Error updating service: Instance <ServiceDB at 0x7b21c48f44d0> is not bound to a Session; attribute refresh operation cannot proceed (Background on this error at: https://sqlalche.me/e/20/bhk3)
+2026-08-23 14:22:30 - telegram_bot - INFO - Shutting down application...
+2026-08-23 14:22:30 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 14:22:30 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 14:22:30 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 14:25:52 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 14:25:52 - telegram_bot - INFO - Debug mode: True
+2026-08-23 14:25:53 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 14:25:53 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 14:25:53 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 14:25:53 - telegram_bot - INFO - Received webhook update: 21524226
+2026-08-23 14:25:53 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 14:25:53 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 14:25:54 - telegram_bot - INFO - Received webhook update: 21524227
+2026-08-23 14:25:54 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 14:25:54 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 14:25:55 - telegram_bot - INFO - Received webhook update: 21524228
+2026-08-23 14:25:55 - telegram_bot - INFO - Callback received from user 444111495: category_2
+2026-08-23 14:25:55 - telegram_bot - INFO - Category 2 selected by user 444111495
+2026-08-23 14:26:00 - telegram_bot - INFO - Service deleted: ID 2
+2026-08-23 14:26:02 - telegram_bot - INFO - Received webhook update: 21524229
+2026-08-23 14:26:02 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 14:26:02 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 14:26:03 - telegram_bot - INFO - Received webhook update: 21524230
+2026-08-23 14:26:03 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 14:26:03 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 14:26:04 - telegram_bot - INFO - Received webhook update: 21524231
+2026-08-23 14:26:04 - telegram_bot - INFO - Callback received from user 444111495: category_2
+2026-08-23 14:26:04 - telegram_bot - INFO - Category 2 selected by user 444111495
+2026-08-23 14:26:21 - telegram_bot - INFO - Received webhook update: 21524232
+2026-08-23 14:26:21 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 14:26:21 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 14:26:22 - telegram_bot - INFO - Received webhook update: 21524233
+2026-08-23 14:26:22 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 14:26:22 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 14:26:24 - telegram_bot - INFO - Received webhook update: 21524234
+2026-08-23 14:26:24 - telegram_bot - INFO - Callback received from user 444111495: service_1
+2026-08-23 14:26:24 - telegram_bot - INFO - Service 1 selected by user 444111495
+2026-08-23 14:42:02 - telegram_bot - INFO - Received webhook update: 21524235
+2026-08-23 14:42:02 - telegram_bot - INFO - Callback received from user 444111495: purchase_1
+2026-08-23 14:42:02 - telegram_bot - INFO - Purchase requested by user 444111495 for service 1
+2026-08-23 14:42:05 - telegram_bot - INFO - Received webhook update: 21524236
+2026-08-23 14:42:05 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 14:42:05 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 14:42:11 - telegram_bot - INFO - Received webhook update: 21524237
+2026-08-23 14:42:11 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 14:42:11 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 14:42:12 - telegram_bot - INFO - Received webhook update: 21524238
+2026-08-23 14:42:12 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 14:42:12 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 14:42:13 - telegram_bot - INFO - Received webhook update: 21524239
+2026-08-23 14:42:13 - telegram_bot - INFO - Callback received from user 444111495: service_1
+2026-08-23 14:42:13 - telegram_bot - INFO - Service 1 selected by user 444111495
+2026-08-23 14:42:14 - telegram_bot - INFO - Received webhook update: 21524240
+2026-08-23 14:42:14 - telegram_bot - INFO - Callback received from user 444111495: purchase_1
+2026-08-23 14:42:14 - telegram_bot - INFO - Purchase requested by user 444111495 for service 1
+2026-08-23 14:42:17 - telegram_bot - INFO - Received webhook update: 21524241
+2026-08-23 14:42:17 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 14:42:17 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 14:42:35 - telegram_bot - INFO - Shutting down application...
+2026-08-23 14:42:35 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 14:42:35 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 14:42:35 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 14:46:42 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 14:46:42 - telegram_bot - INFO - Debug mode: True
+2026-08-23 14:46:42 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 14:46:42 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 14:46:42 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 14:46:44 - telegram_bot - INFO - Received webhook update: 21524242
+2026-08-23 14:46:44 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 14:46:44 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 14:46:46 - telegram_bot - INFO - Received webhook update: 21524243
+2026-08-23 14:46:46 - telegram_bot - INFO - Callback received from user 444111495: category_2
+2026-08-23 14:46:46 - telegram_bot - INFO - Category 2 selected by user 444111495
+2026-08-23 14:46:54 - telegram_bot - INFO - Received webhook update: 21524244
+2026-08-23 14:46:54 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 14:46:55 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 14:46:55 - telegram_bot - INFO - Received webhook update: 21524245
+2026-08-23 14:46:55 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 14:46:55 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 14:46:57 - telegram_bot - INFO - Received webhook update: 21524246
+2026-08-23 14:46:57 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 14:46:57 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 14:46:59 - telegram_bot - INFO - Received webhook update: 21524247
+2026-08-23 14:46:59 - telegram_bot - INFO - Callback received from user 444111495: category_2
+2026-08-23 14:46:59 - telegram_bot - INFO - Category 2 selected by user 444111495
+2026-08-23 14:47:38 - telegram_bot - INFO - Shutting down application...
+2026-08-23 14:47:38 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 14:47:38 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 14:47:38 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 14:51:29 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 14:51:29 - telegram_bot - INFO - Debug mode: True
+2026-08-23 14:51:29 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 14:51:29 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 14:51:29 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 14:51:30 - telegram_bot - INFO - Received webhook update: 21524248
+2026-08-23 14:51:30 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 14:51:30 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 14:51:31 - telegram_bot - INFO - Received webhook update: 21524249
+2026-08-23 14:51:31 - telegram_bot - INFO - Callback received from user 444111495: category_2
+2026-08-23 14:51:31 - telegram_bot - INFO - Category 2 selected by user 444111495
+2026-08-23 14:51:35 - telegram_bot - INFO - Received webhook update: 21524250
+2026-08-23 14:51:35 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 14:51:35 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 14:51:36 - telegram_bot - INFO - Received webhook update: 21524251
+2026-08-23 14:51:36 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 14:51:36 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 14:51:37 - telegram_bot - INFO - Received webhook update: 21524252
+2026-08-23 14:51:37 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 14:51:37 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 14:51:38 - telegram_bot - INFO - Received webhook update: 21524253
+2026-08-23 14:51:38 - telegram_bot - INFO - Callback received from user 444111495: category_2
+2026-08-23 14:51:38 - telegram_bot - INFO - Category 2 selected by user 444111495
+2026-08-23 14:51:39 - telegram_bot - INFO - Received webhook update: 21524254
+2026-08-23 14:51:39 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 14:51:40 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 14:51:41 - telegram_bot - INFO - Received webhook update: 21524255
+2026-08-23 14:51:41 - telegram_bot - INFO - Callback received from user 444111495: category_2
+2026-08-23 14:51:41 - telegram_bot - INFO - Category 2 selected by user 444111495
+2026-08-23 14:52:42 - telegram_bot - INFO - Shutting down application...
+2026-08-23 14:52:42 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 14:52:42 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 14:52:42 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 14:57:36 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 14:57:36 - telegram_bot - INFO - Debug mode: True
+2026-08-23 14:57:36 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 14:57:36 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 14:57:36 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 14:57:37 - telegram_bot - INFO - Received webhook update: 21524256
+2026-08-23 14:57:37 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 14:57:37 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 14:57:38 - telegram_bot - INFO - Received webhook update: 21524257
+2026-08-23 14:57:38 - telegram_bot - INFO - Callback received from user 444111495: category_2
+2026-08-23 14:57:38 - telegram_bot - INFO - Category 2 selected by user 444111495
+2026-08-23 14:57:39 - telegram_bot - INFO - Received webhook update: 21524258
+2026-08-23 14:57:39 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 14:57:39 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 14:57:42 - telegram_bot - INFO - Admin services page accessed
+2026-08-23 14:57:46 - telegram_bot - INFO - Received webhook update: 21524259
+2026-08-23 14:57:46 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 14:57:46 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 14:57:46 - telegram_bot - INFO - Received webhook update: 21524260
+2026-08-23 14:57:46 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 14:57:46 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 14:57:48 - telegram_bot - INFO - Received webhook update: 21524261
+2026-08-23 14:57:48 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 14:57:48 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 14:57:49 - telegram_bot - INFO - Received webhook update: 21524262
+2026-08-23 14:57:49 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 14:57:49 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 14:57:50 - telegram_bot - INFO - Received webhook update: 21524263
+2026-08-23 14:57:50 - telegram_bot - INFO - Callback received from user 444111495: category_2
+2026-08-23 14:57:50 - telegram_bot - INFO - Category 2 selected by user 444111495
+2026-08-23 15:00:06 - telegram_bot - INFO - Shutting down application...
+2026-08-23 15:00:06 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 15:00:06 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 15:00:06 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 15:08:39 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 15:08:39 - telegram_bot - INFO - Debug mode: True
+2026-08-23 15:08:39 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 15:08:39 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 15:08:39 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 15:08:48 - telegram_bot - INFO - Received webhook update: 21524264
+2026-08-23 15:08:48 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 15:08:48 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 15:08:49 - telegram_bot - INFO - Received webhook update: 21524265
+2026-08-23 15:08:49 - telegram_bot - INFO - Callback received from user 444111495: category_2
+2026-08-23 15:08:49 - telegram_bot - INFO - Category 2 selected by user 444111495
+2026-08-23 15:08:49 - telegram_bot - INFO - Full API response for category 2: {'status': 'success', 'data': []}
+2026-08-23 15:08:49 - telegram_bot - INFO - Data type: <class 'dict'>
+2026-08-23 15:08:49 - telegram_bot - INFO - Data keys: dict_keys(['status', 'data'])
+2026-08-23 15:08:51 - telegram_bot - INFO - Received webhook update: 21524266
+2026-08-23 15:08:51 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 15:08:51 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 15:08:52 - telegram_bot - INFO - Received webhook update: 21524267
+2026-08-23 15:08:52 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 15:08:52 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 15:08:52 - telegram_bot - INFO - Full API response for category 1: {'status': 'success', 'data': [{'id': 1, 'name': '10 گیگ', 'category_id': 1, 'panel_id': 1, 'panel_name': 'آلمان', 'inbound_id': '2', 'volume': '10', 'duration': 30, 'users': None, 'price': 110000, 'payment_link': 'http://example.com'}]}
+2026-08-23 15:08:52 - telegram_bot - INFO - Data type: <class 'dict'>
+2026-08-23 15:08:52 - telegram_bot - INFO - Data keys: dict_keys(['status', 'data'])
+2026-08-23 15:08:59 - telegram_bot - INFO - Received webhook update: 21524268
+2026-08-23 15:08:59 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 15:08:59 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 15:09:00 - telegram_bot - INFO - Received webhook update: 21524269
+2026-08-23 15:09:00 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 15:09:00 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 15:09:00 - telegram_bot - INFO - Full API response for category 1: {'status': 'success', 'data': [{'id': 1, 'name': '10 گیگ', 'category_id': 1, 'panel_id': 1, 'panel_name': 'آلمان', 'inbound_id': '2', 'volume': '10', 'duration': 30, 'users': None, 'price': 110000, 'payment_link': 'http://example.com'}]}
+2026-08-23 15:09:00 - telegram_bot - INFO - Data type: <class 'dict'>
+2026-08-23 15:09:00 - telegram_bot - INFO - Data keys: dict_keys(['status', 'data'])
+2026-08-23 15:09:02 - telegram_bot - INFO - Received webhook update: 21524270
+2026-08-23 15:09:02 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 15:09:02 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 15:09:03 - telegram_bot - INFO - Received webhook update: 21524271
+2026-08-23 15:09:03 - telegram_bot - INFO - Callback received from user 444111495: category_2
+2026-08-23 15:09:03 - telegram_bot - INFO - Category 2 selected by user 444111495
+2026-08-23 15:09:03 - telegram_bot - INFO - Full API response for category 2: {'status': 'success', 'data': []}
+2026-08-23 15:09:03 - telegram_bot - INFO - Data type: <class 'dict'>
+2026-08-23 15:09:03 - telegram_bot - INFO - Data keys: dict_keys(['status', 'data'])
+2026-08-23 15:09:59 - telegram_bot - INFO - Shutting down application...
+2026-08-23 15:09:59 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 15:09:59 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 15:09:59 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 15:12:32 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 15:12:32 - telegram_bot - INFO - Debug mode: True
+2026-08-23 15:12:32 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 15:12:32 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 15:12:32 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 15:12:39 - telegram_bot - INFO - Received webhook update: 21524272
+2026-08-23 15:12:39 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 15:12:39 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 15:12:40 - telegram_bot - INFO - Received webhook update: 21524273
+2026-08-23 15:12:40 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 15:12:40 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 15:12:41 - telegram_bot - INFO - Received webhook update: 21524274
+2026-08-23 15:12:41 - telegram_bot - INFO - Callback received from user 444111495: category_2
+2026-08-23 15:12:41 - telegram_bot - INFO - Category 2 selected by user 444111495
+2026-08-23 15:12:41 - telegram_bot - INFO - Full API response for category 2: {'status': 'success', 'data': []}
+2026-08-23 15:12:41 - telegram_bot - INFO - Services list: []
+2026-08-23 15:12:41 - telegram_bot - INFO - Services length: 0
+2026-08-23 15:12:41 - telegram_bot - INFO - Services is empty - showing empty message
+2026-08-23 15:12:45 - telegram_bot - INFO - Received webhook update: 21524275
+2026-08-23 15:12:45 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 15:12:45 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 15:12:46 - telegram_bot - INFO - Received webhook update: 21524276
+2026-08-23 15:12:46 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 15:12:46 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 15:12:46 - telegram_bot - INFO - Full API response for category 1: {'status': 'success', 'data': [{'id': 1, 'name': '10 گیگ', 'category_id': 1, 'panel_id': 1, 'panel_name': 'آلمان', 'inbound_id': '2', 'volume': '10', 'duration': 30, 'users': None, 'price': 110000, 'payment_link': 'http://example.com'}]}
+2026-08-23 15:12:46 - telegram_bot - INFO - Services list: [{'id': 1, 'name': '10 گیگ', 'category_id': 1, 'panel_id': 1, 'panel_name': 'آلمان', 'inbound_id': '2', 'volume': '10', 'duration': 30, 'users': None, 'price': 110000, 'payment_link': 'http://example.com'}]
+2026-08-23 15:12:46 - telegram_bot - INFO - Services length: 1
+2026-08-23 15:12:48 - telegram_bot - INFO - Received webhook update: 21524277
+2026-08-23 15:12:48 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 15:12:48 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 15:12:50 - telegram_bot - INFO - Received webhook update: 21524278
+2026-08-23 15:12:50 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 15:12:50 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 15:12:59 - telegram_bot - INFO - Received webhook update: 21524279
+2026-08-23 15:12:59 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 15:12:59 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 15:12:59 - telegram_bot - INFO - Full API response for category 1: {'status': 'success', 'data': [{'id': 1, 'name': '10 گیگ', 'category_id': 1, 'panel_id': 1, 'panel_name': 'آلمان', 'inbound_id': '2', 'volume': '10', 'duration': 30, 'users': None, 'price': 110000, 'payment_link': 'http://example.com'}]}
+2026-08-23 15:12:59 - telegram_bot - INFO - Services list: [{'id': 1, 'name': '10 گیگ', 'category_id': 1, 'panel_id': 1, 'panel_name': 'آلمان', 'inbound_id': '2', 'volume': '10', 'duration': 30, 'users': None, 'price': 110000, 'payment_link': 'http://example.com'}]
+2026-08-23 15:12:59 - telegram_bot - INFO - Services length: 1
+2026-08-23 15:13:28 - telegram_bot - ERROR - Error updating service: Instance <ServiceDB at 0x78be253baa50> is not bound to a Session; attribute refresh operation cannot proceed (Background on this error at: https://sqlalche.me/e/20/bhk3)
+2026-08-23 15:13:35 - telegram_bot - ERROR - Error updating service: Instance <ServiceDB at 0x78be27562900> is not bound to a Session; attribute refresh operation cannot proceed (Background on this error at: https://sqlalche.me/e/20/bhk3)
+2026-08-23 15:14:08 - telegram_bot - INFO - Admin categories page accessed
+2026-08-23 15:14:11 - telegram_bot - INFO - Admin panels page accessed
+2026-08-23 15:14:12 - telegram_bot - INFO - Fetching inbounds from: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-23 15:14:12 - telegram_bot - WARNING - Inbounds endpoint not found: https://du03.spacegate.ir:2053/3r18yxe69fjaBoPEim/panel/api/inbounds/list
+2026-08-23 15:14:16 - telegram_bot - INFO - Panel updated: آلمان (ID: 1)
+2026-08-23 15:19:31 - telegram_bot - INFO - Shutting down application...
+2026-08-23 15:19:31 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 15:19:31 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 15:19:31 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 15:20:59 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 15:20:59 - telegram_bot - INFO - Debug mode: True
+2026-08-23 15:20:59 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 15:20:59 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 15:20:59 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 15:21:01 - telegram_bot - INFO - Admin services page accessed
+2026-08-23 15:21:09 - telegram_bot - INFO - Service updated: 10 گیگ (ID: 1)
+2026-08-23 15:22:14 - telegram_bot - INFO - Received webhook update: 21524280
+2026-08-23 15:22:14 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 15:22:14 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 15:22:15 - telegram_bot - INFO - Received webhook update: 21524281
+2026-08-23 15:22:15 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 15:22:15 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 15:22:15 - telegram_bot - INFO - Full API response for category 1: {'status': 'success', 'data': [{'id': 1, 'name': '10 گیگ', 'category_id': 1, 'panel_id': 1, 'panel_name': 'آلمان', 'inbound_id': '2', 'volume': '11', 'duration': 1, 'users': None, 'price': 110000, 'payment_link': 'http://example.com'}]}
+2026-08-23 15:22:15 - telegram_bot - INFO - Services list: [{'id': 1, 'name': '10 گیگ', 'category_id': 1, 'panel_id': 1, 'panel_name': 'آلمان', 'inbound_id': '2', 'volume': '11', 'duration': 1, 'users': None, 'price': 110000, 'payment_link': 'http://example.com'}]
+2026-08-23 15:22:15 - telegram_bot - INFO - Services length: 1
+2026-08-23 15:23:38 - telegram_bot - INFO - Received webhook update: 21524282
+2026-08-23 15:23:38 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 15:23:38 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 15:23:39 - telegram_bot - INFO - Received webhook update: 21524283
+2026-08-23 15:23:39 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 15:23:39 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 15:23:40 - telegram_bot - INFO - Received webhook update: 21524284
+2026-08-23 15:23:40 - telegram_bot - INFO - Callback received from user 444111495: category_2
+2026-08-23 15:23:40 - telegram_bot - INFO - Category 2 selected by user 444111495
+2026-08-23 15:23:40 - telegram_bot - INFO - Full API response for category 2: {'status': 'success', 'data': []}
+2026-08-23 15:23:40 - telegram_bot - INFO - Services list: []
+2026-08-23 15:23:40 - telegram_bot - INFO - Services length: 0
+2026-08-23 15:23:40 - telegram_bot - INFO - Services is empty - showing empty message
+2026-08-23 15:24:06 - telegram_bot - INFO - Service created: 1 ماه (ID: 2)
+2026-08-23 15:24:09 - telegram_bot - INFO - Received webhook update: 21524285
+2026-08-23 15:24:09 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 15:24:09 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 15:24:10 - telegram_bot - INFO - Received webhook update: 21524286
+2026-08-23 15:24:10 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 15:24:10 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 15:24:11 - telegram_bot - INFO - Received webhook update: 21524287
+2026-08-23 15:24:11 - telegram_bot - INFO - Callback received from user 444111495: category_2
+2026-08-23 15:24:11 - telegram_bot - INFO - Category 2 selected by user 444111495
+2026-08-23 15:24:11 - telegram_bot - INFO - Full API response for category 2: {'status': 'success', 'data': [{'id': 2, 'name': '1 ماه', 'category_id': 2, 'panel_id': 1, 'panel_name': 'آلمان', 'inbound_id': '2', 'volume': None, 'duration': None, 'users': '2', 'price': 300000, 'payment_link': 'http://example.com'}]}
+2026-08-23 15:24:11 - telegram_bot - INFO - Services list: [{'id': 2, 'name': '1 ماه', 'category_id': 2, 'panel_id': 1, 'panel_name': 'آلمان', 'inbound_id': '2', 'volume': None, 'duration': None, 'users': '2', 'price': 300000, 'payment_link': 'http://example.com'}]
+2026-08-23 15:24:11 - telegram_bot - INFO - Services length: 1
+2026-08-23 15:24:17 - telegram_bot - INFO - Received webhook update: 21524288
+2026-08-23 15:24:17 - telegram_bot - INFO - Callback received from user 444111495: service_2
+2026-08-23 15:24:17 - telegram_bot - INFO - Service 2 selected by user 444111495
+2026-08-23 15:24:21 - telegram_bot - INFO - Received webhook update: 21524289
+2026-08-23 15:24:21 - telegram_bot - INFO - Callback received from user 444111495: purchase_2
+2026-08-23 15:24:21 - telegram_bot - INFO - Purchase requested by user 444111495 for service 2
+2026-08-23 15:24:23 - telegram_bot - INFO - Received webhook update: 21524290
+2026-08-23 15:24:23 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 15:24:23 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 15:24:26 - telegram_bot - INFO - Received webhook update: 21524291
+2026-08-23 15:24:26 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 15:24:26 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 15:24:27 - telegram_bot - INFO - Received webhook update: 21524292
+2026-08-23 15:24:27 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 15:24:27 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 15:24:27 - telegram_bot - INFO - Full API response for category 1: {'status': 'success', 'data': [{'id': 1, 'name': '10 گیگ', 'category_id': 1, 'panel_id': 1, 'panel_name': 'آلمان', 'inbound_id': '2', 'volume': '11', 'duration': 1, 'users': None, 'price': 110000, 'payment_link': 'http://example.com'}]}
+2026-08-23 15:24:27 - telegram_bot - INFO - Services list: [{'id': 1, 'name': '10 گیگ', 'category_id': 1, 'panel_id': 1, 'panel_name': 'آلمان', 'inbound_id': '2', 'volume': '11', 'duration': 1, 'users': None, 'price': 110000, 'payment_link': 'http://example.com'}]
+2026-08-23 15:24:27 - telegram_bot - INFO - Services length: 1
+2026-08-23 15:29:01 - telegram_bot - INFO - Shutting down application...
+2026-08-23 15:29:01 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 15:29:01 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 15:29:01 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 15:33:36 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 15:33:36 - telegram_bot - INFO - Debug mode: True
+2026-08-23 15:33:36 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 15:33:36 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 15:33:36 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 15:33:37 - telegram_bot - INFO - Received webhook update: 21524293
+2026-08-23 15:33:37 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 15:33:37 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 15:33:39 - telegram_bot - INFO - Received webhook update: 21524294
+2026-08-23 15:33:39 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 15:33:39 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 15:34:13 - telegram_bot - INFO - Service created: 2 ماه (ID: 3)
+2026-08-23 15:34:21 - telegram_bot - INFO - Received webhook update: 21524295
+2026-08-23 15:34:21 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 15:34:21 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 15:34:23 - telegram_bot - INFO - Received webhook update: 21524296
+2026-08-23 15:34:23 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 15:34:23 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 15:34:24 - telegram_bot - INFO - Received webhook update: 21524297
+2026-08-23 15:34:24 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 15:34:24 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 15:34:28 - telegram_bot - INFO - Received webhook update: 21524298
+2026-08-23 15:34:28 - telegram_bot - INFO - Callback received from user 444111495: duration_1_1
+2026-08-23 15:34:30 - telegram_bot - INFO - Received webhook update: 21524299
+2026-08-23 15:34:30 - telegram_bot - INFO - Callback received from user 444111495: duration_1_2
+2026-08-23 15:34:33 - telegram_bot - INFO - Received webhook update: 21524300
+2026-08-23 15:34:33 - telegram_bot - INFO - Callback received from user 444111495: duration_1_1
+2026-08-23 15:34:34 - telegram_bot - INFO - Received webhook update: 21524301
+2026-08-23 15:34:34 - telegram_bot - INFO - Callback received from user 444111495: duration_1_2
+2026-08-23 15:34:35 - telegram_bot - INFO - Received webhook update: 21524302
+2026-08-23 15:34:35 - telegram_bot - INFO - Callback received from user 444111495: duration_1_1
+2026-08-23 15:34:37 - telegram_bot - INFO - Received webhook update: 21524303
+2026-08-23 15:34:37 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 15:34:37 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 15:34:39 - telegram_bot - INFO - Received webhook update: 21524304
+2026-08-23 15:34:39 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 15:34:39 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 15:34:53 - telegram_bot - INFO - Received webhook update: 21524305
+2026-08-23 15:34:53 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 15:34:53 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 15:34:54 - telegram_bot - INFO - Received webhook update: 21524306
+2026-08-23 15:34:54 - telegram_bot - INFO - Callback received from user 444111495: category_2
+2026-08-23 15:34:54 - telegram_bot - INFO - Category 2 selected by user 444111495
+2026-08-23 15:34:57 - telegram_bot - INFO - Received webhook update: 21524307
+2026-08-23 15:34:57 - telegram_bot - INFO - Callback received from user 444111495: service_2
+2026-08-23 15:34:57 - telegram_bot - INFO - Service 2 selected by user 444111495
+2026-08-23 15:34:59 - telegram_bot - INFO - Received webhook update: 21524308
+2026-08-23 15:34:59 - telegram_bot - INFO - Callback received from user 444111495: category_2
+2026-08-23 15:34:59 - telegram_bot - INFO - Category 2 selected by user 444111495
+2026-08-23 15:35:22 - telegram_bot - INFO - Service created: 2 نامحدود (ID: 4)
+2026-08-23 15:35:25 - telegram_bot - INFO - Received webhook update: 21524309
+2026-08-23 15:35:25 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 15:35:25 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 15:35:26 - telegram_bot - INFO - Received webhook update: 21524310
+2026-08-23 15:35:26 - telegram_bot - INFO - Callback received from user 444111495: category_2
+2026-08-23 15:35:26 - telegram_bot - INFO - Category 2 selected by user 444111495
+2026-08-23 15:35:39 - telegram_bot - INFO - Service updated: 1 ماه (ID: 2)
+2026-08-23 15:35:43 - telegram_bot - INFO - Received webhook update: 21524311
+2026-08-23 15:35:43 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 15:35:43 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 15:35:44 - telegram_bot - INFO - Received webhook update: 21524312
+2026-08-23 15:35:44 - telegram_bot - INFO - Callback received from user 444111495: category_2
+2026-08-23 15:35:44 - telegram_bot - INFO - Category 2 selected by user 444111495
+2026-08-23 15:35:45 - telegram_bot - INFO - Received webhook update: 21524313
+2026-08-23 15:35:45 - telegram_bot - INFO - Callback received from user 444111495: duration_2_1
+2026-08-23 15:35:47 - telegram_bot - INFO - Received webhook update: 21524314
+2026-08-23 15:35:47 - telegram_bot - INFO - Callback received from user 444111495: duration_2_2
+2026-08-23 15:35:48 - telegram_bot - INFO - Received webhook update: 21524315
+2026-08-23 15:35:48 - telegram_bot - INFO - Callback received from user 444111495: duration_2_1
+2026-08-23 15:35:49 - telegram_bot - INFO - Received webhook update: 21524316
+2026-08-23 15:35:49 - telegram_bot - INFO - Callback received from user 444111495: duration_2_2
+2026-08-23 15:35:50 - telegram_bot - INFO - Received webhook update: 21524317
+2026-08-23 15:35:50 - telegram_bot - INFO - Callback received from user 444111495: duration_2_1
+2026-08-23 15:38:18 - telegram_bot - INFO - Shutting down application...
+2026-08-23 15:38:18 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 15:38:18 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 15:38:18 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 15:40:05 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 15:40:05 - telegram_bot - INFO - Debug mode: True
+2026-08-23 15:40:05 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 15:40:05 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 15:40:05 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 15:40:10 - telegram_bot - INFO - Received webhook update: 21524318
+2026-08-23 15:40:10 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 15:40:10 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 15:40:12 - telegram_bot - INFO - Received webhook update: 21524319
+2026-08-23 15:40:12 - telegram_bot - INFO - Callback received from user 444111495: category_2
+2026-08-23 15:40:12 - telegram_bot - INFO - Category 2 selected by user 444111495
+2026-08-23 15:40:14 - telegram_bot - INFO - Received webhook update: 21524320
+2026-08-23 15:40:14 - telegram_bot - INFO - Callback received from user 444111495: duration_2_2
+2026-08-23 15:40:15 - telegram_bot - INFO - Received webhook update: 21524321
+2026-08-23 15:40:15 - telegram_bot - INFO - Callback received from user 444111495: duration_2_1
+2026-08-23 15:40:18 - telegram_bot - INFO - Received webhook update: 21524322
+2026-08-23 15:40:18 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 15:40:18 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 15:40:19 - telegram_bot - INFO - Received webhook update: 21524323
+2026-08-23 15:40:19 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 15:40:19 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 15:40:21 - telegram_bot - INFO - Received webhook update: 21524324
+2026-08-23 15:40:21 - telegram_bot - INFO - Callback received from user 444111495: duration_1_2
+2026-08-23 15:40:22 - telegram_bot - INFO - Received webhook update: 21524325
+2026-08-23 15:40:22 - telegram_bot - INFO - Callback received from user 444111495: duration_1_1
+2026-08-23 15:40:24 - telegram_bot - INFO - Received webhook update: 21524326
+2026-08-23 15:40:24 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 15:40:24 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 15:40:26 - telegram_bot - INFO - Received webhook update: 21524327
+2026-08-23 15:40:26 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 15:40:26 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 15:40:32 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-23 15:40:34 - telegram_bot - INFO - Admin services page accessed
+2026-08-23 15:40:37 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-23 15:40:46 - telegram_bot - INFO - Admin services page accessed
+2026-08-23 15:40:48 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-23 15:40:49 - telegram_bot - INFO - Admin services page accessed
+2026-08-23 15:40:57 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-23 15:41:02 - telegram_bot - INFO - Admin services page accessed
+2026-08-23 15:41:05 - telegram_bot - INFO - Received webhook update: 21524328
+2026-08-23 15:41:05 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 15:41:05 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 15:41:08 - telegram_bot - INFO - Received webhook update: 21524329
+2026-08-23 15:41:08 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 15:41:08 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 15:41:10 - telegram_bot - INFO - Received webhook update: 21524330
+2026-08-23 15:41:10 - telegram_bot - INFO - Callback received from user 444111495: service_1
+2026-08-23 15:41:10 - telegram_bot - INFO - Service 1 selected by user 444111495
+2026-08-23 15:41:33 - telegram_bot - INFO - Received webhook update: 21524331
+2026-08-23 15:41:33 - telegram_bot - INFO - Callback received from user 444111495: purchase_1
+2026-08-23 15:41:33 - telegram_bot - INFO - Purchase requested by user 444111495 for service 1
+2026-08-23 15:41:34 - telegram_bot - INFO - Received webhook update: 21524332
+2026-08-23 15:41:34 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 15:41:34 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 15:41:37 - telegram_bot - INFO - Received webhook update: 21524333
+2026-08-23 15:41:37 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 15:41:37 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 15:41:39 - telegram_bot - INFO - Received webhook update: 21524334
+2026-08-23 15:41:39 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 15:41:39 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 15:41:40 - telegram_bot - INFO - Received webhook update: 21524335
+2026-08-23 15:41:40 - telegram_bot - INFO - Callback received from user 444111495: status
+2026-08-23 15:41:40 - telegram_bot - INFO - Status requested for user: 444111495
+2026-08-23 15:41:40 - telegram_bot - ERROR - Error getting user status for 444111495: User 444111495 not found
+2026-08-23 15:41:40 - telegram_bot - ERROR - Error in handle_status: User 444111495 not found
+2026-08-23 15:41:44 - telegram_bot - INFO - Received webhook update: 21524336
+2026-08-23 15:41:44 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 15:41:44 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 15:42:04 - telegram_bot - INFO - Received webhook update: 21524337
+2026-08-23 15:42:04 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 15:42:04 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 15:42:43 - telegram_bot - INFO - Received webhook update: 21524338
+2026-08-23 15:42:43 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 15:42:43 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 15:42:46 - telegram_bot - INFO - Received webhook update: 21524339
+2026-08-23 15:42:46 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 15:42:46 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 15:42:48 - telegram_bot - INFO - Received webhook update: 21524340
+2026-08-23 15:42:48 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 15:42:48 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 15:42:49 - telegram_bot - INFO - Received webhook update: 21524341
+2026-08-23 15:42:49 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 15:42:49 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 15:42:51 - telegram_bot - INFO - Received webhook update: 21524342
+2026-08-23 15:42:51 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 15:42:51 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 15:43:28 - telegram_bot - INFO - Received webhook update: 21524343
+2026-08-23 15:43:28 - telegram_bot - INFO - Callback received from user 444111495: duration_1_2
+2026-08-23 15:43:29 - telegram_bot - INFO - Received webhook update: 21524344
+2026-08-23 15:43:29 - telegram_bot - INFO - Callback received from user 444111495: duration_1_1
+2026-08-23 15:45:27 - telegram_bot - INFO - Received webhook update: 21524345
+2026-08-23 15:45:27 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 15:45:27 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 15:45:29 - telegram_bot - INFO - Received webhook update: 21524346
+2026-08-23 15:45:29 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 15:45:29 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 15:45:35 - telegram_bot - INFO - Received webhook update: 21524347
+2026-08-23 15:45:35 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 15:45:35 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 15:45:37 - telegram_bot - INFO - Received webhook update: 21524348
+2026-08-23 15:45:37 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 15:45:37 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 15:46:07 - telegram_bot - INFO - Shutting down application...
+2026-08-23 15:46:07 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 15:46:07 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 15:46:07 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 16:12:56 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 16:12:56 - telegram_bot - INFO - Debug mode: True
+2026-08-23 16:12:56 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 16:12:56 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 16:12:56 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 16:13:02 - telegram_bot - INFO - Received webhook update: 21524349
+2026-08-23 16:13:02 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 16:13:02 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 16:13:03 - telegram_bot - INFO - Received webhook update: 21524350
+2026-08-23 16:13:03 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 16:13:03 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 16:13:05 - telegram_bot - INFO - Received webhook update: 21524351
+2026-08-23 16:13:05 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 16:13:05 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 16:13:09 - telegram_bot - INFO - Received webhook update: 21524352
+2026-08-23 16:13:09 - telegram_bot - INFO - Callback received from user 444111495: duration_1_1
+2026-08-23 16:13:09 - telegram_bot - ERROR - BadRequest error: Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+2026-08-23 16:13:11 - telegram_bot - INFO - Received webhook update: 21524353
+2026-08-23 16:13:11 - telegram_bot - INFO - Callback received from user 444111495: duration_1_2
+2026-08-23 16:13:12 - telegram_bot - INFO - Received webhook update: 21524354
+2026-08-23 16:13:12 - telegram_bot - INFO - Callback received from user 444111495: duration_1_1
+2026-08-23 16:13:19 - telegram_bot - INFO - Received webhook update: 21524355
+2026-08-23 16:13:19 - telegram_bot - INFO - Callback received from user 444111495: duration_1_1
+2026-08-23 16:13:19 - telegram_bot - ERROR - BadRequest error: Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+2026-08-23 16:13:21 - telegram_bot - INFO - Received webhook update: 21524356
+2026-08-23 16:13:21 - telegram_bot - INFO - Callback received from user 444111495: duration_1_2
+2026-08-23 16:13:23 - telegram_bot - INFO - Received webhook update: 21524357
+2026-08-23 16:13:23 - telegram_bot - INFO - Callback received from user 444111495: duration_1_1
+2026-08-23 16:13:31 - telegram_bot - INFO - Received webhook update: 21524358
+2026-08-23 16:13:31 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 16:13:31 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 16:13:33 - telegram_bot - INFO - Received webhook update: 21524359
+2026-08-23 16:13:33 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 16:13:33 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 16:13:34 - telegram_bot - INFO - Received webhook update: 21524360
+2026-08-23 16:13:34 - telegram_bot - INFO - Callback received from user 444111495: renew_service
+2026-08-23 16:13:34 - telegram_bot - INFO - Renew service requested by user: 444111495
+2026-08-23 16:13:35 - telegram_bot - INFO - Received webhook update: 21524361
+2026-08-23 16:13:35 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 16:13:35 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 16:13:36 - telegram_bot - INFO - Received webhook update: 21524362
+2026-08-23 16:13:36 - telegram_bot - INFO - Callback received from user 444111495: renew_service
+2026-08-23 16:13:36 - telegram_bot - INFO - Renew service requested by user: 444111495
+2026-08-23 16:13:40 - telegram_bot - INFO - Received webhook update: 21524363
+2026-08-23 16:13:40 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 16:13:40 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 16:13:41 - telegram_bot - INFO - Received webhook update: 21524364
+2026-08-23 16:13:41 - telegram_bot - INFO - Callback received from user 444111495: test_account
+2026-08-23 16:13:41 - telegram_bot - INFO - Test account requested by user: 444111495
+2026-08-23 16:13:42 - telegram_bot - INFO - Received webhook update: 21524365
+2026-08-23 16:13:42 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 16:13:42 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 16:13:43 - telegram_bot - INFO - Received webhook update: 21524366
+2026-08-23 16:13:43 - telegram_bot - INFO - Callback received from user 444111495: subordinates
+2026-08-23 16:13:43 - telegram_bot - INFO - Subordinates requested by user: 444111495
+2026-08-23 16:13:43 - telegram_bot - INFO - Found 0 subordinates for user 444111495
+2026-08-23 16:13:44 - telegram_bot - INFO - Received webhook update: 21524367
+2026-08-23 16:13:44 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 16:13:44 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 16:13:46 - telegram_bot - INFO - Received webhook update: 21524368
+2026-08-23 16:13:46 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 16:13:46 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 16:13:49 - telegram_bot - INFO - Received webhook update: 21524369
+2026-08-23 16:13:49 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 16:13:49 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 16:13:50 - telegram_bot - INFO - Received webhook update: 21524370
+2026-08-23 16:13:50 - telegram_bot - INFO - Callback received from user 444111495: status
+2026-08-23 16:13:50 - telegram_bot - INFO - Status requested for user: 444111495
+2026-08-23 16:13:50 - telegram_bot - ERROR - Error getting user status for 444111495: User 444111495 not found
+2026-08-23 16:13:50 - telegram_bot - ERROR - Error in handle_status: User 444111495 not found
+2026-08-23 16:13:52 - telegram_bot - INFO - Received webhook update: 21524371
+2026-08-23 16:13:52 - telegram_bot - INFO - Callback received from user 444111495: test_account
+2026-08-23 16:13:52 - telegram_bot - INFO - Test account requested by user: 444111495
+2026-08-23 16:13:58 - telegram_bot - INFO - Received webhook update: 21524372
+2026-08-23 16:13:58 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 16:13:58 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 16:13:59 - telegram_bot - INFO - Received webhook update: 21524373
+2026-08-23 16:13:59 - telegram_bot - INFO - Callback received from user 444111495: help
+2026-08-23 16:13:59 - telegram_bot - INFO - Help requested by user: 444111495
+2026-08-23 16:14:01 - telegram_bot - INFO - Received webhook update: 21524374
+2026-08-23 16:14:01 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 16:14:01 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 16:14:02 - telegram_bot - INFO - Received webhook update: 21524375
+2026-08-23 16:14:02 - telegram_bot - INFO - Callback received from user 444111495: test_account
+2026-08-23 16:14:02 - telegram_bot - INFO - Test account requested by user: 444111495
+2026-08-23 16:14:05 - telegram_bot - INFO - Received webhook update: 21524376
+2026-08-23 16:14:05 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 16:14:05 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 16:14:10 - telegram_bot - INFO - Received webhook update: 21524377
+2026-08-23 16:14:10 - telegram_bot - INFO - Callback received from user 444111495: test_account
+2026-08-23 16:14:10 - telegram_bot - INFO - Test account requested by user: 444111495
+2026-08-23 16:14:11 - telegram_bot - INFO - Received webhook update: 21524378
+2026-08-23 16:14:11 - telegram_bot - INFO - Callback received from user 444111495: connection_guide
+2026-08-23 16:14:11 - telegram_bot - INFO - Connection guide requested by user: 444111495
+2026-08-23 16:14:15 - telegram_bot - INFO - Received webhook update: 21524379
+2026-08-23 16:14:15 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 16:14:15 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 16:14:17 - telegram_bot - INFO - Received webhook update: 21524380
+2026-08-23 16:14:17 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 16:14:17 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 16:14:19 - telegram_bot - INFO - Received webhook update: 21524381
+2026-08-23 16:14:19 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 16:14:19 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 16:14:20 - telegram_bot - INFO - Received webhook update: 21524382
+2026-08-23 16:14:20 - telegram_bot - INFO - Callback received from user 444111495: duration_1_1
+2026-08-23 16:14:20 - telegram_bot - ERROR - BadRequest error: Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+2026-08-23 16:14:22 - telegram_bot - INFO - Received webhook update: 21524383
+2026-08-23 16:14:22 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 16:14:22 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 16:14:23 - telegram_bot - INFO - Shutting down application...
+2026-08-23 16:14:23 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 16:14:23 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 16:14:23 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 16:17:25 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 16:17:25 - telegram_bot - INFO - Debug mode: True
+2026-08-23 16:17:25 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 16:17:25 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 16:17:25 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 16:17:27 - telegram_bot - INFO - Received webhook update: 21524384
+2026-08-23 16:17:27 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 16:17:27 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 16:17:28 - telegram_bot - INFO - Received webhook update: 21524385
+2026-08-23 16:17:28 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 16:17:28 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 16:17:28 - telegram_bot - ERROR - Error in handle_category_selection: Can't parse inlinekeyboardbutton: field "text" must be of type string
+2026-08-23 16:17:31 - telegram_bot - INFO - Received webhook update: 21524386
+2026-08-23 16:17:31 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 16:17:31 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 16:17:32 - telegram_bot - INFO - Received webhook update: 21524387
+2026-08-23 16:17:32 - telegram_bot - INFO - Callback received from user 444111495: category_2
+2026-08-23 16:17:32 - telegram_bot - INFO - Category 2 selected by user 444111495
+2026-08-23 16:17:32 - telegram_bot - ERROR - Error in handle_category_selection: Can't parse inlinekeyboardbutton: field "text" must be of type string
+2026-08-23 16:17:33 - telegram_bot - INFO - Received webhook update: 21524388
+2026-08-23 16:17:33 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 16:17:33 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 16:17:37 - telegram_bot - INFO - Shutting down application...
+2026-08-23 16:17:37 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 16:17:37 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 16:17:37 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 16:20:55 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 16:20:55 - telegram_bot - INFO - Debug mode: True
+2026-08-23 16:20:55 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 16:20:55 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 16:20:55 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 16:20:57 - telegram_bot - INFO - Received webhook update: 21524389
+2026-08-23 16:20:57 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 16:20:57 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 16:20:59 - telegram_bot - INFO - Received webhook update: 21524390
+2026-08-23 16:20:59 - telegram_bot - INFO - Callback received from user 444111495: duration_1_2
+2026-08-23 16:21:00 - telegram_bot - INFO - Received webhook update: 21524391
+2026-08-23 16:21:00 - telegram_bot - INFO - Callback received from user 444111495: duration_1_1
+2026-08-23 16:25:11 - telegram_bot - INFO - Received webhook update: 21524392
+2026-08-23 16:25:11 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 16:25:11 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 16:25:15 - telegram_bot - INFO - Received webhook update: 21524393
+2026-08-23 16:25:15 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 16:25:15 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 16:25:16 - telegram_bot - INFO - Received webhook update: 21524394
+2026-08-23 16:25:16 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 16:25:16 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 16:25:18 - telegram_bot - INFO - Received webhook update: 21524395
+2026-08-23 16:25:18 - telegram_bot - INFO - Callback received from user 444111495: category_2
+2026-08-23 16:25:18 - telegram_bot - INFO - Category 2 selected by user 444111495
+2026-08-23 16:25:20 - telegram_bot - INFO - Received webhook update: 21524396
+2026-08-23 16:25:20 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 16:25:20 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 16:25:21 - telegram_bot - INFO - Received webhook update: 21524397
+2026-08-23 16:25:21 - telegram_bot - INFO - Callback received from user 444111495: renew_service
+2026-08-23 16:25:21 - telegram_bot - INFO - Renew service requested by user: 444111495
+2026-08-23 16:25:31 - telegram_bot - INFO - Received webhook update: 21524398
+2026-08-23 16:25:31 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 16:25:31 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 16:25:34 - telegram_bot - INFO - Received webhook update: 21524399
+2026-08-23 16:25:34 - telegram_bot - INFO - Callback received from user 444111495: renew_service
+2026-08-23 16:25:34 - telegram_bot - INFO - Renew service requested by user: 444111495
+2026-08-23 16:25:39 - telegram_bot - INFO - Received webhook update: 21524400
+2026-08-23 16:25:39 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 16:25:39 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 16:25:41 - telegram_bot - INFO - Received webhook update: 21524401
+2026-08-23 16:25:41 - telegram_bot - INFO - Callback received from user 444111495: subordinates
+2026-08-23 16:25:41 - telegram_bot - INFO - Subordinates requested by user: 444111495
+2026-08-23 16:25:41 - telegram_bot - INFO - Found 0 subordinates for user 444111495
+2026-08-23 16:25:43 - telegram_bot - INFO - Received webhook update: 21524402
+2026-08-23 16:25:43 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 16:25:43 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 16:25:47 - telegram_bot - INFO - Received webhook update: 21524403
+2026-08-23 16:25:47 - telegram_bot - INFO - Callback received from user 444111495: support
+2026-08-23 16:25:47 - telegram_bot - INFO - Support requested by user: 444111495
+2026-08-23 16:25:49 - telegram_bot - INFO - Received webhook update: 21524404
+2026-08-23 16:25:49 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 16:25:49 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 16:25:50 - telegram_bot - INFO - Received webhook update: 21524405
+2026-08-23 16:25:50 - telegram_bot - INFO - Callback received from user 444111495: help
+2026-08-23 16:25:50 - telegram_bot - INFO - Help requested by user: 444111495
+2026-08-23 16:25:51 - telegram_bot - INFO - Received webhook update: 21524406
+2026-08-23 16:25:51 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 16:25:51 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 16:25:53 - telegram_bot - INFO - Received webhook update: 21524407
+2026-08-23 16:25:53 - telegram_bot - INFO - Callback received from user 444111495: test_account
+2026-08-23 16:25:53 - telegram_bot - INFO - Test account requested by user: 444111495
+2026-08-23 16:25:54 - telegram_bot - INFO - Received webhook update: 21524408
+2026-08-23 16:25:54 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 16:25:54 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 16:25:58 - telegram_bot - INFO - Received webhook update: 21524409
+2026-08-23 16:25:58 - telegram_bot - INFO - Callback received from user 444111495: test_account
+2026-08-23 16:25:58 - telegram_bot - INFO - Test account requested by user: 444111495
+2026-08-23 16:26:08 - telegram_bot - INFO - Received webhook update: 21524410
+2026-08-23 16:26:08 - telegram_bot - INFO - Callback received from user 444111495: get_test_account
+2026-08-23 16:26:09 - telegram_bot - INFO - Received webhook update: 21524411
+2026-08-23 16:26:09 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 16:26:09 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 16:26:17 - telegram_bot - INFO - Received webhook update: 21524412
+2026-08-23 16:26:17 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 16:26:17 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 16:26:21 - telegram_bot - INFO - Received webhook update: 21524413
+2026-08-23 16:26:21 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 16:26:21 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 16:26:24 - telegram_bot - INFO - Received webhook update: 21524414
+2026-08-23 16:26:24 - telegram_bot - INFO - Callback received from user 444111495: renew_service
+2026-08-23 16:26:24 - telegram_bot - INFO - Renew service requested by user: 444111495
+2026-08-23 16:26:30 - telegram_bot - INFO - Shutting down application...
+2026-08-23 16:26:30 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 16:26:30 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 16:26:30 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 16:40:26 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 16:40:26 - telegram_bot - INFO - Debug mode: True
+2026-08-23 16:40:26 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 16:40:26 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 16:40:26 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 16:40:30 - telegram_bot - INFO - Received webhook update: 21524415
+2026-08-23 16:40:30 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 16:40:30 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 16:40:50 - telegram_bot - INFO - Received webhook update: 21524416
+2026-08-23 16:40:50 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 16:40:50 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 16:40:52 - telegram_bot - INFO - Received webhook update: 21524417
+2026-08-23 16:40:52 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 16:40:52 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 16:40:52 - telegram_bot - INFO - Received webhook update: 21524418
+2026-08-23 16:40:52 - telegram_bot - INFO - Callback received from user 444111495: renew_service
+2026-08-23 16:40:52 - telegram_bot - INFO - Renew service requested by user: 444111495
+2026-08-23 16:40:54 - telegram_bot - INFO - Received webhook update: 21524419
+2026-08-23 16:40:54 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 16:40:54 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 16:40:54 - telegram_bot - INFO - Received webhook update: 21524420
+2026-08-23 16:40:54 - telegram_bot - INFO - Callback received from user 444111495: test_account
+2026-08-23 16:40:54 - telegram_bot - INFO - Test account requested by user: 444111495
+2026-08-23 16:40:59 - telegram_bot - INFO - Received webhook update: 21524421
+2026-08-23 16:40:59 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 16:40:59 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 16:41:01 - telegram_bot - INFO - Shutting down application...
+2026-08-23 16:41:01 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 16:41:01 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 16:41:01 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 16:41:23 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 16:41:23 - telegram_bot - INFO - Debug mode: True
+2026-08-23 16:41:23 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 16:41:23 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 16:41:23 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 16:41:26 - telegram_bot - INFO - Received webhook update: 21524422
+2026-08-23 16:41:26 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 16:41:26 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 16:41:27 - telegram_bot - INFO - Received webhook update: 21524423
+2026-08-23 16:41:27 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 16:41:27 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 16:41:30 - telegram_bot - INFO - Received webhook update: 21524424
+2026-08-23 16:41:30 - telegram_bot - INFO - Callback received from user 444111495: test_account
+2026-08-23 16:41:30 - telegram_bot - INFO - Test account requested by user: 444111495
+2026-08-23 16:41:48 - telegram_bot - INFO - Received webhook update: 21524425
+2026-08-23 16:41:48 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 16:41:48 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 16:41:49 - telegram_bot - INFO - Received webhook update: 21524426
+2026-08-23 16:41:49 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 16:41:49 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 16:41:51 - telegram_bot - INFO - Received webhook update: 21524427
+2026-08-23 16:41:51 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 16:41:51 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 16:41:54 - telegram_bot - INFO - Received webhook update: 21524428
+2026-08-23 16:41:54 - telegram_bot - INFO - Callback received from user 444111495: duration_1_2
+2026-08-23 16:41:55 - telegram_bot - INFO - Received webhook update: 21524429
+2026-08-23 16:41:55 - telegram_bot - INFO - Callback received from user 444111495: duration_1_1
+2026-08-23 16:41:57 - telegram_bot - INFO - Received webhook update: 21524430
+2026-08-23 16:41:57 - telegram_bot - INFO - Callback received from user 444111495: service_1
+2026-08-23 16:41:57 - telegram_bot - INFO - Service 1 selected by user 444111495
+2026-08-23 16:42:03 - telegram_bot - INFO - Received webhook update: 21524431
+2026-08-23 16:42:03 - telegram_bot - INFO - Callback received from user 444111495: purchase_1
+2026-08-23 16:42:03 - telegram_bot - INFO - Purchase requested by user 444111495 for service 1
+2026-08-23 16:43:16 - telegram_bot - INFO - Received webhook update: 21524432
+2026-08-23 16:43:16 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 16:43:16 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 16:43:19 - telegram_bot - INFO - Received webhook update: 21524433
+2026-08-23 16:43:19 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 16:43:19 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 16:43:21 - telegram_bot - INFO - Received webhook update: 21524434
+2026-08-23 16:43:21 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 16:43:21 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 16:43:23 - telegram_bot - INFO - Received webhook update: 21524435
+2026-08-23 16:43:23 - telegram_bot - INFO - Callback received from user 444111495: service_1
+2026-08-23 16:43:23 - telegram_bot - INFO - Service 1 selected by user 444111495
+2026-08-23 16:43:24 - telegram_bot - INFO - Received webhook update: 21524436
+2026-08-23 16:43:24 - telegram_bot - INFO - Callback received from user 444111495: purchase_1
+2026-08-23 16:43:24 - telegram_bot - INFO - Purchase requested by user 444111495 for service 1
+2026-08-23 16:47:35 - telegram_bot - INFO - Received webhook update: 21524437
+2026-08-23 16:50:42 - telegram_bot - INFO - Shutting down application...
+2026-08-23 16:50:42 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 16:50:42 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 16:50:42 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 17:09:52 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 17:09:52 - telegram_bot - INFO - Debug mode: True
+2026-08-23 17:09:52 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 17:09:53 - telegram_bot - ERROR - Error setting webhook: Bad webhook: failed to resolve host: temporary failure in name resolution
+2026-08-23 17:09:53 - telegram_bot - INFO - Webhook setup: {'status': 'error', 'message': 'Bad webhook: failed to resolve host: temporary failure in name resolution'}
+2026-08-23 17:12:27 - telegram_bot - INFO - Shutting down application...
+2026-08-23 17:12:27 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 17:12:27 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 17:12:27 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 17:13:46 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 17:13:46 - telegram_bot - INFO - Debug mode: True
+2026-08-23 17:13:46 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 17:13:46 - telegram_bot - ERROR - Error setting webhook: Bad webhook: failed to resolve host: temporary failure in name resolution
+2026-08-23 17:13:46 - telegram_bot - INFO - Webhook setup: {'status': 'error', 'message': 'Bad webhook: failed to resolve host: temporary failure in name resolution'}
+2026-08-23 17:14:47 - telegram_bot - INFO - Admin services page accessed
+2026-08-23 17:14:51 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-23 17:16:47 - telegram_bot - INFO - Shutting down application...
+2026-08-23 17:16:47 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 17:16:47 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 17:16:47 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 17:40:08 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 17:40:08 - telegram_bot - INFO - Debug mode: True
+2026-08-23 17:40:08 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 17:40:08 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 17:40:08 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 17:40:08 - telegram_bot - INFO - Received webhook update: 21524439
+2026-08-23 17:40:08 - telegram_bot - INFO - User started the bot: 444111495 - Shell_man
+2026-08-23 17:40:08 - telegram_bot - INFO - User registered: 444111495
+2026-08-23 17:40:08 - telegram_bot - INFO - Main menu sent to user: 444111495
+2026-08-23 17:40:08 - telegram_bot - INFO - Received webhook update: 21524440
+2026-08-23 17:40:08 - telegram_bot - INFO - User started the bot: 444111495 - Shell_man
+2026-08-23 17:40:08 - telegram_bot - INFO - User updated: 444111495
+2026-08-23 17:40:08 - telegram_bot - INFO - Main menu sent to user: 444111495
+2026-08-23 17:40:08 - telegram_bot - INFO - Received webhook update: 21524441
+2026-08-23 17:40:08 - telegram_bot - INFO - User started the bot: 444111495 - Shell_man
+2026-08-23 17:40:08 - telegram_bot - INFO - User updated: 444111495
+2026-08-23 17:40:08 - telegram_bot - INFO - Main menu sent to user: 444111495
+2026-08-23 17:40:08 - telegram_bot - INFO - Received webhook update: 21524442
+2026-08-23 17:40:08 - telegram_bot - INFO - User started the bot: 444111495 - Shell_man
+2026-08-23 17:40:08 - telegram_bot - INFO - User updated: 444111495
+2026-08-23 17:40:08 - telegram_bot - INFO - Main menu sent to user: 444111495
+2026-08-23 17:40:08 - telegram_bot - INFO - Received webhook update: 21524443
+2026-08-23 17:40:08 - telegram_bot - INFO - User started the bot: 444111495 - Shell_man
+2026-08-23 17:40:08 - telegram_bot - INFO - User updated: 444111495
+2026-08-23 17:40:08 - telegram_bot - INFO - Main menu sent to user: 444111495
+2026-08-23 17:40:08 - telegram_bot - INFO - Received webhook update: 21524444
+2026-08-23 17:40:08 - telegram_bot - INFO - User started the bot: 444111495 - Shell_man
+2026-08-23 17:40:08 - telegram_bot - INFO - User updated: 444111495
+2026-08-23 17:40:08 - telegram_bot - INFO - Main menu sent to user: 444111495
+2026-08-23 17:40:08 - telegram_bot - INFO - Received webhook update: 21524446
+2026-08-23 17:40:08 - telegram_bot - INFO - User started the bot: 444111495 - Shell_man
+2026-08-23 17:40:08 - telegram_bot - INFO - User updated: 444111495
+2026-08-23 17:40:09 - telegram_bot - INFO - Main menu sent to user: 444111495
+2026-08-23 17:40:18 - telegram_bot - INFO - Received webhook update: 21524447
+2026-08-23 17:40:18 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 17:40:18 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 17:40:20 - telegram_bot - INFO - Received webhook update: 21524448
+2026-08-23 17:40:20 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 17:40:20 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 17:40:21 - telegram_bot - INFO - Received webhook update: 21524449
+2026-08-23 17:40:21 - telegram_bot - INFO - Callback received from user 444111495: duration_1_1
+2026-08-23 17:40:22 - telegram_bot - ERROR - BadRequest error: Message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message
+2026-08-23 17:40:23 - telegram_bot - INFO - Received webhook update: 21524450
+2026-08-23 17:40:23 - telegram_bot - INFO - Callback received from user 444111495: service_1
+2026-08-23 17:40:23 - telegram_bot - INFO - Service 1 selected by user 444111495
+2026-08-23 17:40:25 - telegram_bot - INFO - Received webhook update: 21524451
+2026-08-23 17:40:25 - telegram_bot - INFO - Callback received from user 444111495: purchase_1
+2026-08-23 17:40:25 - telegram_bot - INFO - Purchase requested by user 444111495 for service 1
+2026-08-23 17:40:42 - telegram_bot - INFO - Received webhook update: 21524452
+2026-08-23 17:40:54 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-23 17:40:57 - telegram_bot - INFO - Admin services page accessed
+2026-08-23 17:40:58 - telegram_bot - INFO - Admin categories page accessed
+2026-08-23 17:43:10 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-23 17:47:26 - telegram_bot - INFO - Shutting down application...
+2026-08-23 17:47:26 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 17:47:26 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 17:47:26 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 17:55:08 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 17:55:08 - telegram_bot - INFO - Debug mode: True
+2026-08-23 17:55:08 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 17:55:08 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 17:55:08 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 17:55:24 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-23 17:55:30 - telegram_bot - INFO - Admin reports page accessed
+2026-08-23 17:55:32 - telegram_bot - INFO - Admin services page accessed
+2026-08-23 17:55:33 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-23 17:55:42 - telegram_bot - INFO - Received webhook update: 21524453
+2026-08-23 17:55:42 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 17:55:42 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 17:55:45 - telegram_bot - INFO - Received webhook update: 21524454
+2026-08-23 17:55:45 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 17:55:45 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 17:55:46 - telegram_bot - INFO - Received webhook update: 21524455
+2026-08-23 17:55:46 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 17:55:46 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 17:55:47 - telegram_bot - INFO - Received webhook update: 21524456
+2026-08-23 17:55:47 - telegram_bot - INFO - Callback received from user 444111495: service_1
+2026-08-23 17:55:47 - telegram_bot - INFO - Service 1 selected by user 444111495
+2026-08-23 17:55:49 - telegram_bot - INFO - Received webhook update: 21524457
+2026-08-23 17:55:49 - telegram_bot - INFO - Callback received from user 444111495: purchase_1
+2026-08-23 17:55:49 - telegram_bot - INFO - Purchase requested by user 444111495 for service 1
+2026-08-23 17:55:54 - telegram_bot - INFO - Received webhook update: 21524458
+2026-08-23 17:55:54 - telegram_bot - INFO - Callback received from user 444111495: send_receipt_1
+2026-08-23 17:55:54 - telegram_bot - INFO - Receipt upload requested by user 444111495 for service 1
+2026-08-23 17:55:54 - telegram_bot - ERROR - Error handling callback send_receipt_1: Unknown error in HTTP implementation: TypeError('Object of type coroutine is not JSON serializable')
+2026-08-23 17:56:07 - telegram_bot - INFO - Received webhook update: 21524459
+2026-08-23 17:56:11 - telegram_bot - INFO - Received webhook update: 21524460
+2026-08-23 17:56:11 - telegram_bot - INFO - Callback received from user 444111495: send_receipt_1
+2026-08-23 17:56:11 - telegram_bot - INFO - Receipt upload requested by user 444111495 for service 1
+2026-08-23 17:56:11 - telegram_bot - ERROR - Error handling callback send_receipt_1: Unknown error in HTTP implementation: TypeError('Object of type coroutine is not JSON serializable')
+2026-08-23 17:58:54 - telegram_bot - INFO - Received webhook update: 21524461
+2026-08-23 17:58:54 - telegram_bot - INFO - Callback received from user 444111495: send_receipt_1
+2026-08-23 17:58:54 - telegram_bot - INFO - Receipt upload requested by user 444111495 for service 1
+2026-08-23 17:58:54 - telegram_bot - ERROR - Error handling callback send_receipt_1: Unknown error in HTTP implementation: TypeError('Object of type coroutine is not JSON serializable')
+2026-08-23 17:58:56 - telegram_bot - INFO - Received webhook update: 21524462
+2026-08-23 17:58:56 - telegram_bot - INFO - Callback received from user 444111495: send_receipt_1
+2026-08-23 17:58:56 - telegram_bot - INFO - Receipt upload requested by user 444111495 for service 1
+2026-08-23 17:58:56 - telegram_bot - ERROR - Error handling callback send_receipt_1: Unknown error in HTTP implementation: TypeError('Object of type coroutine is not JSON serializable')
+2026-08-23 17:59:10 - telegram_bot - INFO - Shutting down application...
+2026-08-23 17:59:10 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 17:59:10 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 17:59:10 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 18:00:37 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 18:00:37 - telegram_bot - INFO - Debug mode: True
+2026-08-23 18:00:37 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 18:00:37 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 18:00:37 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 18:00:39 - telegram_bot - INFO - Received webhook update: 21524463
+2026-08-23 18:00:39 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 18:00:39 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 18:00:59 - telegram_bot - INFO - Received webhook update: 21524464
+2026-08-23 18:00:59 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 18:00:59 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 18:01:00 - telegram_bot - INFO - Received webhook update: 21524465
+2026-08-23 18:01:00 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 18:01:00 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 18:01:02 - telegram_bot - INFO - Received webhook update: 21524466
+2026-08-23 18:01:02 - telegram_bot - INFO - Callback received from user 444111495: service_1
+2026-08-23 18:01:02 - telegram_bot - INFO - Service 1 selected by user 444111495
+2026-08-23 18:01:04 - telegram_bot - INFO - Received webhook update: 21524467
+2026-08-23 18:01:04 - telegram_bot - INFO - Callback received from user 444111495: purchase_1
+2026-08-23 18:01:04 - telegram_bot - INFO - Purchase requested by user 444111495 for service 1
+2026-08-23 18:01:07 - telegram_bot - INFO - Received webhook update: 21524468
+2026-08-23 18:01:07 - telegram_bot - INFO - Callback received from user 444111495: send_receipt_1
+2026-08-23 18:01:07 - telegram_bot - INFO - Receipt upload requested by user 444111495 for service 1
+2026-08-23 18:01:14 - telegram_bot - INFO - Received webhook update: 21524469
+2026-08-23 18:01:25 - telegram_bot - INFO - Received webhook update: 21524470
+2026-08-23 18:01:25 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 18:01:26 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 18:01:48 - telegram_bot - INFO - Received webhook update: 21524471
+2026-08-23 18:01:48 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 18:01:49 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 18:01:50 - telegram_bot - INFO - Received webhook update: 21524472
+2026-08-23 18:01:50 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 18:01:51 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 18:01:52 - telegram_bot - INFO - Received webhook update: 21524473
+2026-08-23 18:01:52 - telegram_bot - INFO - Callback received from user 444111495: service_1
+2026-08-23 18:01:52 - telegram_bot - INFO - Service 1 selected by user 444111495
+2026-08-23 18:01:55 - telegram_bot - INFO - Received webhook update: 21524474
+2026-08-23 18:01:55 - telegram_bot - INFO - Callback received from user 444111495: purchase_1
+2026-08-23 18:01:55 - telegram_bot - INFO - Purchase requested by user 444111495 for service 1
+2026-08-23 18:01:57 - telegram_bot - INFO - Received webhook update: 21524475
+2026-08-23 18:01:57 - telegram_bot - INFO - Callback received from user 444111495: send_receipt_1
+2026-08-23 18:01:57 - telegram_bot - INFO - Receipt upload requested by user 444111495 for service 1
+2026-08-23 18:02:16 - telegram_bot - INFO - Received webhook update: 21524476
+2026-08-23 18:02:29 - telegram_bot - INFO - Admin services page accessed
+2026-08-23 18:02:31 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-23 18:02:32 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-23 18:09:04 - telegram_bot - INFO - Shutting down application...
+2026-08-23 18:09:04 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 18:09:04 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 18:09:04 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 18:16:25 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 18:16:25 - telegram_bot - INFO - Debug mode: True
+2026-08-23 18:16:25 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 18:16:26 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 18:16:26 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 18:16:31 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-23 18:18:16 - telegram_bot - INFO - Shutting down application...
+2026-08-23 18:18:17 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 18:18:17 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 18:18:17 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 18:21:04 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 18:21:04 - telegram_bot - INFO - Debug mode: True
+2026-08-23 18:21:04 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 18:21:04 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 18:21:04 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 18:21:11 - telegram_bot - INFO - Shutting down application...
+2026-08-23 18:21:11 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 18:21:11 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 18:21:11 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 19:53:12 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 19:53:12 - telegram_bot - INFO - Debug mode: True
+2026-08-23 19:53:12 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 19:53:12 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 19:53:12 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 19:53:28 - telegram_bot - INFO - Received webhook update: 21524477
+2026-08-23 19:53:28 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 19:53:28 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 19:53:29 - telegram_bot - INFO - Received webhook update: 21524478
+2026-08-23 19:53:29 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 19:53:29 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 19:53:34 - telegram_bot - INFO - Received webhook update: 21524479
+2026-08-23 19:53:34 - telegram_bot - INFO - Callback received from user 444111495: service_1
+2026-08-23 19:53:34 - telegram_bot - INFO - Service 1 selected by user 444111495
+2026-08-23 19:53:36 - telegram_bot - INFO - Received webhook update: 21524480
+2026-08-23 19:53:36 - telegram_bot - INFO - Callback received from user 444111495: purchase_1
+2026-08-23 19:53:36 - telegram_bot - INFO - Purchase requested by user 444111495 for service 1
+2026-08-23 19:53:38 - telegram_bot - INFO - Received webhook update: 21524481
+2026-08-23 19:53:38 - telegram_bot - INFO - Callback received from user 444111495: send_receipt_1
+2026-08-23 19:53:38 - telegram_bot - INFO - Receipt upload requested by user 444111495 for service 1
+2026-08-23 19:53:45 - telegram_bot - INFO - Received webhook update: 21524482
+2026-08-23 19:53:48 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-23 19:53:52 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-23 19:56:46 - telegram_bot - INFO - Shutting down application...
+2026-08-23 19:56:46 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 19:56:46 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 19:56:46 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 20:03:53 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 20:03:53 - telegram_bot - INFO - Debug mode: True
+2026-08-23 20:03:53 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 20:03:53 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 20:03:53 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 20:04:03 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-23 20:04:08 - telegram_bot - INFO - Received webhook update: 21524483
+2026-08-23 20:04:08 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 20:04:08 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 20:04:15 - telegram_bot - INFO - Received webhook update: 21524484
+2026-08-23 20:04:15 - telegram_bot - INFO - Callback received from user 444111495: main_menu
+2026-08-23 20:04:15 - telegram_bot - INFO - Main menu shown to user: 444111495
+2026-08-23 20:04:16 - telegram_bot - INFO - Received webhook update: 21524485
+2026-08-23 20:04:16 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 20:04:16 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 20:04:19 - telegram_bot - INFO - Received webhook update: 21524486
+2026-08-23 20:04:19 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 20:04:19 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 20:04:21 - telegram_bot - INFO - Received webhook update: 21524487
+2026-08-23 20:04:21 - telegram_bot - INFO - Callback received from user 444111495: service_1
+2026-08-23 20:04:21 - telegram_bot - INFO - Service 1 selected by user 444111495
+2026-08-23 20:04:22 - telegram_bot - INFO - Received webhook update: 21524488
+2026-08-23 20:04:22 - telegram_bot - INFO - Callback received from user 444111495: purchase_1
+2026-08-23 20:04:22 - telegram_bot - INFO - Purchase requested by user 444111495 for service 1
+2026-08-23 20:04:24 - telegram_bot - INFO - Received webhook update: 21524489
+2026-08-23 20:04:24 - telegram_bot - INFO - Callback received from user 444111495: send_receipt_1
+2026-08-23 20:04:24 - telegram_bot - INFO - Receipt upload requested by user 444111495 for service 1
+2026-08-23 20:04:30 - telegram_bot - INFO - Received webhook update: 21524490
+2026-08-23 20:04:30 - telegram_bot - INFO - 📸 Photo received from user 444111495
+2026-08-23 20:04:30 - telegram_bot - INFO - 📸 Processing receipt for service 1
+2026-08-23 20:04:30 - telegram_bot - INFO - 📸 File ID: AgACAgQAAxkBAAPPaoswmnTI4nVTvdPgyZY3TeaG4nMAApsPaxtEtFhQeZvwf6YI1jcBAAMCAAN4AAM9BA
+2026-08-23 20:04:30 - telegram_bot - INFO - 📸 Saving image to: receipts/receipt_444111495_20260823_200430.jpg
+2026-08-23 20:04:30 - telegram_bot - INFO - 📸 Saving receipt to database for user 444111495
+2026-08-23 20:04:30 - telegram_bot - INFO - Receipt created for user 444111495 (ID: 1)
+2026-08-23 20:04:30 - telegram_bot - INFO - 📸 API response: 200 - {"status":"success","message":"رسید با موفقیت ذخیره شد","data":{"id":1}}
+2026-08-23 20:04:34 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-23 20:05:54 - telegram_bot - INFO - Shutting down application...
+2026-08-23 20:05:54 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 20:05:54 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 20:05:54 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 20:09:07 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 20:09:07 - telegram_bot - INFO - Debug mode: True
+2026-08-23 20:09:07 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 20:09:07 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 20:09:07 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 20:09:09 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-23 20:09:24 - telegram_bot - ERROR - Error updating receipt: Instance <ReceiptDB at 0x7c2cf2ff6840> is not bound to a Session; attribute refresh operation cannot proceed (Background on this error at: https://sqlalche.me/e/20/bhk3)
+2026-08-23 20:10:11 - telegram_bot - INFO - Shutting down application...
+2026-08-23 20:10:11 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 20:10:11 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 20:10:11 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 20:11:33 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 20:11:33 - telegram_bot - INFO - Debug mode: True
+2026-08-23 20:11:33 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 20:11:33 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 20:11:33 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 20:11:35 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-23 20:12:23 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-23 20:12:28 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-23 20:12:38 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-23 20:12:39 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-23 20:12:44 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-23 20:13:07 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-23 20:13:26 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-23 20:13:27 - telegram_bot - INFO - Admin reports page accessed
+2026-08-23 20:13:43 - telegram_bot - INFO - Admin reports page accessed
+2026-08-23 20:13:49 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-23 20:14:19 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-23 20:15:51 - telegram_bot - INFO - Shutting down application...
+2026-08-23 20:15:51 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 20:15:51 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 20:15:51 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 20:16:23 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 20:16:23 - telegram_bot - INFO - Debug mode: True
+2026-08-23 20:16:24 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 20:16:24 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 20:16:24 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 20:16:39 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-23 20:16:51 - telegram_bot - INFO - Admin reports page accessed
+2026-08-23 20:16:52 - telegram_bot - INFO - Admin reports page accessed
+2026-08-23 20:16:53 - telegram_bot - INFO - Admin panels page accessed
+2026-08-23 20:17:02 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-23 20:17:15 - telegram_bot - INFO - Admin panels page accessed
+2026-08-23 20:17:21 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-23 20:17:32 - telegram_bot - INFO - Admin panels page accessed
+2026-08-23 20:17:32 - telegram_bot - INFO - Admin categories page accessed
+2026-08-23 20:17:33 - telegram_bot - INFO - Admin services page accessed
+2026-08-23 20:18:16 - telegram_bot - INFO - Admin services page accessed
+2026-08-23 20:18:17 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-23 20:21:35 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-23 20:22:08 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-23 20:30:55 - telegram_bot - INFO - Shutting down application...
+2026-08-23 20:30:55 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 20:30:55 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 20:30:55 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 20:39:14 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 20:39:14 - telegram_bot - INFO - Debug mode: True
+2026-08-23 20:39:15 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 20:39:15 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 20:39:15 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 20:39:17 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-23 20:39:17 - telegram_bot - ERROR - Error getting receipts: type object 'ReceiptDB' has no attribute 'is_archived'
+2026-08-23 20:39:21 - telegram_bot - INFO - Admin reports page accessed
+2026-08-23 20:39:21 - telegram_bot - ERROR - Error getting receipts: type object 'ReceiptDB' has no attribute 'is_archived'
+2026-08-23 20:39:28 - telegram_bot - ERROR - Error getting receipts: type object 'ReceiptDB' has no attribute 'is_archived'
+2026-08-23 20:39:42 - telegram_bot - INFO - Received webhook update: 21524491
+2026-08-23 20:39:42 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-23 20:39:42 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-23 20:39:44 - telegram_bot - INFO - Received webhook update: 21524492
+2026-08-23 20:39:44 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-23 20:39:44 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-23 20:39:45 - telegram_bot - INFO - Received webhook update: 21524493
+2026-08-23 20:39:45 - telegram_bot - INFO - Callback received from user 444111495: service_1
+2026-08-23 20:39:45 - telegram_bot - INFO - Service 1 selected by user 444111495
+2026-08-23 20:39:47 - telegram_bot - INFO - Received webhook update: 21524494
+2026-08-23 20:39:47 - telegram_bot - INFO - Callback received from user 444111495: purchase_1
+2026-08-23 20:39:47 - telegram_bot - INFO - Purchase requested by user 444111495 for service 1
+2026-08-23 20:39:48 - telegram_bot - INFO - Received webhook update: 21524495
+2026-08-23 20:39:48 - telegram_bot - INFO - Callback received from user 444111495: send_receipt_1
+2026-08-23 20:39:48 - telegram_bot - INFO - Receipt upload requested by user 444111495 for service 1
+2026-08-23 20:39:51 - telegram_bot - ERROR - Error getting receipts: type object 'ReceiptDB' has no attribute 'is_archived'
+2026-08-23 20:39:55 - telegram_bot - INFO - Received webhook update: 21524496
+2026-08-23 20:39:55 - telegram_bot - INFO - 📸 Photo received from user 444111495
+2026-08-23 20:39:55 - telegram_bot - INFO - 📸 Processing receipt for service 1
+2026-08-23 20:39:55 - telegram_bot - INFO - 📸 File ID: AgACAgQAAxkBAAPPaoswmnTI4nVTvdPgyZY3TeaG4nMAApsPaxtEtFhQeZvwf6YI1jcBAAMCAAN4AAM9BA
+2026-08-23 20:39:55 - telegram_bot - INFO - 📸 Saving image to: receipts/receipt_444111495_20260823_203955.jpg
+2026-08-23 20:39:55 - telegram_bot - INFO - 📸 Saving receipt to database for user 444111495
+2026-08-23 20:39:55 - telegram_bot - INFO - Receipt created for user 444111495 (ID: 2)
+2026-08-23 20:39:55 - telegram_bot - INFO - 📸 API response: 200 - {"status":"success","message":"رسید با موفقیت ذخیره شد","data":{"id":2}}
+2026-08-23 20:39:58 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-23 20:39:58 - telegram_bot - ERROR - Error getting receipts: type object 'ReceiptDB' has no attribute 'is_archived'
+2026-08-23 20:40:03 - telegram_bot - ERROR - Error getting receipts: type object 'ReceiptDB' has no attribute 'is_archived'
+2026-08-23 20:40:05 - telegram_bot - ERROR - Error getting receipts: type object 'ReceiptDB' has no attribute 'is_archived'
+2026-08-23 20:40:06 - telegram_bot - ERROR - Error getting receipts: type object 'ReceiptDB' has no attribute 'is_archived'
+2026-08-23 20:40:08 - telegram_bot - INFO - Admin reports page accessed
+2026-08-23 20:40:08 - telegram_bot - ERROR - Error getting receipts: type object 'ReceiptDB' has no attribute 'is_archived'
+2026-08-23 20:40:10 - telegram_bot - INFO - Admin reports page accessed
+2026-08-23 20:40:10 - telegram_bot - ERROR - Error getting receipts: type object 'ReceiptDB' has no attribute 'is_archived'
+2026-08-23 20:40:11 - telegram_bot - INFO - Admin reports page accessed
+2026-08-23 20:40:11 - telegram_bot - ERROR - Error getting receipts: type object 'ReceiptDB' has no attribute 'is_archived'
+2026-08-23 20:40:14 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-23 20:40:14 - telegram_bot - ERROR - Error getting receipts: type object 'ReceiptDB' has no attribute 'is_archived'
+2026-08-23 20:40:15 - telegram_bot - ERROR - Error getting receipts: type object 'ReceiptDB' has no attribute 'is_archived'
+2026-08-23 20:40:18 - telegram_bot - ERROR - Error getting receipts: type object 'ReceiptDB' has no attribute 'is_archived'
+2026-08-23 20:40:20 - telegram_bot - ERROR - Error getting receipts: type object 'ReceiptDB' has no attribute 'is_archived'
+2026-08-23 20:40:24 - telegram_bot - ERROR - Error getting receipts: type object 'ReceiptDB' has no attribute 'is_archived'
+2026-08-23 20:40:27 - telegram_bot - ERROR - Error getting receipts: type object 'ReceiptDB' has no attribute 'is_archived'
+2026-08-23 20:40:31 - telegram_bot - ERROR - Error getting receipts: type object 'ReceiptDB' has no attribute 'is_archived'
+2026-08-23 20:40:41 - telegram_bot - INFO - Admin reports page accessed
+2026-08-23 20:40:41 - telegram_bot - ERROR - Error getting receipts: type object 'ReceiptDB' has no attribute 'is_archived'
+2026-08-23 20:40:44 - telegram_bot - INFO - Admin reports page accessed
+2026-08-23 20:40:44 - telegram_bot - ERROR - Error getting receipts: type object 'ReceiptDB' has no attribute 'is_archived'
+2026-08-23 20:40:47 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-23 20:40:47 - telegram_bot - ERROR - Error getting receipts: type object 'ReceiptDB' has no attribute 'is_archived'
+2026-08-23 20:40:57 - telegram_bot - ERROR - Error getting receipts: type object 'ReceiptDB' has no attribute 'is_archived'
+2026-08-23 20:41:07 - telegram_bot - ERROR - Error getting receipts: type object 'ReceiptDB' has no attribute 'is_archived'
+2026-08-23 20:41:17 - telegram_bot - ERROR - Error getting receipts: type object 'ReceiptDB' has no attribute 'is_archived'
+2026-08-23 20:41:27 - telegram_bot - ERROR - Error getting receipts: type object 'ReceiptDB' has no attribute 'is_archived'
+2026-08-23 20:42:05 - telegram_bot - ERROR - Error getting receipts: type object 'ReceiptDB' has no attribute 'is_archived'
+2026-08-23 20:42:15 - telegram_bot - ERROR - Error getting receipts: type object 'ReceiptDB' has no attribute 'is_archived'
+2026-08-23 20:42:25 - telegram_bot - ERROR - Error getting receipts: type object 'ReceiptDB' has no attribute 'is_archived'
+2026-08-23 20:42:35 - telegram_bot - ERROR - Error getting receipts: type object 'ReceiptDB' has no attribute 'is_archived'
+2026-08-23 20:44:49 - telegram_bot - INFO - Shutting down application...
+2026-08-23 20:44:50 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 20:44:50 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 20:44:50 - telegram_bot - INFO - Telegram application shut down
+2026-08-23 20:44:52 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-23 20:44:52 - telegram_bot - INFO - Debug mode: True
+2026-08-23 20:44:52 - telegram_bot - INFO - Telegram application initialized
+2026-08-23 20:44:52 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-23 20:44:52 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-23 20:44:59 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-23 20:46:13 - telegram_bot - INFO - Message sent to user 444111495
+2026-08-23 20:46:13 - telegram_bot - INFO - Receipt 2 updated to approved
+2026-08-23 20:59:53 - telegram_bot - INFO - Shutting down application...
+2026-08-23 20:59:53 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-23 20:59:53 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-23 20:59:53 - telegram_bot - INFO - Telegram application shut down
+2026-08-24 17:09:58 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-24 17:09:58 - telegram_bot - INFO - Debug mode: True
+2026-08-24 17:09:58 - telegram_bot - INFO - Telegram application initialized
+2026-08-24 17:09:58 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-24 17:09:58 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-24 17:10:01 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-24 17:10:14 - telegram_bot - INFO - Admin reports page accessed
+2026-08-24 17:10:19 - telegram_bot - INFO - Admin reports page accessed
+2026-08-24 17:10:22 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-24 17:10:45 - telegram_bot - INFO - Admin reports page accessed
+2026-08-24 17:10:50 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-24 17:11:00 - telegram_bot - INFO - Received webhook update: 21524497
+2026-08-24 17:11:00 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-24 17:11:00 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-24 17:11:01 - telegram_bot - INFO - Received webhook update: 21524498
+2026-08-24 17:11:01 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-24 17:11:01 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-24 17:11:02 - telegram_bot - INFO - Received webhook update: 21524499
+2026-08-24 17:11:02 - telegram_bot - INFO - Callback received from user 444111495: service_1
+2026-08-24 17:11:03 - telegram_bot - INFO - Service 1 selected by user 444111495
+2026-08-24 17:11:04 - telegram_bot - INFO - Received webhook update: 21524500
+2026-08-24 17:11:04 - telegram_bot - INFO - Callback received from user 444111495: purchase_1
+2026-08-24 17:11:04 - telegram_bot - INFO - Purchase requested by user 444111495 for service 1
+2026-08-24 17:11:06 - telegram_bot - INFO - Received webhook update: 21524501
+2026-08-24 17:11:06 - telegram_bot - INFO - Callback received from user 444111495: send_receipt_1
+2026-08-24 17:11:06 - telegram_bot - INFO - Receipt upload requested by user 444111495 for service 1
+2026-08-24 17:11:28 - telegram_bot - INFO - Received webhook update: 21524502
+2026-08-24 17:11:28 - telegram_bot - INFO - 📸 Photo received from user 444111495
+2026-08-24 17:11:28 - telegram_bot - INFO - 📸 Processing receipt for service 1
+2026-08-24 17:11:28 - telegram_bot - INFO - 📸 File ID: AgACAgQAAxkBAAPdaox7QIk0iliXt7qcu_Pts-smQY0AApsPaxtEtFhQeZvwf6YI1jcBAAMCAAN4AAM9BA
+2026-08-24 17:11:28 - telegram_bot - INFO - 📸 Saving image to: receipts/receipt_444111495_20260824_171128.jpg
+2026-08-24 17:11:28 - telegram_bot - INFO - 📸 Saving receipt to database for user 444111495
+2026-08-24 17:11:28 - telegram_bot - INFO - Receipt created for user 444111495 (ID: 3)
+2026-08-24 17:11:28 - telegram_bot - INFO - 📸 API response: 200 - {"status":"success","message":"رسید با موفقیت ذخیره شد","data":{"id":3}}
+2026-08-24 17:11:49 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-24 17:11:52 - telegram_bot - INFO - Message sent to user 444111495
+2026-08-24 17:11:52 - telegram_bot - INFO - Receipt 3 updated to rejected
+2026-08-24 17:11:57 - telegram_bot - INFO - Admin reports page accessed
+2026-08-24 17:12:09 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-24 17:12:20 - telegram_bot - INFO - Admin reports page accessed
+2026-08-24 17:12:32 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-24 17:17:27 - telegram_bot - INFO - Shutting down application...
+2026-08-24 17:17:28 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-24 17:17:28 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-24 17:17:28 - telegram_bot - INFO - Telegram application shut down
+2026-08-24 17:18:53 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-24 17:18:53 - telegram_bot - INFO - Debug mode: True
+2026-08-24 17:18:53 - telegram_bot - INFO - Telegram application initialized
+2026-08-24 17:18:53 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-24 17:18:53 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-24 17:18:53 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-24 17:19:05 - telegram_bot - INFO - Admin reports page accessed
+2026-08-24 17:19:19 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-24 17:19:23 - telegram_bot - INFO - Received webhook update: 21524503
+2026-08-24 17:19:23 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-24 17:19:23 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-24 17:19:24 - telegram_bot - INFO - Received webhook update: 21524504
+2026-08-24 17:19:24 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-24 17:19:24 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-24 17:19:26 - telegram_bot - INFO - Received webhook update: 21524505
+2026-08-24 17:19:26 - telegram_bot - INFO - Callback received from user 444111495: service_1
+2026-08-24 17:19:26 - telegram_bot - INFO - Service 1 selected by user 444111495
+2026-08-24 17:19:27 - telegram_bot - INFO - Received webhook update: 21524506
+2026-08-24 17:19:27 - telegram_bot - INFO - Callback received from user 444111495: purchase_1
+2026-08-24 17:19:27 - telegram_bot - INFO - Purchase requested by user 444111495 for service 1
+2026-08-24 17:19:28 - telegram_bot - INFO - Received webhook update: 21524507
+2026-08-24 17:19:28 - telegram_bot - INFO - Callback received from user 444111495: send_receipt_1
+2026-08-24 17:19:28 - telegram_bot - INFO - Receipt upload requested by user 444111495 for service 1
+2026-08-24 17:19:35 - telegram_bot - INFO - Received webhook update: 21524508
+2026-08-24 17:19:35 - telegram_bot - INFO - 📸 Photo received from user 444111495
+2026-08-24 17:19:35 - telegram_bot - INFO - 📸 Processing receipt for service 1
+2026-08-24 17:19:35 - telegram_bot - INFO - 📸 File ID: AgACAgQAAxkBAAPdaox7QIk0iliXt7qcu_Pts-smQY0AApsPaxtEtFhQeZvwf6YI1jcBAAMCAAN4AAM9BA
+2026-08-24 17:19:35 - telegram_bot - INFO - 📸 Saving image to: receipts/receipt_444111495_20260824_171935.jpg
+2026-08-24 17:19:35 - telegram_bot - INFO - 📸 Saving receipt to database for user 444111495
+2026-08-24 17:19:35 - telegram_bot - INFO - Receipt created for user 444111495 (ID: 4)
+2026-08-24 17:19:35 - telegram_bot - INFO - 📸 API response: 200 - {"status":"success","message":"رسید با موفقیت ذخیره شد","data":{"id":4}}
+2026-08-24 17:20:17 - telegram_bot - INFO - Received webhook update: 21524509
+2026-08-24 17:20:17 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-24 17:20:17 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-24 17:20:19 - telegram_bot - INFO - Received webhook update: 21524510
+2026-08-24 17:20:19 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-24 17:20:19 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-24 17:20:21 - telegram_bot - INFO - Received webhook update: 21524511
+2026-08-24 17:20:21 - telegram_bot - INFO - Callback received from user 444111495: service_1
+2026-08-24 17:20:21 - telegram_bot - INFO - Service 1 selected by user 444111495
+2026-08-24 17:20:22 - telegram_bot - INFO - Received webhook update: 21524512
+2026-08-24 17:20:22 - telegram_bot - INFO - Callback received from user 444111495: purchase_1
+2026-08-24 17:20:22 - telegram_bot - INFO - Purchase requested by user 444111495 for service 1
+2026-08-24 17:20:24 - telegram_bot - INFO - Received webhook update: 21524513
+2026-08-24 17:20:24 - telegram_bot - INFO - Callback received from user 444111495: send_receipt_1
+2026-08-24 17:20:24 - telegram_bot - INFO - Receipt upload requested by user 444111495 for service 1
+2026-08-24 17:20:29 - telegram_bot - INFO - Received webhook update: 21524514
+2026-08-24 17:20:29 - telegram_bot - INFO - 📸 Photo received from user 444111495
+2026-08-24 17:20:29 - telegram_bot - INFO - 📸 Processing receipt for service 1
+2026-08-24 17:20:29 - telegram_bot - INFO - 📸 File ID: AgACAgQAAxkBAAPdaox7QIk0iliXt7qcu_Pts-smQY0AApsPaxtEtFhQeZvwf6YI1jcBAAMCAAN4AAM9BA
+2026-08-24 17:20:29 - telegram_bot - INFO - 📸 Saving image to: receipts/receipt_444111495_20260824_172029.jpg
+2026-08-24 17:20:29 - telegram_bot - INFO - 📸 Saving receipt to database for user 444111495
+2026-08-24 17:20:29 - telegram_bot - INFO - Receipt created for user 444111495 (ID: 5)
+2026-08-24 17:20:29 - telegram_bot - INFO - 📸 API response: 200 - {"status":"success","message":"رسید با موفقیت ذخیره شد","data":{"id":5}}
+2026-08-24 17:20:44 - telegram_bot - INFO - Message sent to user 444111495
+2026-08-24 17:20:44 - telegram_bot - INFO - Receipt 5 updated to rejected
+2026-08-24 17:20:46 - telegram_bot - INFO - Admin reports page accessed
+2026-08-24 17:20:54 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-24 17:21:01 - telegram_bot - INFO - Admin services page accessed
+2026-08-24 17:21:04 - telegram_bot - INFO - Admin reports page accessed
+2026-08-24 17:21:14 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-24 17:22:52 - telegram_bot - INFO - Shutting down application...
+2026-08-24 17:22:52 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-24 17:22:52 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-24 17:22:52 - telegram_bot - INFO - Telegram application shut down
+2026-08-24 17:28:22 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-24 17:28:22 - telegram_bot - INFO - Debug mode: True
+2026-08-24 17:28:22 - telegram_bot - INFO - Telegram application initialized
+2026-08-24 17:28:22 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-24 17:28:22 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-24 17:28:24 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-24 17:28:57 - telegram_bot - INFO - Received webhook update: 21524515
+2026-08-24 17:28:57 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-24 17:28:57 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-24 17:28:58 - telegram_bot - INFO - Received webhook update: 21524516
+2026-08-24 17:28:58 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-24 17:28:58 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-24 17:28:59 - telegram_bot - INFO - Received webhook update: 21524517
+2026-08-24 17:28:59 - telegram_bot - INFO - Callback received from user 444111495: service_1
+2026-08-24 17:28:59 - telegram_bot - INFO - Service 1 selected by user 444111495
+2026-08-24 17:29:00 - telegram_bot - INFO - Received webhook update: 21524518
+2026-08-24 17:29:00 - telegram_bot - INFO - Callback received from user 444111495: purchase_1
+2026-08-24 17:29:00 - telegram_bot - INFO - Purchase requested by user 444111495 for service 1
+2026-08-24 17:29:03 - telegram_bot - INFO - Received webhook update: 21524519
+2026-08-24 17:29:03 - telegram_bot - INFO - Callback received from user 444111495: send_receipt_1
+2026-08-24 17:29:03 - telegram_bot - INFO - Receipt upload requested by user 444111495 for service 1
+2026-08-24 17:29:09 - telegram_bot - INFO - Received webhook update: 21524520
+2026-08-24 17:29:09 - telegram_bot - INFO - 📸 Photo received from user 444111495
+2026-08-24 17:29:09 - telegram_bot - INFO - 📸 Processing receipt for service 1
+2026-08-24 17:29:09 - telegram_bot - INFO - 📸 File ID: AgACAgQAAxkBAAPdaox7QIk0iliXt7qcu_Pts-smQY0AApsPaxtEtFhQeZvwf6YI1jcBAAMCAAN4AAM9BA
+2026-08-24 17:29:09 - telegram_bot - INFO - 📸 Saving image to: receipts/receipt_444111495_20260824_172909.jpg
+2026-08-24 17:29:09 - telegram_bot - INFO - 📸 Saving receipt to database for user 444111495
+2026-08-24 17:29:09 - telegram_bot - INFO - Receipt created for user 444111495 (ID: 6)
+2026-08-24 17:29:09 - telegram_bot - INFO - 📸 API response: 200 - {"status":"success","message":"رسید با موفقیت ذخیره شد","data":{"id":6}}
+2026-08-24 17:31:49 - telegram_bot - INFO - Shutting down application...
+2026-08-24 17:31:49 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-24 17:31:49 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-24 17:31:49 - telegram_bot - INFO - Telegram application shut down
+2026-08-24 17:31:52 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-24 17:31:52 - telegram_bot - INFO - Debug mode: True
+2026-08-24 17:31:52 - telegram_bot - INFO - Telegram application initialized
+2026-08-24 17:31:52 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-24 17:31:52 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-24 17:33:13 - telegram_bot - INFO - Received webhook update: 21524521
+2026-08-24 17:33:13 - telegram_bot - INFO - Callback received from user 444111495: buy_service
+2026-08-24 17:33:13 - telegram_bot - INFO - Buy service requested by user: 444111495
+2026-08-24 17:33:14 - telegram_bot - INFO - Received webhook update: 21524522
+2026-08-24 17:33:14 - telegram_bot - INFO - Callback received from user 444111495: category_1
+2026-08-24 17:33:14 - telegram_bot - INFO - Category 1 selected by user 444111495
+2026-08-24 17:33:16 - telegram_bot - INFO - Received webhook update: 21524523
+2026-08-24 17:33:16 - telegram_bot - INFO - Callback received from user 444111495: service_1
+2026-08-24 17:33:16 - telegram_bot - INFO - Service 1 selected by user 444111495
+2026-08-24 17:33:17 - telegram_bot - INFO - Received webhook update: 21524524
+2026-08-24 17:33:17 - telegram_bot - INFO - Callback received from user 444111495: purchase_1
+2026-08-24 17:33:17 - telegram_bot - INFO - Purchase requested by user 444111495 for service 1
+2026-08-24 17:33:18 - telegram_bot - INFO - Received webhook update: 21524525
+2026-08-24 17:33:18 - telegram_bot - INFO - Callback received from user 444111495: send_receipt_1
+2026-08-24 17:33:18 - telegram_bot - INFO - Receipt upload requested by user 444111495 for service 1
+2026-08-24 17:33:24 - telegram_bot - INFO - Received webhook update: 21524526
+2026-08-24 17:33:24 - telegram_bot - INFO - 📸 Photo received from user 444111495
+2026-08-24 17:33:24 - telegram_bot - INFO - 📸 Processing receipt for service 1
+2026-08-24 17:33:24 - telegram_bot - INFO - 📸 File ID: AgACAgQAAxkBAAPdaox7QIk0iliXt7qcu_Pts-smQY0AApsPaxtEtFhQeZvwf6YI1jcBAAMCAAN4AAM9BA
+2026-08-24 17:33:24 - telegram_bot - INFO - 📸 Saving image to: receipts/receipt_444111495_20260824_173324.jpg
+2026-08-24 17:33:24 - telegram_bot - INFO - 📸 Saving receipt to database for user 444111495
+2026-08-24 17:33:24 - telegram_bot - INFO - Receipt created for user 444111495 (ID: 7)
+2026-08-24 17:33:24 - telegram_bot - INFO - 📸 API response: 200 - {"status":"success","message":"رسید با موفقیت ذخیره شد","data":{"id":7}}
+2026-08-24 17:48:19 - telegram_bot - INFO - Shutting down application...
+2026-08-24 17:48:19 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-24 17:48:19 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-24 17:48:19 - telegram_bot - INFO - Telegram application shut down
+2026-08-24 19:25:47 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-24 19:25:47 - telegram_bot - INFO - Debug mode: True
+2026-08-24 19:25:47 - telegram_bot - INFO - Telegram application initialized
+2026-08-24 19:25:47 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-24 19:25:47 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-24 19:25:48 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-24 19:26:03 - telegram_bot - INFO - Message sent to user 444111495
+2026-08-24 19:26:03 - telegram_bot - INFO - Receipt 7 updated to rejected
+2026-08-24 19:26:16 - telegram_bot - INFO - Message sent to user 444111495
+2026-08-24 19:26:16 - telegram_bot - INFO - Receipt 6 updated to approved
+2026-08-24 19:26:35 - telegram_bot - INFO - Admin reports page accessed
+2026-08-24 19:27:03 - telegram_bot - INFO - Admin staff page accessed
+2026-08-24 19:27:05 - telegram_bot - INFO - Admin settings page accessed
+2026-08-24 19:27:15 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-24 19:27:17 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-24 19:27:27 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-24 19:27:55 - telegram_bot - INFO - Shutting down application...
+2026-08-24 19:27:55 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-24 19:27:55 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-24 19:27:55 - telegram_bot - INFO - Telegram application shut down

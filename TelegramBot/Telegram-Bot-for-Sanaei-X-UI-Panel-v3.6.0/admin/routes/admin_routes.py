@@ -25,6 +25,7 @@ from sqlalchemy import create_engine, Column, Integer, String, DateTime, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from pydantic import BaseModel, Field
+from datetime import datetime, timedelta
 
 # Setup templates
 templates_dir = Path(__file__).parent.parent / "templates"
@@ -89,6 +90,7 @@ class CategoryDB(Base):
     __tablename__ = "categories"
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(100), nullable=False)
+    is_active = Column(Boolean, default=True)
     created_at = Column(DateTime, default=datetime.now)
 
 
@@ -111,6 +113,162 @@ class ServiceDB(Base):
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
+
+
+# ==============================================
+# Database Setup for Receipts
+# ==============================================
+
+class ReceiptDB(Base):
+    __tablename__ = "receipts"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, nullable=False, index=True)
+    username = Column(String(100), nullable=True)
+    service_id = Column(Integer, nullable=False)
+    service_name = Column(String(100), nullable=False)
+    service_details = Column(JSON, nullable=True)
+    image_path = Column(String(255), nullable=False)
+    image_filename = Column(String(255), nullable=True)
+    status = Column(String(20), default="pending")
+    admin_comment = Column(String(500), nullable=True)
+    admin_message = Column(String(500), nullable=True)
+    created_at = Column(DateTime, default=datetime.now)
+    updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
+    processed_at = Column(DateTime, nullable=True)
+    client_email = Column(String(100), nullable=True)  
+    client_uuid = Column(String(100), nullable=True) 
+    is_archived = Column(Boolean, default=False) 
+    archived_at = Column(DateTime, nullable=True)
+
+# ==============================================
+# API ENDPOINTS FOR RECEIPTS
+# ==============================================
+
+@router.get("/api/receipts")
+async def get_receipts(archived: bool = False):
+    """
+    Get all receipts.
+    If archived=True, return archived receipts only.
+    """
+    try:
+        db = SessionLocal()
+        query = db.query(ReceiptDB).filter(ReceiptDB.is_archived == archived)
+        receipts = query.order_by(ReceiptDB.created_at.desc()).all()
+        db.close()
+
+        result = []
+        for r in receipts:
+            result.append({
+                "id": r.id,
+                "user_id": r.user_id,
+                "username": r.username or "نامشخص",
+                "service_id": r.service_id,
+                "service_name": r.service_name,
+                "service_details": r.service_details or {},
+                "image_path": r.image_path,
+                "image_filename": r.image_filename,
+                "status": r.status,
+                "admin_comment": r.admin_comment,
+                "admin_message": r.admin_message,
+                "created_at": r.created_at.isoformat() if r.created_at else None,
+                "updated_at": r.updated_at.isoformat() if r.updated_at else None,
+                "processed_at": r.processed_at.isoformat() if r.processed_at else None,
+                "client_email": r.client_email,
+                "client_uuid": r.client_uuid
+            })
+
+        return {"status": "success", "data": result}
+    except Exception as e:
+        logger.error(f"Error getting receipts: {str(e)}")
+        return {"status": "error", "message": str(e)}
+
+
+@router.put("/api/receipts/{receipt_id}")
+async def update_receipt(receipt_id: int, request: Request):
+    """Update receipt status and admin message."""
+    try:
+        data = await request.json()
+        db = SessionLocal()
+
+        receipt = db.query(ReceiptDB).filter(ReceiptDB.id == receipt_id).first()
+        if not receipt:
+            db.close()
+            return {"status": "error", "message": "رسید پیدا نشد"}
+
+        if "status" in data:
+            receipt.status = data["status"]
+        if "admin_comment" in data:
+            receipt.admin_comment = data["admin_comment"]
+        if "admin_message" in data:
+            receipt.admin_message = data["admin_message"]  
+        if data.get("status") in ["approved", "rejected"]:
+            receipt.processed_at = datetime.now()
+            receipt.is_archived = True
+            receipt.archived_at = datetime.now()
+
+        receipt.updated_at = datetime.now()
+        db.commit()
+        
+        receipt_id = receipt.id
+        receipt_status = receipt.status
+        receipt_admin_message = receipt.admin_message
+        
+        db.close()
+
+        if receipt_admin_message and receipt.user_id:
+            await send_message_to_user(receipt.user_id, receipt_admin_message)
+        elif receipt.user_id:
+            if receipt_status == "approved":
+                default_message = "✅ رسید شما تأیید شد. اکانت شما ساخته شده است."
+            else:
+                default_message = "❌ رسید شما رد شد. لطفاً با پشتیبانی تماس بگیرید."
+            await send_message_to_user(receipt.user_id, default_message)
+
+        logger.info(f"Receipt {receipt_id} updated to {receipt_status}")
+        return {"status": "success", "message": "رسید با موفقیت بروزرسانی شد"}
+    except Exception as e:
+        logger.error(f"Error updating receipt: {str(e)}")
+        return {"status": "error", "message": str(e)}
+
+@router.post("/api/receipts/{receipt_id}/archive")
+async def archive_receipt(receipt_id: int):
+    """Archive a receipt manually."""
+    try:
+        db = SessionLocal()
+        receipt = db.query(ReceiptDB).filter(ReceiptDB.id == receipt_id).first()
+        if not receipt:
+            db.close()
+            return {"status": "error", "message": "رسید پیدا نشد"}
+
+        receipt.is_archived = True
+        receipt.archived_at = datetime.now()
+        db.commit()
+        db.close()
+
+        return {"status": "success", "message": "رسید با موفقیت آرشیو شد"}
+    except Exception as e:
+        logger.error(f"Error archiving receipt: {str(e)}")
+        return {"status": "error", "message": str(e)}
+
+
+# ==============================================
+# Helper function to send message to user
+# ==============================================
+
+async def send_message_to_user(user_id: int, message: str):
+    """Send a message to a Telegram user."""
+    try:
+        from api.routes.webhook import application
+        await application.bot.send_message(
+            chat_id=user_id,
+            text=message,
+            parse_mode="Markdown"
+        )
+        logger.info(f"Message sent to user {user_id}")
+    except Exception as e:
+        logger.error(f"Failed to send message to user {user_id}: {str(e)}")
+
+
 
 # Create tables if not exists
 def init_db():
@@ -1044,11 +1202,17 @@ async def update_service(service_id: int, request: Request):
             service.is_active = data["is_active"]
 
         service.updated_at = datetime.now()
+        
         db.commit()
+        
+        service_id = service.id
+        service_name = service.name
+        
         db.close()
 
-        logger.info(f"Service updated: {service.name} (ID: {service.id})")
+        logger.info(f"Service updated: {service_name} (ID: {service_id})")
         return {"status": "success", "message": "سرویس با موفقیت ویرایش شد"}
+        
     except Exception as e:
         logger.error(f"Error updating service: {str(e)}")
         return {"status": "error", "message": str(e)}
@@ -1195,4 +1359,158 @@ async def get_public_panel(panel_id: int):
         return {"status": "success", "data": result}
     except Exception as e:
         logger.error(f"Error getting public panel: {str(e)}")
+        return {"status": "error", "message": str(e)}
+
+# ==============================================
+# API ENDPOINTS FOR RECEIPTS (اضافه کردن POST)
+# ==============================================
+
+@router.post("/api/receipts")
+async def create_receipt(request: Request):
+    """Create a new receipt."""
+    try:
+        data = await request.json()
+
+        # Validate required fields
+        required_fields = ["user_id", "service_id", "service_name", "image_path"]
+        for field in required_fields:
+            if not data.get(field):
+                return {"status": "error", "message": f"فیلد {field} الزامی است"}
+
+        db = SessionLocal()
+
+        new_receipt = ReceiptDB(
+            user_id=data.get("user_id"),
+            username=data.get("username"),
+            service_id=data.get("service_id"),
+            service_name=data.get("service_name"),
+            service_details=data.get("service_details", {}),
+            image_path=data.get("image_path"),
+            image_filename=data.get("image_filename"),
+            status="pending"
+        )
+
+        db.add(new_receipt)
+        db.commit()
+        db.refresh(new_receipt)
+        db.close()
+
+        logger.info(f"Receipt created for user {data.get('user_id')} (ID: {new_receipt.id})")
+        return {"status": "success", "message": "رسید با موفقیت ذخیره شد", "data": {"id": new_receipt.id}}
+    except Exception as e:
+        logger.error(f"Error creating receipt: {str(e)}")
+        return {"status": "error", "message": str(e)}
+
+@router.post("/api/receipts/{receipt_id}/approve")
+async def approve_receipt(receipt_id: int):
+    """
+    Approve a receipt and create user in panel.
+    """
+    try:
+        db = SessionLocal()
+        receipt = db.query(ReceiptDB).filter(ReceiptDB.id == receipt_id).first()
+        if not receipt:
+            db.close()
+            return {"status": "error", "message": "رسید پیدا نشد"}
+
+        # Update receipt status
+        receipt.status = "approved"
+        receipt.processed_at = datetime.now()
+        db.commit()
+
+        # Get service details
+        service = db.query(ServiceDB).filter(ServiceDB.id == receipt.service_id).first()
+        if not service:
+            db.close()
+            return {"status": "error", "message": "سرویس پیدا نشد"}
+
+        # Get panel details
+        panel = db.query(PanelDB).filter(PanelDB.id == service.panel_id).first()
+        if not panel:
+            db.close()
+            return {"status": "error", "message": "پنل پیدا نشد"}
+
+        # ====== Create user in panel ======
+        import secrets
+        import string
+        
+        # Generate random email
+        random_suffix = ''.join(secrets.choice(string.ascii_lowercase + string.digits) for _ in range(8))
+        email = f"user_{receipt.user_id}_{random_suffix}"
+        
+        # Calculate totalGB from volume
+        volume_gb = service.volume
+        if volume_gb and volume_gb != "unlimited":
+            totalGB = int(volume_gb) * 1073741824  # Convert GB to bytes
+        else:
+            totalGB = 0  # Unlimited
+        
+        # Calculate expiry time (duration in months)
+        duration_months = service.duration or 1
+        expiry_time = int((datetime.now() + timedelta(days=duration_months * 30)).timestamp() * 1000)
+        
+        # Get inbound IDs
+        inbound_ids = []
+        if service.inbound_id:
+            try:
+                inbound_ids = [int(service.inbound_id)]
+            except:
+                inbound_ids = []
+        
+        if not inbound_ids:
+            db.close()
+            return {"status": "error", "message": "هیچ Inboundی برای این سرویس تعریف نشده است"}
+        
+        # Prepare client data
+        client_data = {
+            "client": {
+                "email": email,
+                "totalGB": totalGB,
+                "expiryTime": expiry_time,
+                "tgId": receipt.user_id,
+                "limitIp": 0,
+                "enable": True
+            },
+            "inboundIds": inbound_ids
+        }
+        
+        # Send request to panel
+        async with httpx.AsyncClient(timeout=30.0, verify=False) as client:
+            response = await client.post(
+                f"{panel.url}/panel/api/clients/add",
+                headers={
+                    "accept": "application/json",
+                    "Authorization": f"Bearer {panel.api_token}",
+                    "Content-Type": "application/json"
+                },
+                json=client_data
+            )
+            
+            if response.status_code != 200:
+                db.close()
+                return {"status": "error", "message": f"خطا در ساخت کاربر در پنل: {response.text}"}
+            
+            result = response.json()
+            if not result.get("success"):
+                db.close()
+                return {"status": "error", "message": result.get("msg", "خطا در ساخت کاربر")}
+        
+        # Save client info to receipt
+        receipt.client_email = email
+        receipt.client_uuid = result.get("obj", {}).get("id")
+        db.commit()
+        db.close()
+
+        return {
+            "status": "success",
+            "message": "رسید تأیید شد و کاربر در پنل ساخته شد",
+            "data": {
+                "client_email": email,
+                "panel_url": panel.url,
+                "sub_url": panel.sub_url
+            }
+        }
+        
+    except Exception as e:
+        logger.error(f"Error approving receipt: {str(e)}")
         return {"status": "error", "message": str(e)}

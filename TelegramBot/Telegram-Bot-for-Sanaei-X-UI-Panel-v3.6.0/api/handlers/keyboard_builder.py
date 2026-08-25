@@ -18,7 +18,8 @@ class KeyboardBuilder:
     @staticmethod
     def create_colored_button(
         text: str,
-        callback_data: str
+        callback_data: str,
+        style: Optional[str] = None
     ) -> InlineKeyboardButton:
         """
         Create an inline keyboard button.
@@ -32,7 +33,8 @@ class KeyboardBuilder:
         """
         return InlineKeyboardButton(
             text=text,
-            callback_data=callback_data
+            callback_data=callback_data,
+            style=style
         )
     
     @staticmethod
@@ -241,11 +243,13 @@ class KeyboardBuilder:
             [
                 InlineKeyboardButton(
                     "📖 راهنمای اتصال",
-                    callback_data="connection_guide"
+                    callback_data="connection_guide",
+                    style="primary"
                 ),
                 InlineKeyboardButton(
                     "🆘 پشتیبانی",
-                    callback_data="support"
+                    callback_data="support",
+                    style="success"
                 )
             ],
             [
@@ -271,7 +275,8 @@ class KeyboardBuilder:
             [
                 InlineKeyboardButton(
                     "🔙 بازگشت به منو",
-                    callback_data="main_menu"
+                    callback_data="main_menu",
+                    style="danger"
                 )
             ]
         ]

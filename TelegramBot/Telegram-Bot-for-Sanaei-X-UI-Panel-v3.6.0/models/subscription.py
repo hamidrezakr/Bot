@@ -3,7 +3,7 @@ Subscription models for managing user subscriptions and services.
 """
 
 from datetime import datetime
-from typing import Optional, List
+from typing import Optional, List, Dict, Any
 from pydantic import BaseModel, Field
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, Float, ForeignKey, JSON, Text
 from sqlalchemy.ext.declarative import declarative_base
@@ -210,3 +210,60 @@ class ServiceWithDetails(Service):
     panel_url: Optional[str] = None
     panel_sub_url: Optional[str] = None
     inbound_remark: Optional[str] = None
+
+
+class ReceiptDB(Base):
+    """
+    Receipt database model for storing payment receipts.
+    
+    Attributes:
+        id: Unique identifier for the receipt
+        user_id: Telegram user ID who sent the receipt
+        service_id: Service ID being purchased
+        service_name: Name of the service
+        service_details: Details of the service (volume, duration, price)
+        image_path: Path to the uploaded receipt image
+        image_filename: Original filename of the image
+        status: Status of the receipt (pending, approved, rejected)
+        admin_comment: Comment from admin
+        created_at: Creation timestamp
+        updated_at: Last update timestamp
+        processed_at: When the receipt was processed
+    """
+    __tablename__ = "receipts"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, nullable=False, index=True)
+    username = Column(String(100), nullable=True)
+    service_id = Column(Integer, nullable=False)
+    service_name = Column(String(100), nullable=False)
+    service_details = Column(JSON, nullable=True)
+    image_path = Column(String(255), nullable=False)
+    image_filename = Column(String(255), nullable=True)
+    status = Column(String(20), default="pending")  
+    admin_comment = Column(String(500), nullable=True)
+    admin_message = Column(String(500), nullable=True)  
+    created_at = Column(DateTime, default=datetime.now)
+    updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
+    processed_at = Column(DateTime, nullable=True)
+    client_email = Column(String(100), nullable=True)
+    client_uuid = Column(String(100), nullable=True)
+    is_archived = Column(Boolean, default=False)
+    archived_at = Column(DateTime, nullable=True)
+    processed_at = Column(DateTime, nullable=True)
+
+
+class Receipt(BaseModel):
+    """Receipt Pydantic model for API operations."""
+    id: Optional[int] = None
+    user_id: int = Field(..., description="Telegram user ID")
+    service_id: int = Field(..., description="Service ID")
+    service_name: str = Field(..., description="Service name")
+    service_details: Optional[Dict] = Field(None, description="Service details")
+    image_path: str = Field(..., description="Path to receipt image")
+    image_filename: Optional[str] = Field(None, description="Original filename")
+    status: str = Field(default="pending", description="Receipt status")
+    admin_comment: Optional[str] = Field(None, description="Admin comment")
+    created_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None
+    processed_at: Optional[datetime] = None
