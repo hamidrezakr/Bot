@@ -90,6 +90,14 @@ class KeyboardBuilder:
                     "🆘 پشتیبانی",
                     callback_data="support"
                 )
+            ],
+             # Row 5: Sales Partner
+            [
+                InlineKeyboardButton(
+                    "🤝 همکاری در فروش",
+                    callback_data="sales_partner",
+                    style="primary"
+                )
             ]
         ]
         
@@ -224,8 +232,8 @@ class KeyboardBuilder:
     @staticmethod
     def create_service_menu() -> InlineKeyboardMarkup:
         """
-        Create the service menu with Test Account, Wallet, Guide, Support.
-        
+        Create the service menu with Test Account, Guide, Support.
+
         Returns:
             InlineKeyboardMarkup: Service menu keyboard
         """
@@ -233,23 +241,18 @@ class KeyboardBuilder:
             [
                 InlineKeyboardButton(
                     "🧪 دریافت اکانت تست",
-                    callback_data="get_test_account"
-                ),
-                InlineKeyboardButton(
-                    "💰 کیف پول",
-                    callback_data="wallet"
+                    callback_data="get_test_account",
+                    style="primary"
                 )
             ],
             [
                 InlineKeyboardButton(
                     "📖 راهنمای اتصال",
-                    callback_data="connection_guide",
-                    style="primary"
+                    callback_data="connection_guide"
                 ),
                 InlineKeyboardButton(
                     "🆘 پشتیبانی",
-                    callback_data="support",
-                    style="success"
+                    callback_data="support"
                 )
             ],
             [
@@ -260,9 +263,9 @@ class KeyboardBuilder:
                 )
             ]
         ]
-        
+
         return InlineKeyboardMarkup(keyboard)
-    
+
     @staticmethod
     def create_sub_menu() -> InlineKeyboardMarkup:
         """

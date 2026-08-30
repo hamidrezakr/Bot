@@ -72,13 +72,20 @@ async def set_webhook() -> dict:
     try:
         webhook_url = settings.TELEGRAM_WEBHOOK_URL
         await application.initialize()
+        
+        # ====== ✅ Set bot commands for menu ======
+        commands = [
+            ("start", "🚀 شروع"),
+        ]
+        
+        await application.bot.set_my_commands(commands)
+        
         await application.bot.set_webhook(webhook_url)
         logger.info(f"Webhook set successfully to: {webhook_url}")
         return {"status": "success", "message": f"Webhook set to {webhook_url}"}
     except Exception as e:
         logger.error(f"Error setting webhook: {str(e)}")
         return {"status": "error", "message": str(e)}
-
 
 @router.post("/delete_webhook")
 async def delete_webhook() -> dict:

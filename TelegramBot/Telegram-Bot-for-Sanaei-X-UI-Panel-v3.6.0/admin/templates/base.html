@@ -4,99 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🚀 Space Gate</title>
-    <!-- فقط Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    <style>
-        body {
-            background: #0b0e1a;
-            color: #fff;
-            font-family: 'Vazirmatn', Tahoma, sans-serif;
-        }
-        .sidebar {
-            background: rgba(11, 14, 26, 0.95);
-            min-height: 100vh;
-            border-left: 1px solid rgba(255,255,255,0.05);
-        }
-        .sidebar .nav-link {
-            color: rgba(255,255,255,0.6);
-            border-radius: 10px;
-            padding: 10px 16px;
-            margin: 4px 8px;
-        }
-        .sidebar .nav-link:hover {
-            background: rgba(255,255,255,0.05);
-            color: #fff;
-        }
-        .sidebar .nav-link.active {
-            background: rgba(102,126,234,0.15);
-            color: #fff;
-        }
-        .sidebar .nav-link i { margin-left: 10px; }
-        .main-content { padding: 20px; }
-        .glass-card {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 12px;
-            padding: 16px;
-        }
-        .stat-card {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 12px;
-            padding: 16px 20px;
-        }
-        .stat-card .number {
-            font-size: 24px;
-            font-weight: 900;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .page-title {
-            font-weight: 900;
-            font-size: 24px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .btn-glass {
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.08);
-            color: #fff;
-            padding: 8px 20px;
-            border-radius: 10px;
-        }
-        .btn-glass:hover { background: rgba(255,255,255,0.12); color: #fff; }
-        .btn-primary-glass {
-            background: rgba(102,126,234,0.2);
-            border: 1px solid rgba(102,126,234,0.2);
-            color: #fff;
-            padding: 8px 20px;
-            border-radius: 10px;
-        }
-        .btn-primary-glass:hover { background: rgba(102,126,234,0.35); color: #fff; }
-        .btn-success-glass {
-            background: rgba(40,167,69,0.15);
-            border: 1px solid rgba(40,167,69,0.2);
-            color: #28a745;
-            padding: 8px 20px;
-            border-radius: 10px;
-        }
-        .btn-success-glass:hover { background: rgba(40,167,69,0.25); color: #28a745; }
-        @media (max-width: 768px) {
-            .sidebar { min-height: auto; }
-            .main-content { padding: 12px; }
-        }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/admin.css">
 </head>
 <body>
+    <canvas id="stars-canvas" style="position:fixed;inset:0;z-index:0;pointer-events:none;"></canvas>
+    
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
             <nav class="col-md-3 col-lg-2 d-md-block sidebar" style="position:sticky;top:0;height:100vh;overflow-y:auto;">
                 <div class="text-center py-3 border-bottom border-secondary border-opacity-10">
-                    <h4>🚀 Space Gate</h4>
+                    <h4 class="brand-title">🚀 Space Gate</h4>
                     <small class="text-muted">مدیریت پنل</small>
                 </div>
                 <div class="nav flex-column mt-3">
@@ -106,11 +29,14 @@
                     <a class="nav-link {% if active == 'panels' %}active{% endif %}" href="/admin/panels">
                         <i class="bi bi-hdd-stack"></i> پنل‌ها
                     </a>
-		    <a class="nav-link {% if active == 'categories' %}active{% endif %}" href="/admin/categories">
-    		       <i class="bi bi-tags"></i> دسته‌بندی
-		    </a>
+                    <a class="nav-link {% if active == 'categories' %}active{% endif %}" href="/admin/categories">
+                       <i class="bi bi-tags"></i> دسته‌بندی
+                    </a>
                     <a class="nav-link {% if active == 'services' %}active{% endif %}" href="/admin/services">
                         <i class="bi bi-box-seam"></i> سرویس‌ها
+                    </a>
+                    <a class="nav-link {% if active == 'broadcast' %}active{% endif %}" href="/admin/broadcast">
+                        <i class="bi bi-broadcast"></i> پیام گروهی
                     </a>
                     <a class="nav-link {% if active == 'receipts' %}active{% endif %}" href="/admin/receipts">
                         <i class="bi bi-receipt"></i> رسیدها
@@ -138,5 +64,47 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // ===== Starfield Animation =====
+        const starsCanvas = document.getElementById('stars-canvas');
+        const starsCtx = starsCanvas.getContext('2d');
+        let starsArray = [];
+
+        function resizeStarsCanvas() {
+            starsCanvas.width = window.innerWidth;
+            starsCanvas.height = window.innerHeight;
+            const count = Math.floor((starsCanvas.width * starsCanvas.height) / 12000);
+            starsArray = Array.from({length: count}, () => ({
+                x: Math.random() * starsCanvas.width,
+                y: Math.random() * starsCanvas.height,
+                r: Math.random() * 1.3 + 0.3,
+                speed: Math.random() * 0.3 + 0.03,
+                phase: Math.random() * Math.PI * 2,
+                color: Math.random() > 0.7 ? '#33e0ff' : Math.random() > 0.5 ? '#7c5cff' : '#ffffff'
+            }));
+        }
+        resizeStarsCanvas();
+        window.addEventListener('resize', resizeStarsCanvas);
+
+        let starTime = 0;
+        function drawStars() {
+            starTime += 0.02;
+            starsCtx.clearRect(0, 0, starsCanvas.width, starsCanvas.height);
+            starsArray.forEach(s => {
+                const twinkle = 0.5 + 0.5 * Math.sin(starTime + s.phase);
+                starsCtx.beginPath();
+                starsCtx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                starsCtx.fillStyle = `rgba(230,230,255,${0.2 + twinkle * 0.5})`;
+                starsCtx.fill();
+                s.y += s.speed;
+                if (s.y > starsCanvas.height) {
+                    s.y = 0;
+                    s.x = Math.random() * starsCanvas.width;
+                }
+            });
+            requestAnimationFrame(drawStars);
+        }
+        drawStars();
+    </script>
 </body>
 </html>

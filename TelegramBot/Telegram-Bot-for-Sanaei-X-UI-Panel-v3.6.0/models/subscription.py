@@ -251,6 +251,7 @@ class ReceiptDB(Base):
     is_archived = Column(Boolean, default=False)
     archived_at = Column(DateTime, nullable=True)
     processed_at = Column(DateTime, nullable=True)
+    is_renewal = Column(Boolean, default=False)
 
 
 class Receipt(BaseModel):

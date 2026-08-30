@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Environment
+.env
+
+# Database
+*.db
+
+# Logs
+*.log
+bot.log
+
+# Receipts
+receipts/
+broadcast_photos/
+
+# IDE
+.vscode/
+.idea/

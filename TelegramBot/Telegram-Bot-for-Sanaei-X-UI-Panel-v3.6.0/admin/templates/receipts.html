@@ -80,10 +80,8 @@
         background: rgba(255, 255, 255, 0.08);
     }
     .receipt-actions {
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
-        margin-top: 12px;
+	position: relative;
+        z-index: 1060;
     }
     .btn-sm-approve {
         background: rgba(40, 167, 69, 0.15);
@@ -402,7 +400,7 @@ function viewReceipt(id) {
     if (!receipt) return;
     
     currentReceiptId = id;
-    
+    console.log('📋 Viewing receipt:', currentReceiptId); 
     // Set image
     const img = document.getElementById('modalReceiptImage');
     img.src = '/' + receipt.image_path;
@@ -455,27 +453,42 @@ function toggleModalImageSize() {
 function processReceipt(status) {
     const message = document.getElementById('modalAdminMessage').value.trim();
     const statusText = status === 'approved' ? 'تأیید' : 'رد';
-    
-    // ====== حذف الزام پیام ======
+
     let confirmMessage = `آیا از ${statusText} این رسید اطمینان دارید؟`;
     if (message) {
         confirmMessage += `\n\nپیام زیر برای کاربر ارسال می‌شود:\n${message}`;
     } else {
         confirmMessage += `\n\n⚠️ هیچ پیامی برای کاربر ارسال نمی‌شود.`;
     }
-    
+
     if (!confirm(confirmMessage)) return;
+
+    // ====== مسیر درست برای تأیید ======
+    let url, method, body;
     
-    fetch(`/admin/api/receipts/${currentReceiptId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
+    if (status === 'approved') {
+        url = `/admin/api/receipts/${currentReceiptId}/approve`;
+        method = 'POST';
+        body = JSON.stringify({});
+    } else {
+        url = `/admin/api/receipts/${currentReceiptId}`;
+        method = 'PUT';
+        body = JSON.stringify({ 
             status: status, 
-            admin_message: message || null  // ← اگر خالی بود null ارسال کن
-        })
+            admin_message: message || null 
+        });
+    }
+
+    console.log('📤 Sending request:', { url, method, body });
+
+    fetch(url, {
+        method: method,
+        headers: { 'Content-Type': 'application/json' },
+        body: body
     })
     .then(r => r.json())
     .then(res => {
+        console.log('📥 Response:', res);
         if (res.status === 'success') {
             bootstrap.Modal.getInstance(document.getElementById('receiptModal')).hide();
             loadReceipts();
@@ -484,6 +497,10 @@ function processReceipt(status) {
         } else {
             alert('❌ خطا: ' + res.message);
         }
+    })
+    .catch(err => {
+        console.error('❌ Fetch error:', err);
+        alert('❌ خطا در ارتباط با سرور');
     });
 }
 // ===== Refresh Controls =====

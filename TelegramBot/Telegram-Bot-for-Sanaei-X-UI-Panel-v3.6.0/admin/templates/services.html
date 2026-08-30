@@ -98,11 +98,6 @@
                         <input type="number" class="form-control bg-dark text-white border-secondary" id="servicePrice" placeholder="مثلاً 150000" min="0">
                     </div>
                 </div>
-
-                <div class="mb-2">
-                    <label class="form-label text-muted small">لینک پرداخت</label>
-                    <input type="url" class="form-control bg-dark text-white border-secondary" id="servicePaymentLink" placeholder="https://...">
-                </div>
             </div>
             <div class="modal-footer border-secondary border-opacity-10">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">لغو</button>
@@ -194,7 +189,6 @@ function saveService() {
         duration: document.getElementById('serviceDuration').value || null,
         users: document.getElementById('serviceUsers').value || null,
         price: document.getElementById('servicePrice').value || null,
-        payment_link: document.getElementById('servicePaymentLink').value.trim() || null
     };
 
     if (!data.name) {
@@ -272,7 +266,6 @@ function editService(id) {
                 document.getElementById('serviceDuration').value = s.duration || '';
                 document.getElementById('serviceUsers').value = s.users || '';
                 document.getElementById('servicePrice').value = s.price || '';
-                document.getElementById('servicePaymentLink').value = s.payment_link || '';
                 document.getElementById('serviceModalTitle').textContent = '✏️ ویرایش سرویس';
                 new bootstrap.Modal(document.getElementById('serviceModal')).show();
             }

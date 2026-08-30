@@ -1,0 +1,235 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .broadcast-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 16px;
+        padding: 24px;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+    .broadcast-textarea {
+        width: 100%;
+        min-height: 150px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: #fff;
+        border-radius: 12px;
+        padding: 14px;
+        resize: vertical;
+        font-size: 0.95rem;
+        font-family: 'Vazirmatn', Tahoma, sans-serif;
+    }
+    .broadcast-textarea:focus {
+        border-color: rgba(102, 126, 234, 0.4);
+        outline: none;
+        background: rgba(255, 255, 255, 0.08);
+    }
+    .preview-box {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px dashed rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 16px;
+        color: rgba(255, 255, 255, 0.8);
+        white-space: pre-wrap;
+        min-height: 60px;
+        margin-top: 12px;
+    }
+    .photo-preview {
+        max-width: 300px;
+        max-height: 300px;
+        border-radius: 12px;
+        margin-top: 12px;
+    }
+    .stats-box {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 12px;
+        padding: 14px;
+        margin-top: 16px;
+        display: none;
+    }
+    .stats-box.show {
+        display: block;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row mb-3">
+        <div class="col">
+            <h1 class="page-title">📢 ارسال پیام گروهی</h1>
+            <p class="page-subtitle">ارسال پیام به همه کاربران ربات</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="broadcast-card">
+                <!-- آمار کاربران -->
+                <div class="text-center mb-3">
+                    <span class="badge bg-info bg-opacity-25 text-info">
+                        👥 تعداد کاربران: <span id="usersCount">0</span>
+                    </span>
+                </div>
+
+                <!-- فرم ارسال -->
+                <div class="mb-3">
+                    <label class="form-label" style="color:rgba(255,255,255,0.6);font-size:0.85rem;">
+                        متن پیام
+                    </label>
+                    <textarea class="broadcast-textarea" id="messageText" 
+                              placeholder="متن پیام خود را وارد کنید... (می‌توانید از ایموجی استفاده کنید)"></textarea>
+                </div>
+
+                <!-- آپلود عکس -->
+                <div class="mb-3">
+                    <label class="form-label" style="color:rgba(255,255,255,0.6);font-size:0.85rem;">
+                        عکس (اختیاری)
+                    </label>
+                    <input type="file" class="form-control" id="photoInput" accept="image/*"
+                           style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);color:#fff;">
+                    <div id="photoPreviewContainer" style="display:none;">
+                        <img id="photoPreview" class="photo-preview" src="" alt="پیش‌نمایش عکس">
+                        <button class="btn btn-sm btn-outline-danger mt-2" onclick="removePhoto()">حذف عکس</button>
+                    </div>
+                </div>
+
+                <!-- پیش‌نمایش -->
+                <div class="mb-3">
+                    <label style="color:rgba(255,255,255,0.4);font-size:0.75rem;">پیش‌نمایش:</label>
+                    <div class="preview-box" id="previewBox">متن پیش‌نمایش اینجا نمایش داده می‌شود</div>
+                </div>
+
+                <!-- دکمه ارسال -->
+                <button class="btn-primary-glass w-100" onclick="sendBroadcast()" id="sendBtn">
+                    <i class="bi bi-send"></i> ارسال به همه کاربران
+                </button>
+
+                <!-- نتیجه -->
+                <div class="stats-box" id="resultBox">
+                    <h6 class="mb-2">📊 نتیجه ارسال:</h6>
+                    <div id="resultContent"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// ===== Load Users Count =====
+function loadUsersCount() {
+    fetch('/admin/api/users/count')
+        .then(r => r.json())
+        .then(res => {
+            if (res.status === 'success') {
+                document.getElementById('usersCount').textContent = res.data.count;
+            }
+        });
+}
+
+// ===== Update Preview =====
+function updatePreview() {
+    const text = document.getElementById('messageText').value;
+    document.getElementById('previewBox').textContent = text || 'متن پیش‌نمایش اینجا نمایش داده می‌شود';
+}
+
+// ===== Photo Preview =====
+document.getElementById('photoInput').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            document.getElementById('photoPreview').src = event.target.result;
+            document.getElementById('photoPreviewContainer').style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+// ===== Remove Photo =====
+function removePhoto() {
+    document.getElementById('photoInput').value = '';
+    document.getElementById('photoPreviewContainer').style.display = 'none';
+}
+
+// ===== Send Broadcast =====
+async function sendBroadcast() {
+    const text = document.getElementById('messageText').value.trim();
+    const photoFile = document.getElementById('photoInput').files[0];
+    
+    if (!text && !photoFile) {
+        alert('لطفاً متن پیام یا عکس را وارد کنید');
+        return;
+    }
+    
+    if (!confirm(`آیا از ارسال این پیام به همه کاربران اطمینان دارید؟`)) return;
+    
+    const sendBtn = document.getElementById('sendBtn');
+    sendBtn.disabled = true;
+    sendBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> در حال ارسال...';
+    
+    try {
+        let photoPath = null;
+        
+        // اگر عکس داریم، اول آپلودش کن
+        if (photoFile) {
+            const formData = new FormData();
+            formData.append('photo', photoFile);
+            
+            const uploadResponse = await fetch('/admin/api/upload-photo', {
+                method: 'POST',
+                body: formData
+            });
+            
+            const uploadResult = await uploadResponse.json();
+            if (uploadResult.status === 'success') {
+                photoPath = uploadResult.data.path;
+            }
+        }
+        
+        // ارسال پیام
+        const response = await fetch('/admin/api/broadcast/send', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                text: text,
+                photo_path: photoPath
+            })
+        });
+        
+        const result = await response.json();
+        
+        const resultBox = document.getElementById('resultBox');
+        resultBox.classList.add('show');
+        
+        if (result.status === 'success') {
+            document.getElementById('resultContent').innerHTML = `
+                <p class="text-success">✅ ${result.message}</p>
+                <p>📊 کل کاربران: ${result.data.total}</p>
+                <p>✅ موفق: ${result.data.success_count}</p>
+                <p>❌ خطا: ${result.data.failed_count}</p>
+            `;
+        } else {
+            document.getElementById('resultContent').innerHTML = `
+                <p class="text-danger">❌ ${result.message}</p>
+            `;
+        }
+        
+    } catch (error) {
+        alert('خطا در ارسال پیام');
+        console.error(error);
+    } finally {
+        sendBtn.disabled = false;
+        sendBtn.innerHTML = '<i class="bi bi-send"></i> ارسال به همه کاربران';
+    }
+}
+
+// ===== Event Listeners =====
+document.addEventListener('DOMContentLoaded', function() {
+    loadUsersCount();
+    document.getElementById('messageText').addEventListener('input', updatePreview);
+});
+</script>
+{% endblock %}
