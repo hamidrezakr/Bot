@@ -11212,3 +11212,13 @@ FROM referral_settings
 2026-08-30 14:44:51 - telegram_bot - INFO - Webhook deleted successfully
 2026-08-30 14:44:51 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
 2026-08-30 14:44:51 - telegram_bot - INFO - Telegram application shut down
+2026-08-30 15:01:01 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-30 15:01:01 - telegram_bot - INFO - Debug mode: True
+2026-08-30 15:01:01 - telegram_bot - INFO - Telegram application initialized
+2026-08-30 15:01:01 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-30 15:01:01 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-30 15:01:01 - telegram_bot - INFO - ✅ Weekly test account cleanup task started
+2026-08-30 15:01:01 - telegram_bot - INFO - Initializing Telegram application...
+2026-08-30 15:01:01 - telegram_bot - INFO - Telegram application initialized successfully
+2026-08-30 15:01:01 - telegram_bot - INFO - 🔄 Starting weekly test account cleanup...
+2026-08-30 15:01:01 - telegram_bot - ERROR - ❌ Cleanup failed: 302

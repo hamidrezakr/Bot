@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  bot:
+    build: .
+    container_name: telegram-xui-bot
+    restart: always
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - ./receipts:/app/receipts
+      - ./broadcast_photos:/app/broadcast_photos
+      - ./telegram_bot.db:/app/telegram_bot.db
+      - ./bot.log:/app/bot.log
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8000
+    networks:
+      - bot-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+networks:
+  bot-network:
+    driver: bridge
