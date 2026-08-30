@@ -11,7 +11,7 @@ from typing import Optional
 
 def setup_logging(
     log_level: str = "INFO",
-    log_file: Optional[str] = "bot.log"
+    log_file: Optional[str] = "data/bot.log"
 ) -> logging.Logger:
     """
     Configure logging for the application.

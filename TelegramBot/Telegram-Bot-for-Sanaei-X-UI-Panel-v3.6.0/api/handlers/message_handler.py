@@ -213,8 +213,8 @@ class MessageHandler:
 
             import os
             filename = f"receipt_{user_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.jpg"
-            file_path = f"receipts/{filename}"
-            os.makedirs("receipts", exist_ok=True)
+            file_path = f"data/receipts/{filename}"
+            os.makedirs("data/receipts", exist_ok=True)
             await file.download_to_drive(file_path)
 
             user_info_serializable = None

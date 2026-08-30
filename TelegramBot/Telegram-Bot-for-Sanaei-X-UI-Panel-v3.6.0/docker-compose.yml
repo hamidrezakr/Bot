@@ -11,13 +11,11 @@ services:
       - .env
     volumes:
       # Persistent data
-      - ./data/telegram_bot.db:/app/telegram_bot.db
-      - ./data/receipts:/app/receipts
-      - ./data/broadcast_photos:/app/broadcast_photos
-      - ./data/bot.log:/app/bot.log
+      - /data:/app/data
     environment:
       - HOST=0.0.0.0
       - PORT=8000
+      - DATABASE_URL=sqlite:///./data/telegram_bot.db
     networks:
       - bot-network
     healthcheck:

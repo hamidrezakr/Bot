@@ -29,7 +29,7 @@ class Settings(BaseSettings):
     ADMIN_SECRET_KEY: str = os.getenv("ADMIN_SECRET_KEY", "secret_key_for_session")
 
     # Database Configuration
-    DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./telegram_bot.db")
+    DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./data/telegram_bot.db")
     
     # Security
     SECRET_KEY: str = os.getenv("SECRET_KEY", "your-secret-key-here")
