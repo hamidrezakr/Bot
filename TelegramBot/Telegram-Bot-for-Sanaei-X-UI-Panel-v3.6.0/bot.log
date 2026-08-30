@@ -11222,3 +11222,34 @@ FROM referral_settings
 2026-08-30 15:01:01 - telegram_bot - INFO - Telegram application initialized successfully
 2026-08-30 15:01:01 - telegram_bot - INFO - 🔄 Starting weekly test account cleanup...
 2026-08-30 15:01:01 - telegram_bot - ERROR - ❌ Cleanup failed: 302
+2026-08-30 15:09:27 - telegram_bot - INFO - Shutting down Telegram application...
+2026-08-30 15:09:27 - telegram_bot - INFO - Telegram application shut down successfully
+2026-08-30 15:09:27 - telegram_bot - INFO - Shutting down application...
+2026-08-30 15:09:27 - telegram_bot - INFO - ✅ Weekly cleanup task cancelled
+2026-08-30 15:09:27 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-30 15:09:27 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-30 15:09:27 - telegram_bot - INFO - Telegram application shut down
+2026-08-30 15:11:58 - telegram_bot - INFO - Starting Telegram Bot v1.0.0
+2026-08-30 15:11:58 - telegram_bot - INFO - Debug mode: True
+2026-08-30 15:11:58 - telegram_bot - INFO - Telegram application initialized
+2026-08-30 15:11:58 - telegram_bot - INFO - Webhook set successfully to: https://bot.spacegate.ir/webhook
+2026-08-30 15:11:58 - telegram_bot - INFO - Webhook setup: {'status': 'success', 'message': 'Webhook set to https://bot.spacegate.ir/webhook'}
+2026-08-30 15:11:58 - telegram_bot - INFO - ✅ Weekly test account cleanup task started
+2026-08-30 15:11:58 - telegram_bot - INFO - 🔄 Starting weekly test account cleanup...
+2026-08-30 15:11:58 - telegram_bot - ERROR - ❌ Cleanup failed: 302
+2026-08-30 15:12:49 - telegram_bot - INFO - Admin dashboard accessed
+2026-08-30 15:12:52 - telegram_bot - INFO - Admin panels page accessed
+2026-08-30 15:12:53 - telegram_bot - INFO - Admin categories page accessed
+2026-08-30 15:12:53 - telegram_bot - INFO - Admin services page accessed
+2026-08-30 15:12:54 - telegram_bot - INFO - Broadcast page accessed
+2026-08-30 15:12:55 - telegram_bot - INFO - Admin receipts page accessed
+2026-08-30 15:12:55 - telegram_bot - INFO - Admin reports page accessed
+2026-08-30 15:12:56 - telegram_bot - INFO - Admin staff page accessed
+2026-08-30 15:12:57 - telegram_bot - INFO - Admin settings page accessed
+2026-08-30 15:12:59 - telegram_bot - INFO - Admin staff page accessed
+2026-08-30 15:12:59 - telegram_bot - INFO - Admin reports page accessed
+2026-08-30 15:13:01 - telegram_bot - INFO - Shutting down application...
+2026-08-30 15:13:01 - telegram_bot - INFO - ✅ Weekly cleanup task cancelled
+2026-08-30 15:13:01 - telegram_bot - INFO - Webhook deleted successfully
+2026-08-30 15:13:01 - telegram_bot - INFO - Webhook deleted: {'status': 'success', 'message': 'Webhook deleted successfully'}
+2026-08-30 15:13:01 - telegram_bot - INFO - Telegram application shut down

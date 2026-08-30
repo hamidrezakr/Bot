@@ -10,10 +10,11 @@ services:
     env_file:
       - .env
     volumes:
-      - ./receipts:/app/receipts
-      - ./broadcast_photos:/app/broadcast_photos
-      - ./telegram_bot.db:/app/telegram_bot.db
-      - ./bot.log:/app/bot.log
+      # Persistent data
+      - ./data/telegram_bot.db:/app/telegram_bot.db
+      - ./data/receipts:/app/receipts
+      - ./data/broadcast_photos:/app/broadcast_photos
+      - ./data/bot.log:/app/bot.log
     environment:
       - HOST=0.0.0.0
       - PORT=8000
@@ -29,3 +30,6 @@ services:
 networks:
   bot-network:
     driver: bridge
+
+volumes:
+  bot-data:
