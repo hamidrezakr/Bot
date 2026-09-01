@@ -101,13 +101,14 @@ nano .env
 # 6. Run
 uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
+```
 
 
 
 
+### Docker Deployment
 
-Docker Deployment
-
+```
 # 1. Create .env
 cp .env.example .env
 nano .env
@@ -124,10 +125,11 @@ docker compose logs -f
 
 # 5. Stop
 docker compose down
-
+```
 
 
 ⚙️ Environment Variables
+
 Variable	Description
 TELEGRAM_BOT_TOKEN	Bot token from @BotFather
 TELEGRAM_WEBHOOK_URL	Webhook URL (HTTPS required)
