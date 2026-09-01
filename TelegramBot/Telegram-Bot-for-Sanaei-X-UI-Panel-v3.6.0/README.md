@@ -39,7 +39,7 @@ A production-ready Telegram bot for managing X-UI VPN panel (Sanaei v3.6.0) with
 ## 🏗️ Project Structure
 
 
-
+```
 ├── admin/
 │ ├── routes/
 │ │ ├── admin_routes.py # Admin API endpoints
@@ -67,7 +67,7 @@ A production-ready Telegram bot for managing X-UI VPN panel (Sanaei v3.6.0) with
 ├── docker-compose.yml # Docker Compose
 ├── requirements.txt # Python dependencies
 └── main.py # Application entry point
-
+```
 
 
 
