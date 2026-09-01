@@ -1,0 +1,681 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h1 class="page-title">🖥️ مدیریت پنل‌ها</h1>
+        <p class="text-muted small">لیست و مدیریت سرورهای پنل X-UI</p>
+    </div>
+    <button class="btn-success-glass" data-bs-toggle="modal" data-bs-target="#panelModal" onclick="resetPanelModal()">
+        <i class="bi bi-plus-lg"></i> افزودن پنل
+    </button>
+</div>
+
+<!-- Table -->
+<div class="glass-card p-0 overflow-hidden">
+    <div class="table-responsive">
+        <table class="table table-dark table-hover mb-0" style="background:transparent;">
+            <thead>
+                <tr>
+	            <th style="width:3%;">#</th>
+                    <th style="width:10%;">نام</th>
+                    <th style="width:15%;">آدرس</th>
+                    <th style="width:12%;">آدرس ساب</th>
+                    <th style="width:18%;">Inbound‌ها</th>
+                    <th style="width:8%;">وضعیت</th>
+                    <th style="width:6%;">نسخه</th>
+                    <th style="width:10%;">کاربران فعال</th>
+                    <th style="width:10%;">ظرفیت</th>
+                    <th style="width:8%;">عملیات</th>
+                </tr>
+            </thead>
+            <tbody id="panelsTableBody">
+                <!-- داده از JS -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- ===== MODAL ===== -->
+<div class="modal fade" id="panelModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content" style="background:#0b0e1a;border:1px solid rgba(255,255,255,0.06);">
+            <div class="modal-header border-secondary border-opacity-10">
+                <h5 class="modal-title" id="panelModalTitle">➕ افزودن پنل</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="panelId">
+                
+                <div class="row">
+                    <div class="col-md-6 mb-2">
+                        <label class="form-label text-muted small">نام پنل</label>
+                        <input type="text" class="form-control bg-dark text-white border-secondary" id="panelName" placeholder="مثال: پنل ایران">
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <label class="form-label text-muted small">آدرس URL</label>
+                        <input type="url" class="form-control bg-dark text-white border-secondary" id="panelUrl" placeholder="https://du03.spacegate.ir:2053/...">
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6 mb-2">
+                        <label class="form-label text-muted small">API Token</label>
+                        <input type="text" class="form-control bg-dark text-white border-secondary" id="panelToken" placeholder="توکن API">
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <label class="form-label text-muted small">آدرس ساب (Subscription URL)</label>
+                        <input type="url" class="form-control bg-dark text-white border-secondary" id="panelSubUrl" placeholder="https://en.spacegate01.ir:2096/sub">
+                    </div>
+                </div>
+                
+		<div class="row">
+		    <div class="col-md-6 mb-2">
+			<label class="form-label text-muted small">ظرفیت کاربران</label>
+			<div class="d-flex gap-2">
+			    <input type="number" class="form-control bg-dark text-white border-secondary" id="panelCapacity" placeholder="مثلاً 100" min="0">
+			    <button class="btn btn-sm btn-outline-secondary" onclick="setUnlimitedCapacity()">نامحدود</button>
+			</div>
+			<small class="text-muted">تعداد کاربرانی که این پنل می‌تواند پشتیبانی کند (۰ = نامحدود)</small>
+		    </div>
+		    <div class="col-md-6 mb-2">
+			<label class="form-label text-muted small">وضعیت ظرفیت</label>
+			<div id="capacityStatusDisplay">
+			    <span class="badge bg-secondary">نامشخص</span>
+			</div>
+			<small class="text-muted">پس از ذخیره و بررسی وضعیت نمایش داده می‌شود</small>
+		    </div>
+		</div>
+
+                <div class="mb-2">
+                    <label class="form-label text-muted small">انتخاب Inbound‌ها</label>
+                    <div class="d-flex gap-2 mb-2">
+                        <button class="btn btn-sm btn-outline-info" onclick="fetchInboundList()">
+                            <i class="bi bi-arrow-repeat"></i> دریافت لیست Inbound‌ها
+                        </button>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="selectAllInbounds()">انتخاب همه</button>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="deselectAllInbounds()">لغو همه</button>
+                    </div>
+                    <div id="inboundContainer" class="d-flex flex-wrap gap-2 p-2 border border-secondary border-opacity-25 rounded" style="min-height:50px;background:rgba(255,255,255,0.03);">
+                        <span class="text-muted small">برای دریافت لیست، دکمه "دریافت لیست Inbound‌ها" را بزنید</span>
+                    </div>
+                </div>
+                
+                <div class="mb-2">
+                    <label class="form-label text-muted small">تعداد کاربران فعال</label>
+                    <div class="d-flex gap-2">
+                        <input type="number" class="form-control bg-dark text-white border-secondary" id="panelUsersCount" placeholder="۰" min="0" readonly>
+                        <button class="btn btn-sm btn-outline-info" onclick="fetchUserCount()">
+                            <i class="bi bi-people"></i> دریافت تعداد کاربران
+                        </button>
+                    </div>
+                    <small class="text-muted">پس از ذخیره، تعداد کاربران به‌طور خودکار بروزرسانی می‌شود</small>
+                </div>
+            </div>
+            <div class="modal-footer border-secondary border-opacity-10">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">لغو</button>
+                <button type="button" class="btn btn-primary" onclick="savePanel()">ذخیره</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// ===== Global Variables =====
+let panelsData = [];
+let inboundList = [];
+let selectedInbounds = [];
+let selectedInboundsData = [];
+let autoRefreshInterval = null;
+
+// ===== Load Panels =====
+function loadPanels() {
+    fetch('/admin/api/panels')
+        .then(r => r.json())
+        .then(res => {
+            if (res.status === 'success') {
+                panelsData = res.data || [];
+                renderPanelsTable();
+            }
+        });
+}
+// ===== Format Traffic =====
+function formatTraffic(sent, recv) {
+    if (!sent && !recv) return '—';
+    const format = (bytes) => {
+        if (bytes < 1024) return bytes + ' B';
+        if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+        if (bytes < 1073741824) return (bytes / 1048576).toFixed(1) + ' MB';
+        return (bytes / 1073741824).toFixed(2) + ' GB';
+    };
+    return `⬆${format(sent)} ⬇${format(recv)}`;
+}
+// ===== Render Panels Table =====
+function renderPanelsTable() {
+    const tbody = document.getElementById('panelsTableBody');
+
+    if (!panelsData || panelsData.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="10" class="text-center text-muted">هیچ پنلی ثبت نشده</td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = panelsData.map((p, i) => {
+        const statusBadge = getStatusBadge(p.status);
+
+        // ====== Inbound Tags ======
+        let inboundTags = '';
+        if (p.inbound_details && p.inbound_details.length > 0) {
+            inboundTags = p.inbound_details.map(detail => {
+                let displayText = '';
+                if (detail.remark) {
+                    displayText = `${detail.remark} (ID: ${detail.id})`;
+                } else {
+                    displayText = `ID: ${detail.id}`;
+                }
+                if (detail.port) displayText += ` :${detail.port}`;
+                if (detail.protocol) displayText += ` ${detail.protocol}`;
+                if (detail.active_clients !== undefined) displayText += ` ${detail.active_clients} فعال`;
+                return `<span class="badge bg-info bg-opacity-25 text-info me-1 mb-1" style="font-size:0.75rem;">${displayText}</span>`;
+            }).join('');
+        } else if (p.inbound_ids && p.inbound_ids.length > 0) {
+            inboundTags = p.inbound_ids.map(id => {
+                return `<span class="badge bg-info bg-opacity-25 text-info me-1 mb-1" style="font-size:0.75rem;">ID: ${id}</span>`;
+            }).join('');
+        } else {
+            inboundTags = '<span class="text-muted" style="font-size:0.75rem;">—</span>';
+        }
+
+        // ====== ظرفیت ======
+        const capacityDisplay = p.capacity === 0 ? '♾️ نامحدود' : `${p.capacity} نفر`;
+        const fullStatus = p.is_full ? '<span class="badge bg-danger">پر</span>' : '<span class="badge bg-success">در دسترس</span>';
+
+        return `
+            <tr>
+                <td style="text-align:center;">${i+1}</td>
+                <td><strong>${p.name}</strong></td>
+                <td><span style="color:#ffffff;font-size:0.8rem;word-break:break-all;">${p.url}</span></td>
+                <td><span style="color:#ffffff;font-size:0.8rem;word-break:break-all;">${p.sub_url || '—'}</span></td>
+                <td>${inboundTags}</td>
+                <td style="text-align:center;">${statusBadge}</td>
+                <td style="text-align:center;"><small>${p.version || '—'}</small></td>
+                <td style="text-align:center;"><span class="badge bg-primary">${p.users_count || 0}</span></td>
+                <td style="text-align:center;">${capacityDisplay} ${fullStatus}</td>
+                <td style="text-align:center;">
+                    <button class="btn btn-sm btn-outline-success me-1" onclick="checkPanelStatus(${p.id})" title="بروزرسانی لحظه‌ای">
+                        <i class="bi bi-arrow-repeat"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-info me-1" onclick="editPanel(${p.id})" title="ویرایش">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger" onclick="deletePanel(${p.id})" title="حذف">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        `;
+    }).join('');
+}
+
+// ===== Get Status Badge =====
+function getStatusBadge(status) {
+    const map = {
+        'running': '<span class="badge bg-success">🟢 فعال</span>',
+        'stopped': '<span class="badge bg-danger">🔴 متوقف</span>',
+        'offline': '<span class="badge bg-secondary">⚫ قطع</span>',
+        'unknown': '<span class="badge bg-warning">🟡 نامشخص</span>'
+    };
+    return map[status] || map['unknown'];
+}
+// ===== Fetch Inbound List =====
+function fetchInboundList() {
+    const url = document.getElementById('panelUrl').value.trim();
+    const token = document.getElementById('panelToken').value.trim();
+
+    if (!url || !token) {
+        showToast('لطفاً ابتدا آدرس URL و توکن API را وارد کنید', 'warning');
+        return;
+    }
+
+    // نمایش پیام در حال بارگذاری
+    document.getElementById('inboundContainer').innerHTML = '<span class="text-muted small">⏳ در حال دریافت Inbound‌ها...</span>';
+
+    const cleanUrl = url.replace(/\/+$/, '');
+
+    fetch('/admin/api/panels/fetch-inbounds', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: cleanUrl, api_token: token })
+    })
+    .then(r => r.json())
+    .then(res => {
+        // ====== اینجا رو اصلاح کن ======
+        console.log('Full response:', res);  // برای دیباگ
+        
+        // اگر res.status === 'success' و res.data وجود دارد
+        if (res.status === 'success' && res.data) {
+            // ====== مهم: بررسی کن که res.data.inbounds وجود دارد ======
+            const inbounds = res.data.inbounds || [];
+            inboundList = inbounds;
+            
+            console.log('inboundList after assign:', inboundList);  // برای دیباگ
+            
+            renderInboundSelection();
+
+            if (inboundList.length > 0) {
+                showToast(`✅ ${inboundList.length} Inbound پیدا شد`, 'success');
+                loadPanels();
+            } else {
+                showToast('⚠️ هیچ Inboundی یافت نشد', 'warning');
+                document.getElementById('inboundContainer').innerHTML = '<span class="text-muted small">هیچ Inboundی یافت نشد</span>';
+            }
+        } else {
+            showToast('❌ خطا: ' + (res.message || 'خطای ناشناخته'), 'error');
+            document.getElementById('inboundContainer').innerHTML = `<span class="text-danger small">❌ ${res.message || 'خطا در دریافت اطلاعات'}</span>`;
+        }
+    })
+    .catch((error) => {
+        console.error('Error fetching inbounds:', error);
+        showToast('❌ خطا در ارتباط با سرور', 'error');
+        document.getElementById('inboundContainer').innerHTML = '<span class="text-danger small">❌ خطا در ارتباط با سرور</span>';
+    });
+}
+
+// ===== Render Inbound Selection =====
+function renderInboundSelection() {
+    const container = document.getElementById('inboundContainer');
+
+    if (!inboundList || inboundList.length === 0) {
+        container.innerHTML = '<span class="text-muted small">هیچ Inboundی یافت نشد</span>';
+        return;
+    }
+
+    // ====== این خط رو اضافه کن تا مطمئن بشی inboundList پر است ======
+    console.log('Rendering inbounds:', inboundList);
+
+    container.innerHTML = inboundList.map(inbound => {
+        // ====== IMPORTANT: اطمینان از اینکه inbound.id به string تبدیل شده ======
+        const inboundId = String(inbound.id);
+        const checked = selectedInbounds.includes(inboundId) ? 'checked' : '';
+        const displayText = inbound.remark ? `${inbound.remark} (ID: ${inbound.id})` : `ID: ${inbound.id}`;
+
+        return `
+            <label class="inbound-item p-2 border border-secondary border-opacity-25 rounded" style="cursor:pointer;background:rgba(255,255,255,0.03);">
+                <input type="checkbox" value="${inboundId}" ${checked} onchange="toggleInbound(this, '${inbound.remark || ''}')">
+                <span>${displayText}</span>
+                ${inbound.port ? `<small class="text-muted ms-1">:${inbound.port}</small>` : ''}
+                ${inbound.protocol ? `<span class="badge bg-secondary bg-opacity-25 text-secondary ms-1">${inbound.protocol}</span>` : ''}
+                <span class="badge bg-success bg-opacity-25 text-success ms-1">${inbound.active_clients || 0} فعال</span>
+            </label>
+        `;
+    }).join('');
+}
+// ===== Toggle Inbound =====
+
+function toggleInbound(checkbox, remark) {
+    const value = checkbox.value;
+    const inbound = inboundList.find(item => String(item.id) === String(value));
+
+    console.log('🔍 toggleInbound - value:', value);
+    console.log('🔍 toggleInbound - inbound:', inbound);
+
+    if (checkbox.checked) {
+        // ====== اگر قبلاً اضافه نشده بود، اضافه کن ======
+        if (!selectedInbounds.includes(value)) {
+            selectedInbounds.push(value);
+            console.log('✅ selectedInbounds after push:', selectedInbounds);
+            
+            if (inbound) {
+                selectedInboundsData.push({
+                    "id": inbound.id,
+                    "remark": inbound.remark || "",
+                    "port": inbound.port,
+                    "protocol": inbound.protocol || "",
+                    "active_clients": inbound.active_clients || 0
+                });
+                console.log('✅ selectedInboundsData after push:', selectedInboundsData);
+            } else {
+                // ====== اگر inbound پیدا نشد، یک مقدار پیش‌فرض اضافه کن ======
+                console.warn('⚠️ Inbound not found in list!', value);
+                selectedInboundsData.push({
+                    "id": value,
+                    "remark": remark || "",
+                    "port": null,
+                    "protocol": "",
+                    "active_clients": 0
+                });
+            }
+        }
+    } else {
+        // ====== حذف از هر دو لیست ======
+        selectedInbounds = selectedInbounds.filter(id => id !== value);
+        selectedInboundsData = selectedInboundsData.filter(item => String(item.id) !== String(value));
+        console.log('❌ After removal - selectedInbounds:', selectedInbounds);
+        console.log('❌ After removal - selectedInboundsData:', selectedInboundsData);
+    }
+    
+    console.log('📊 Final - selectedInbounds:', selectedInbounds);
+    console.log('📊 Final - selectedInboundsData:', selectedInboundsData);
+}
+// ===== Select All Inbounds =====
+
+function selectAllInbounds() {
+    document.querySelectorAll('#inboundContainer input[type="checkbox"]').forEach(cb => {
+        cb.checked = true;
+        const value = cb.value;
+        if (!selectedInbounds.includes(value)) {
+            selectedInbounds.push(value);
+            const inbound = inboundList.find(item => String(item.id) === String(value));
+            if (inbound) {
+                selectedInboundsData.push({
+                    "id": inbound.id,
+                    "remark": inbound.remark || "",
+                    "port": inbound.port,
+                    "protocol": inbound.protocol || "",
+                    "active_clients": inbound.active_clients || 0
+                });
+            }
+        }
+    });
+    console.log('✅ Select All - selectedInbounds:', selectedInbounds);
+    console.log('✅ Select All - selectedInboundsData:', selectedInboundsData);
+}
+
+// ===== Deselect All Inbounds =====
+function deselectAllInbounds() {
+    document.querySelectorAll('#inboundContainer input[type="checkbox"]').forEach(cb => {
+        cb.checked = false;
+        const value = cb.value;
+        selectedInbounds = selectedInbounds.filter(id => id !== value);
+        selectedInboundsData = selectedInboundsData.filter(item => String(item.id) !== String(value));
+    });
+}
+// ===== Set Unlimited Capacity =====
+function setUnlimitedCapacity() {
+    const input = document.getElementById('panelCapacity');
+    if (input.value === '0' || input.value === '') {
+        input.value = '0';
+        input.placeholder = 'نامحدود (۰)';
+    } else {
+        input.value = '0';
+        input.placeholder = 'نامحدود (۰)';
+    }
+}
+
+// ===== Fetch User Count =====
+function fetchUserCount() {
+    const url = document.getElementById('panelUrl').value.trim();
+    const token = document.getElementById('panelToken').value.trim();
+    
+    if (!url || !token) {
+        alert('لطفاً ابتدا آدرس URL و توکن API را وارد کنید');
+        return;
+    }
+    
+    fetch('/admin/api/panels/fetch-clients', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: url, api_token: token })
+    })
+    .then(r => r.json())
+    .then(res => {
+        if (res.status === 'success') {
+            document.getElementById('panelUsersCount').value = res.data.count || 0;
+        } else {
+            alert('❌ خطا: ' + res.message);
+        }
+    });
+}
+
+// ===== Check Panel Status (Manual Refresh) =====
+function checkPanelStatus(panelId) {
+    // نمایش اسپینر روی دکمه
+    const btn = event?.target?.closest('button');
+    if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span>';
+    }
+    
+    fetch(`/admin/api/panels/${panelId}/check-status`, {
+        method: 'POST'
+    })
+    .then(r => r.json())
+    .then(res => {
+        if (res.status === 'success') {
+            loadPanels();
+            showToast('✅ وضعیت پنل بروزرسانی شد', 'success');
+        } else {
+            showToast('❌ خطا: ' + res.message, 'error');
+        }
+    })
+    .finally(() => {
+        if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="bi bi-arrow-repeat"></i>';
+        }
+    });
+}
+
+// ===== Save Panel =====
+
+function savePanel() {
+    const id = document.getElementById('panelId').value;
+    const capacity = document.getElementById('panelCapacity').value.trim();
+    
+    console.log('🔍 selectedInboundsData before save:', JSON.stringify(selectedInboundsData));
+    console.log('🔍 selectedInbounds before save:', selectedInbounds);
+    
+    const data = {
+        name: document.getElementById('panelName').value.trim(),
+        url: document.getElementById('panelUrl').value.trim(),
+        api_token: document.getElementById('panelToken').value.trim(),
+        sub_url: document.getElementById('panelSubUrl').value.trim() || null,
+        inbound_ids: selectedInbounds,
+        inbound_details: selectedInboundsData,  
+        capacity: capacity === '' || capacity === 'unlimited' ? 0 : parseInt(capacity) || 0,
+        is_active: true
+    };
+
+    console.log('📤 Sending data to server:', JSON.stringify(data, null, 2));
+
+    if (!data.name) {
+        alert('لطفاً نام پنل را وارد کنید');
+        return;
+    }
+    if (!data.url) {
+        alert('لطفاً آدرس URL را وارد کنید');
+        return;
+    }
+    if (!data.api_token) {
+        alert('لطفاً توکن API را وارد کنید');
+        return;
+    }
+
+    const url = id ? `/admin/api/panels/${id}` : '/admin/api/panels';
+    const method = id ? 'PUT' : 'POST';
+
+    fetch(url, {
+        method: method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    })
+    .then(r => r.json())
+    .then(res => {
+        if (res.status === 'success') {
+            bootstrap.Modal.getInstance(document.getElementById('panelModal')).hide();
+            loadPanels();
+            showToast('✅ پنل ذخیره شد', 'success');
+            const newId = res.data?.id;
+            if (newId) {
+                setTimeout(() => checkPanelStatus(newId), 1000);
+            }
+        } else {
+            showToast('❌ خطا: ' + res.message, 'error');
+        }
+    });
+}
+
+// ===== Edit Panel =====
+function editPanel(id) {
+    const p = panelsData.find(x => x.id === id);
+    if (!p) return;
+    
+    document.getElementById('panelId').value = p.id;
+    document.getElementById('panelName').value = p.name;
+    document.getElementById('panelUrl').value = p.url;
+    document.getElementById('panelToken').value = p.api_token || '';
+    document.getElementById('panelSubUrl').value = p.sub_url || '';
+    document.getElementById('panelUsersCount').value = p.users_count || 0;
+    document.getElementById('panelCapacity').value = p.capacity || 0;
+    
+    selectedInbounds = p.inbound_ids || [];
+    
+    document.getElementById('panelModalTitle').textContent = '✏️ ویرایش پنل';
+    
+    // ====== اصلاح: دریافت inbound ها با آدرس درست ======
+    if (p.url && p.api_token) {
+        // ابتدا url و token را در فیلدها قرار بده
+        document.getElementById('panelUrl').value = p.url;
+        document.getElementById('panelToken').value = p.api_token;
+        
+        // نمایش پیام در حال بارگذاری
+        document.getElementById('inboundContainer').innerHTML = '<span class="text-muted small">⏳ در حال دریافت Inbound‌ها...</span>';
+        
+        // سپس inbound ها را دریافت کن (با تابع جدید که خطا را بهتر مدیریت می‌کند)
+        fetchInboundsForEdit(p.url, p.api_token);
+    }
+    
+    new bootstrap.Modal(document.getElementById('panelModal')).show();
+}
+
+// ===== تابع جدید: دریافت Inbound برای ویرایش =====
+function fetchInboundsForEdit(url, token) {
+    // اطمینان از اینکه url بدون / اضافی است
+    const cleanUrl = url.replace(/\/+$/, '');
+    
+    fetch('/admin/api/panels/fetch-inbounds', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: cleanUrl, api_token: token })
+    })
+    .then(r => r.json())
+    .then(res => {
+        if (res.status === 'success') {
+            inboundList = res.data.inbounds || [];
+            renderInboundSelection();
+            
+            // انتخاب مجدد inbound های ذخیره شده
+            setTimeout(() => {
+                document.querySelectorAll('#inboundContainer input[type="checkbox"]').forEach(cb => {
+                    if (selectedInbounds.includes(cb.value)) {
+                        cb.checked = true;
+                        cb.closest('.inbound-item')?.classList.add('selected');
+                    }
+                });
+            }, 100);
+            
+            if (inboundList.length > 0) {
+                showToast(`✅ ${inboundList.length} Inbound پیدا شد`, 'success');
+            }
+        } else {
+            // اگر خطا بود، پیام مناسب نشان بده
+            if (res.message && res.message.includes('404')) {
+                showToast('⚠️ Inbound‌ها یافت نشدند - ممکن است آدرس پنل یا توکن صحیح نباشد', 'warning');
+                document.getElementById('inboundContainer').innerHTML = '<span class="text-warning small">⚠️ خطا در دریافت Inbound‌ها - لطفاً آدرس و توکن را بررسی کنید</span>';
+            } else {
+                showToast('❌ خطا: ' + res.message, 'error');
+                document.getElementById('inboundContainer').innerHTML = '<span class="text-danger small">❌ خطا در دریافت Inbound‌ها</span>';
+            }
+        }
+    })
+    .catch((error) => {
+        console.error('Error fetching inbounds:', error);
+        showToast('❌ خطا در ارتباط با سرور', 'error');
+        document.getElementById('inboundContainer').innerHTML = '<span class="text-danger small">❌ خطا در ارتباط با سرور</span>';
+    });
+}
+// ===== Delete Panel =====
+function deletePanel(id) {
+    if (!confirm('آیا از حذف این پنل اطمینان دارید؟')) return;
+    
+    fetch(`/admin/api/panels/${id}`, { method: 'DELETE' })
+        .then(r => r.json())
+        .then(res => {
+            if (res.status === 'success') {
+                loadPanels();
+                showToast('✅ پنل حذف شد', 'success');
+            } else {
+                showToast('❌ خطا: ' + res.message, 'error');
+            }
+        });
+}
+
+// ===== Reset Modal =====
+function resetPanelModal() {
+    document.getElementById('panelId').value = '';
+    document.getElementById('panelName').value = '';
+    document.getElementById('panelUrl').value = '';
+    document.getElementById('panelToken').value = '';
+    document.getElementById('panelSubUrl').value = '';
+    document.getElementById('panelUsersCount').value = '';
+    document.getElementById('panelCapacity').value = '0';
+    document.getElementById('panelModalTitle').textContent = '➕ افزودن پنل';
+    selectedInbounds = [];
+    selectedInboundsData = []; 
+    inboundList = [];
+    document.getElementById('inboundContainer').innerHTML = '<span class="text-muted small">برای دریافت لیست، دکمه "دریافت لیست Inbound‌ها" را بزنید</span>';
+}
+
+document.getElementById('panelModal').addEventListener('hidden.bs.modal', resetPanelModal);
+
+// ===== Toast =====
+function showToast(message, type) {
+    const container = document.getElementById('toastContainer');
+    if (!container) return;
+    const icons = { success: '✅', error: '❌', warning: '⚠️' };
+    const toast = document.createElement('div');
+    toast.className = `toast-msg ${type}`;
+    toast.innerHTML = `<span>${icons[type] || '📌'}</span> <span>${message}</span>`;
+    container.appendChild(toast);
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(100%)';
+        toast.style.transition = 'all 0.3s ease';
+        setTimeout(() => toast.remove(), 350);
+    }, 3500);
+}
+
+// ===== Auto Refresh (Every 1 minute) =====
+function startAutoRefresh() {
+    if (autoRefreshInterval) clearInterval(autoRefreshInterval);
+    autoRefreshInterval = setInterval(() => {
+        // Refresh only if page is visible
+        if (!document.hidden) {
+            loadPanels();
+        }
+    }, 60000); // 60 seconds
+}
+
+function stopAutoRefresh() {
+    if (autoRefreshInterval) {
+        clearInterval(autoRefreshInterval);
+        autoRefreshInterval = null;
+    }
+}
+
+// ===== Load on Page Ready =====
+document.addEventListener('DOMContentLoaded', function() {
+    loadPanels();
+    startAutoRefresh();
+});
+
+// Stop refresh when page is hidden
+document.addEventListener('visibilitychange', function() {
+    if (document.hidden) {
+        stopAutoRefresh();
+    } else {
+        startAutoRefresh();
+        loadPanels(); // Immediate refresh when page becomes visible
+    }
+});
+</script>
+{% endblock %}

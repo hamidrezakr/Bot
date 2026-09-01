@@ -1,0 +1,38 @@
+services:
+  bot:
+    build: .
+    container_name: telegram-xui-bot
+    restart: always
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      # Database
+      - /data:/app/telegram_bot.db
+      # Receipts
+      - /data/receipts:/app/receipts
+      # Broadcast photos
+      - /data/broadcast_photos:/app/broadcast_photos
+      # Logs
+      - /data:/app/bot.log
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8000
+    networks:
+      - bot-network
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  bot-network:
+    driver: bridge

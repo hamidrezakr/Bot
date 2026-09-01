@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Space Gate</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/admin.css">
+</head>
+<body>
+    <canvas id="stars-canvas" style="position:fixed;inset:0;z-index:0;pointer-events:none;"></canvas>
+    <div id="dateTimeDisplay" style="text-align:center;padding:8px;background:rgba(5,6,15,0.8);border-bottom:1px solid #2a3162;font-size:0.85rem;color:#a9aed6;position:relative;z-index:1000;">
+    </div> 
+     <!-- Mobile Top Bar -->
+    <div class="mobile-topbar">
+        <button class="btn btn-sm btn-outline-info" onclick="toggleSidebar()">
+            ☰ منو
+        </button>
+        <span style="color:#f4f3ff;font-weight:700;">🚀 Space Gate</span>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-md-3 col-lg-2 d-md-block sidebar">
+                <div class="text-center py-3 border-bottom border-secondary border-opacity-10">
+                    <h4 class="brand-title">🚀 Space Gate</h4>
+                    <small class="text-muted">مدیریت پنل</small>
+                </div>
+                <div class="nav flex-column mt-3">
+                    <a class="nav-link {% if active == 'dashboard' %}active{% endif %}" href="/admin/dashboard">
+                        <i class="bi bi-speedometer2"></i> داشبورد
+                    </a>
+                    <a class="nav-link {% if active == 'panels' %}active{% endif %}" href="/admin/panels">
+                        <i class="bi bi-hdd-stack"></i> پنل‌ها
+                    </a>
+                    <a class="nav-link {% if active == 'categories' %}active{% endif %}" href="/admin/categories">
+                       <i class="bi bi-tags"></i> دسته‌بندی
+                    </a>
+                    <a class="nav-link {% if active == 'services' %}active{% endif %}" href="/admin/services">
+                        <i class="bi bi-box-seam"></i> سرویس‌ها
+                    </a>
+                    <a class="nav-link {% if active == 'broadcast' %}active{% endif %}" href="/admin/broadcast">
+                        <i class="bi bi-broadcast"></i> پیام گروهی
+                    </a>
+                    <a class="nav-link {% if active == 'receipts' %}active{% endif %}" href="/admin/receipts">
+                        <i class="bi bi-receipt"></i> رسیدها
+                    </a>
+                    <a class="nav-link {% if active == 'reports' %}active{% endif %}" href="/admin/reports">
+                        <i class="bi bi-bar-chart"></i> گزارشات
+                    </a>
+                    <a class="nav-link {% if active == 'staff' %}active{% endif %}" href="/admin/staff">
+                        <i class="bi bi-people"></i> کارکنان
+                    </a>
+                    <a class="nav-link {% if active == 'settings' %}active{% endif %}" href="/admin/settings">
+                        <i class="bi bi-gear"></i> تنظیمات
+                    </a>
+                </div>
+                <div class="text-center text-muted small mt-5 pt-3 border-top border-secondary border-opacity-10">
+                    v1.0 ❤️
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="col-md-9 col-lg-10 main-content">
+                {% block content %}{% endblock %}
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // ===== Starfield Animation =====
+        const starsCanvas = document.getElementById('stars-canvas');
+        const starsCtx = starsCanvas.getContext('2d');
+        let starsArray = [];
+
+        function resizeStarsCanvas() {
+            starsCanvas.width = window.innerWidth;
+            starsCanvas.height = window.innerHeight;
+            const count = Math.floor((starsCanvas.width * starsCanvas.height) / 12000);
+            starsArray = Array.from({length: count}, () => ({
+                x: Math.random() * starsCanvas.width,
+                y: Math.random() * starsCanvas.height,
+                r: Math.random() * 1.3 + 0.3,
+                speed: Math.random() * 0.3 + 0.03,
+                phase: Math.random() * Math.PI * 2,
+                color: Math.random() > 0.7 ? '#33e0ff' : Math.random() > 0.5 ? '#7c5cff' : '#ffffff'
+            }));
+        }
+        resizeStarsCanvas();
+        window.addEventListener('resize', resizeStarsCanvas);
+
+        let starTime = 0;
+        function drawStars() {
+            starTime += 0.02;
+            starsCtx.clearRect(0, 0, starsCanvas.width, starsCanvas.height);
+            starsArray.forEach(s => {
+                const twinkle = 0.5 + 0.5 * Math.sin(starTime + s.phase);
+                starsCtx.beginPath();
+                starsCtx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                starsCtx.fillStyle = `rgba(230,230,255,${0.2 + twinkle * 0.5})`;
+                starsCtx.fill();
+                s.y += s.speed;
+                if (s.y > starsCanvas.height) {
+                    s.y = 0;
+                    s.x = Math.random() * starsCanvas.width;
+                }
+            });
+            requestAnimationFrame(drawStars);
+        }
+        drawStars();
+
+
+     <!-- ===== Date & Time Display ===== -->
+	function updateDateTime() {
+	    const now = new Date();
+	    
+	    // روزهای هفته
+	    const days = ['یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه', 'شنبه'];
+	    const dayName = days[now.getDay()];
+	    
+	    // ماه‌های میلادی
+	    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+	    const monthName = months[now.getMonth()];
+	    
+	    // ساعت
+	    const hours = String(now.getHours()).padStart(2, '0');
+	    const minutes = String(now.getMinutes()).padStart(2, '0');
+	    const seconds = String(now.getSeconds()).padStart(2, '0');
+	    const time = `${hours}:${minutes}:${seconds}`;
+	    
+	    // تاریخ شمسی
+	    const jalali = new Intl.DateTimeFormat('fa-IR-u-ca-persian').format(now);
+	    const jalaliParts = jalali.split('/');
+	    const jalaliDate = `${jalaliParts[2]}-${jalaliParts[1]}-${jalaliParts[0]}`;
+	    
+	    // تاریخ میلادی
+	    const gregorian = `${now.getDate()}/${now.getMonth()+1}/${now.getFullYear()}`;
+	    
+	    // نمایش با رنگ‌های متفاوت
+	    document.getElementById('dateTimeDisplay').innerHTML = 
+		`<span style="color:#33e0ff;font-weight:700;">${dayName} ${time}</span>` +
+		`<span style="margin:0 15px;color:#2a3162;">|</span>` +
+		`<span style="color:#ffb84d;font-weight:700;">📅 ${jalaliDate}</span>` +
+		`<span style="margin:0 15px;color:#2a3162;">|</span>` +
+		`<span style="color:#7c5cff;font-weight:700;">🌍 ${gregorian}</span>` +
+		`<span style="margin:0 15px;color:#2a3162;">|</span>` +
+		`<span style="color:#a9aed6;">${monthName}</span>`;
+	}
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+        }
+
+        // بستن سایدبار وقتی روی لینک کلیک میشه
+        document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    toggleSidebar();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

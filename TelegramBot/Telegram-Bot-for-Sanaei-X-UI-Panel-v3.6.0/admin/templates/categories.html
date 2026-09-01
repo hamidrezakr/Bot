@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h1 class="page-title">🏷️ مدیریت دسته‌بندی</h1>
+        <p class="text-muted small">مدیریت دسته‌بندی سرویس‌ها</p>
+    </div>
+    <button class="btn-success-glass" data-bs-toggle="modal" data-bs-target="#categoryModal">
+        <i class="bi bi-plus-lg"></i> افزودن دسته‌بندی
+    </button>
+</div>
+
+<!-- Table -->
+<div class="glass-card p-0 overflow-hidden">
+    <div class="table-responsive">
+        <table class="table table-dark table-hover mb-0" style="background:transparent;">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>نام دسته‌بندی</th>
+                    <th>تاریخ ایجاد</th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+            <tbody id="categoriesTableBody">
+                <!-- داده از JS -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- ===== MODAL ===== -->
+<div class="modal fade" id="categoryModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="background:#0b0e1a;border:1px solid rgba(255,255,255,0.06);">
+            <div class="modal-header border-secondary border-opacity-10">
+                <h5 class="modal-title" id="categoryModalTitle">➕ افزودن دسته‌بندی</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="categoryId">
+                <div class="mb-2">
+                    <label class="form-label text-muted small">نام دسته‌بندی</label>
+                    <input type="text" class="form-control bg-dark text-white border-secondary" id="categoryName" placeholder="مثال: اینترنت پرسرعت">
+                </div>
+            </div>
+            <div class="modal-footer border-secondary border-opacity-10">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">لغو</button>
+                <button type="button" class="btn btn-primary" onclick="saveCategory()">ذخیره</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// ===== Load Categories =====
+function loadCategories() {
+    fetch('/admin/api/categories')
+        .then(r => r.json())
+        .then(res => {
+            if (res.status === 'success') {
+                const tbody = document.getElementById('categoriesTableBody');
+                if (res.data.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="4" class="text-center" style="color:rgba(255,255,255,0.4);">هیچ دسته‌بندی ثبت نشده</td></tr>`;
+                    return;
+                }
+                tbody.innerHTML = res.data.map((c, i) => `
+                    <tr>
+                        <td style="color:rgba(255,255,255,0.4);">${i+1}</td>
+                        <td style="color:#ffffff;font-weight:500;">${c.name}</td>
+                        <td><small style="color:rgba(255,255,255,0.4);">${c.created_at ? new Date(c.created_at).toLocaleDateString('fa-IR') : '—'}</small></td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-danger" onclick="deleteCategory(${c.id})"><i class="bi bi-trash"></i></button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        });
+}
+// ===== Save Category =====
+function saveCategory() {
+    const id = document.getElementById('categoryId').value;
+    const name = document.getElementById('categoryName').value.trim();
+
+    if (!name) {
+        alert('لطفاً نام دسته‌بندی را وارد کنید');
+        return;
+    }
+
+    const url = id ? `/admin/api/categories/${id}` : '/admin/api/categories';
+    const method = id ? 'PUT' : 'POST';
+
+    fetch(url, {
+        method: method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: name })
+    })
+    .then(r => r.json())
+    .then(res => {
+        if (res.status === 'success') {
+            bootstrap.Modal.getInstance(document.getElementById('categoryModal')).hide();
+            loadCategories();
+            document.getElementById('categoryName').value = '';
+            document.getElementById('categoryId').value = '';
+            alert('✅ دسته‌بندی ذخیره شد');
+        } else {
+            alert('❌ خطا: ' + res.message);
+        }
+    });
+}
+
+// ===== Delete Category =====
+function deleteCategory(id) {
+    if (!confirm('حذف شود؟')) return;
+    fetch(`/admin/api/categories/${id}`, { method: 'DELETE' })
+        .then(r => r.json())
+        .then(res => {
+            if (res.status === 'success') {
+                loadCategories();
+                alert('✅ حذف شد');
+            }
+        });
+}
+
+// ===== Reset Modal =====
+document.getElementById('categoryModal').addEventListener('hidden.bs.modal', function() {
+    document.getElementById('categoryId').value = '';
+    document.getElementById('categoryName').value = '';
+    document.getElementById('categoryModalTitle').textContent = '➕ افزودن دسته‌بندی';
+});
+
+// ===== Load =====
+loadCategories();
+</script>
+{% endblock %}

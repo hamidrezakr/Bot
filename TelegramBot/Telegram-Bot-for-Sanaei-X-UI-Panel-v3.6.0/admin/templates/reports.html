@@ -1,0 +1,590 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Header -->
+    <div class="row mb-4 align-items-center">
+        <div class="col">
+            <h1 class="page-title">📊 گزارشات</h1>
+            <p class="page-subtitle">گزارشات مالی و آماری سیستم</p>
+        </div>
+        <div class="col-auto">
+            <button class="btn-glass" onclick="loadReportData()">
+                <i class="bi bi-arrow-clockwise"></i> بروزرسانی
+            </button>
+        </div>
+    </div>
+
+    <!-- Report Filters -->
+    <div class="glass-card mb-4">
+        <div class="row align-items-center g-3">
+            <div class="col-md-3">
+                <label class="form-label">از تاریخ</label>
+                <input type="date" class="form-control" id="dateFrom">
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">تا تاریخ</label>
+                <input type="date" class="form-control" id="dateTo">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">&nbsp;</label>
+                <button class="btn-primary-glass w-100" onclick="applyFilters()">
+                    <i class="bi bi-funnel"></i> اعمال فیلتر
+                </button>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">&nbsp;</label>
+                <button class="btn-glass w-100" onclick="clearFilters()">
+                    <i class="bi bi-x-circle"></i> پاک کردن
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary Cards - Row 1 -->
+    <div class="row g-3 mb-3">
+        <div class="col-xl-3 col-lg-6 col-md-6">
+            <div class="stat-card">
+                <p class="label">💰 کل فروش</p>
+                <p class="number" id="totalRevenue">-</p>
+                <small class="sub">تومان</small>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6">
+            <div class="stat-card">
+                <p class="label">📊 تعداد تراکنش</p>
+                <p class="number" id="totalTransactions">-</p>
+                <small class="sub">تراکنش</small>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6">
+            <div class="stat-card">
+                <p class="label">📈 میانگین تراکنش</p>
+                <p class="number" id="avgTransaction">-</p>
+                <small class="sub">تومان</small>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6">
+            <div class="stat-card">
+                <p class="label">📊 نرخ رشد</p>
+                <p class="number" id="growthRate">-</p>
+                <small class="sub">نسبت به دوره قبل</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary Cards - Row 2 -->
+    <div class="row g-3 mb-4">
+        <div class="col-xl-3 col-lg-6 col-md-6">
+            <div class="stat-card">
+                <p class="label">💳 درآمد آنلاین</p>
+                <p class="number" id="onlineRevenue">-</p>
+                <small class="sub">تومان</small>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6">
+            <div class="stat-card">
+                <p class="label">📋 درآمد رسید</p>
+                <p class="number" id="receiptRevenue">-</p>
+                <small class="sub">تومان</small>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6">
+            <div class="stat-card">
+                <p class="label">👥 کاربر جدید</p>
+                <p class="number" id="newUsers">-</p>
+                <small class="sub" id="totalUsersText">کل: -</small>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6">
+            <div class="stat-card">
+                <p class="label">🔗 رفرال جدید</p>
+                <p class="number" id="newReferrals">-</p>
+                <small class="sub" id="totalReferralsText">کل: -</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Methods + Test Accounts -->
+    <div class="row g-3 mb-4">
+        <div class="col-xl-4 col-lg-6">
+            <div class="stat-card">
+                <p class="label">💳 پرداخت آنلاین</p>
+                <p class="number" id="paymentOnlinePercent">-</p>
+                <small class="sub">درصد از کل</small>
+            </div>
+        </div>
+        <div class="col-xl-4 col-lg-6">
+            <div class="stat-card">
+                <p class="label">📋 ارسال رسید</p>
+                <p class="number" id="paymentReceiptPercent">-</p>
+                <small class="sub">درصد از کل</small>
+            </div>
+        </div>
+        <div class="col-xl-4 col-lg-12">
+            <div class="stat-card">
+                <p class="label">🎁 اکانت تست جدید</p>
+                <p class="number" id="newTestAccounts">-</p>
+                <small class="sub">تعداد</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="row g-3 mb-4">
+        <div class="col-xl-7">
+            <div class="glass-card">
+                <h5 class="mb-3"><i class="bi bi-bar-chart"></i> فروش هفتگی</h5>
+                <div style="height:280px;"><canvas id="reportChart"></canvas></div>
+            </div>
+        </div>
+        <div class="col-xl-5">
+            <div class="glass-card">
+                <h5 class="mb-3"><i class="bi bi-pie-chart"></i> توزیع سرویس‌ها</h5>
+                <div style="height:280px;"><canvas id="serviceChart"></canvas></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ARCHIVED RECEIPTS SECTION -->
+    <!-- ============================================================ -->
+    <div class="mt-4 pt-4" style="border-top: 1px solid rgba(255,255,255,0.1);">
+            <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+            <div class="d-flex align-items-center gap-3">
+                <h3 class="page-title" style="font-size:1.3rem;">📦 آرشیو رسیدها</h3>
+                <span class="badge bg-info bg-opacity-25 text-info" id="archiveCount">۰ رسید</span>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <select class="form-select" id="perPage" style="width:auto;background:#141a38;color:#f4f3ff;border:1px solid #2a3162;" onchange="changePerPage()">
+                    <option value="25">۲۵ تایی</option>
+                    <option value="50">۵۰ تایی</option>
+                    <option value="100">۱۰۰ تایی</option>
+                </select>
+                <button class="btn btn-sm btn-outline-info" onclick="loadArchivedReceipts()">
+                    <i class="bi bi-arrow-clockwise"></i> بروزرسانی
+                </button>
+            </div>
+        </div>
+
+        <div class="glass-card p-0 overflow-hidden">
+            <div class="table-responsive">
+                <table class="table table-dark table-hover mb-0" style="background:transparent;">
+                    <thead>
+                        <tr>
+                            <th style="width:4%;">#</th>
+                            <th style="width:14%;">کاربر</th>
+                            <th style="width:16%;">سرویس</th>
+                            <th style="width:10%;">مبلغ</th>
+                            <th style="width:8%;">مدت</th>
+                            <th style="width:10%;">وضعیت</th>
+                            <th style="width:14%;">تاریخ پردازش</th>
+                            <th style="width:10%;">عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="archivedReceiptsBody">
+                        <!-- داده از JS -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="d-flex justify-content-between align-items-center p-3" style="border-top:1px solid rgba(255,255,255,0.1);">
+                <div style="color:#a9aed6;font-size:0.85rem;" id="paginationInfo">
+                    نمایش ۱ تا ۲۵ از ۱۰۰
+                </div>
+                <div class="d-flex gap-1" id="paginationButtons">
+                    <!-- دکمه‌های صفحه -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ===== Modal برای نمایش رسید آرشیو شده ===== -->
+<div class="modal fade" id="archivedReceiptModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content" style="background:#141a38;border:1px solid #2a3162;">
+            <div class="modal-header border-secondary border-opacity-10">
+                <h5 class="modal-title" style="color:#f4f3ff;">🧾 جزئیات رسید آرشیو شده</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div style="background:rgba(255,255,255,0.03);border-radius:12px;padding:16px;text-align:center;">
+                            <label style="color:#a9aed6;font-size:0.75rem;text-transform:uppercase;">تصویر رسید</label>
+                            <img id="archivedModalImage" src="" alt="رسید"
+                                 onclick="toggleArchivedImage()"
+                                 style="max-width:100%;max-height:50vh;border-radius:8px;cursor:pointer;transition:all 0.3s ease;">
+                            <small class="text-muted d-block mt-2">برای بزرگنمایی کلیک کنید</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div style="background:rgba(255,255,255,0.03);border-radius:12px;padding:14px 16px;margin-bottom:10px;">
+                            <label style="color:#a9aed6;font-size:0.75rem;">👤 کاربر</label>
+                            <div id="archivedModalUser" style="color:#f4f3ff;font-weight:500;">-</div>
+                            <div style="color:#6a7099;font-size:0.7rem;" id="archivedModalUserId">-</div>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.03);border-radius:12px;padding:14px 16px;margin-bottom:10px;">
+                            <label style="color:#a9aed6;font-size:0.75rem;">📦 سرویس</label>
+                            <div id="archivedModalService" style="color:#f4f3ff;font-weight:500;">-</div>
+                            <div style="color:#6a7099;font-size:0.7rem;" id="archivedModalDetails">-</div>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.03);border-radius:12px;padding:14px 16px;">
+                            <label style="color:#a9aed6;font-size:0.75rem;">📋 اطلاعات</label>
+                            <div class="row">
+                                <div class="col-6"><span style="color:#6a7099;font-size:0.7rem;">وضعیت</span><br><span id="archivedModalStatus" style="color:#f4f3ff;font-weight:500;">-</span></div>
+                                <div class="col-6"><span style="color:#6a7099;font-size:0.7rem;">تاریخ</span><br><span id="archivedModalDate" style="color:#f4f3ff;font-weight:500;">-</span></div>
+                            </div>
+                            <div class="mt-2">
+                                <span style="color:#6a7099;font-size:0.7rem;">پیام ادمین</span>
+                                <div id="archivedModalMessage" style="color:#d0d4e8;font-size:0.85rem;margin-top:4px;">-</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer border-secondary border-opacity-10">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+let reportChartInstance = null;
+let serviceChartInstance = null;
+
+// ===== Load Report Data =====
+function loadReportData() {
+    const dateFrom = document.getElementById('dateFrom').value;
+    const dateTo = document.getElementById('dateTo').value;
+    
+    let url = '/admin/api/reports/stats';
+    const params = [];
+    if (dateFrom) params.push(`date_from=${dateFrom}`);
+    if (dateTo) params.push(`date_to=${dateTo}`);
+    if (params.length > 0) url += '?' + params.join('&');
+    
+    fetch(url)
+        .then(r => r.json())
+        .then(res => {
+            if (res.status === 'success') {
+                const data = res.data;
+                
+                // Update summary cards
+                document.getElementById('totalRevenue').textContent = data.total_revenue.toLocaleString('fa-IR');
+                document.getElementById('totalTransactions').textContent = data.total_transactions.toLocaleString('fa-IR');
+                document.getElementById('avgTransaction').textContent = data.avg_transaction.toLocaleString('fa-IR');
+                document.getElementById('growthRate').textContent = `${data.growth_rate > 0 ? '+' : ''}${data.growth_rate.toLocaleString('fa-IR')}%`;
+                
+                // Additional stats
+                document.getElementById('onlineRevenue').textContent = data.online_revenue.toLocaleString('fa-IR');
+                document.getElementById('receiptRevenue').textContent = data.receipt_revenue.toLocaleString('fa-IR');
+                document.getElementById('newUsers').textContent = data.new_users.toLocaleString('fa-IR');
+                document.getElementById('totalUsersText').textContent = `کل: ${data.total_users.toLocaleString('fa-IR')}`;
+                document.getElementById('newReferrals').textContent = data.new_referrals.toLocaleString('fa-IR');
+                document.getElementById('totalReferralsText').textContent = `کل: ${data.total_referrals.toLocaleString('fa-IR')}`;
+                document.getElementById('newTestAccounts').textContent = data.new_test_accounts.toLocaleString('fa-IR');
+                
+                // Payment methods
+                document.getElementById('paymentOnlinePercent').textContent = `${data.payment_methods.online_percent.toLocaleString('fa-IR')}%`;
+                document.getElementById('paymentReceiptPercent').textContent = `${data.payment_methods.receipt_percent.toLocaleString('fa-IR')}%`;
+                
+                // Render charts
+                renderReportChart(data.weekly_sales);
+                renderServiceChart(data.service_distribution);
+            }
+        })
+        .catch(err => console.error('Error loading report:', err));
+}
+
+// ===== Render Report Chart =====
+function renderReportChart(salesData) {
+    const ctx = document.getElementById('reportChart');
+    if (!ctx) return;
+    
+    if (reportChartInstance) reportChartInstance.destroy();
+    
+    reportChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: salesData.labels || [],
+            datasets: [{
+                label: 'فروش (هزار تومان)',
+                data: salesData.data || [],
+                backgroundColor: [
+                    'rgba(124, 92, 255, 0.7)',
+                    'rgba(51, 224, 255, 0.7)',
+                    'rgba(255, 184, 77, 0.7)',
+                    'rgba(40, 167, 69, 0.7)'
+                ],
+                borderColor: ['#7c5cff', '#33e0ff', '#ffb84d', '#28a745'],
+                borderWidth: 2,
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#f4f3ff', font: { family: 'Vazirmatn', size: 12 } } }
+            },
+            scales: {
+                y: { ticks: { color: '#a9aed6' }, grid: { color: 'rgba(255,255,255,0.08)' } },
+                x: { ticks: { color: '#a9aed6' }, grid: { color: 'rgba(255,255,255,0.08)' } }
+            }
+        }
+    });
+}
+
+// ===== Render Service Chart =====
+function renderServiceChart(serviceData) {
+    const ctx = document.getElementById('serviceChart');
+    if (!ctx) return;
+    
+    if (serviceChartInstance) serviceChartInstance.destroy();
+    
+    const colors = ['#7c5cff', '#33e0ff', '#ffb84d', '#28a745', '#dc3545', '#ffc107'];
+    const labels = serviceData.labels || [];
+    const data = serviceData.data || [];
+    
+    serviceChartInstance = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: data,
+                backgroundColor: colors.slice(0, labels.length),
+                borderColor: '#05060f',
+                borderWidth: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: { color: '#f4f3ff', font: { family: 'Vazirmatn', size: 10 }, padding: 15 }
+                }
+            }
+        }
+    });
+}
+
+// ===== Apply Filters =====
+function applyFilters() {
+    loadReportData();
+}
+
+// ===== Clear Filters =====
+function clearFilters() {
+    document.getElementById('dateFrom').value = '';
+    document.getElementById('dateTo').value = '';
+    loadReportData();
+}
+
+// ===== Pagination Variables =====
+let currentPage = 1;
+let totalPages = 1;
+let allArchivedReceipts = [];
+let itemsPerPage = 25;
+
+// ===== Change Per Page =====
+function changePerPage() {
+    itemsPerPage = parseInt(document.getElementById('perPage').value);
+    currentPage = 1;
+    renderArchivedTable();
+}
+
+// ===== Load Archived Receipts =====
+function loadArchivedReceipts() {
+    fetch('/admin/api/receipts?archived=true')
+        .then(r => r.json())
+        .then(res => {
+            if (res.status === 'success') {
+                allArchivedReceipts = res.data || [];
+                currentPage = 1;
+                totalPages = Math.ceil(allArchivedReceipts.length / itemsPerPage) || 1;
+                document.getElementById('archiveCount').textContent = `${allArchivedReceipts.length} رسید`;
+                renderArchivedTable();
+            }
+        });
+}
+
+// ===== Render Archived Table with Pagination =====
+function renderArchivedTable() {
+    const tbody = document.getElementById('archivedReceiptsBody');
+    
+    if (allArchivedReceipts.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" class="text-center text-muted py-4"><i class="bi bi-inbox fs-3 d-block mb-2"></i>هیچ رسید آرشیو شده‌ای وجود ندارد</td></tr>';
+        document.getElementById('paginationInfo').textContent = '۰ رسید';
+        document.getElementById('paginationButtons').innerHTML = '';
+        return;
+    }
+    
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = Math.min(startIndex + itemsPerPage, allArchivedReceipts.length);
+    const pageData = allArchivedReceipts.slice(startIndex, endIndex);
+    
+    tbody.innerHTML = pageData.map((r, i) => {
+        const globalIndex = startIndex + i + 1;
+        const statusClass = r.status === 'approved' ? 'status-archived-approved' : 'status-archived-rejected';
+        const statusText = r.status === 'approved' ? '✅ تایید' : '❌ رد';
+        const price = r.service_details?.price ? `${Number(r.service_details.price).toLocaleString('fa-IR')} تومان` : '—';
+        const duration = r.service_details?.duration ? `${r.service_details.duration} ماه` : '—';
+        const date = r.processed_at ? new Date(r.processed_at).toLocaleString('fa-IR') : '—';
+        
+        return `
+            <tr>
+                <td style="color:#6a7099;">${globalIndex.toLocaleString('fa-IR')}</td>
+                <td style="color:#f4f3ff;">${r.username || 'نامشخص'}</td>
+                <td style="color:#d0d4e8;">${r.service_name}</td>
+                <td style="color:#d0d4e8;">${price}</td>
+                <td style="color:#a9aed6;">${duration}</td>
+                <td><span class="${statusClass}">${statusText}</span></td>
+                <td style="color:#a9aed6;font-size:0.75rem;">${date}</td>
+                <td>
+                    <button class="btn-sm-view-archived" onclick="viewArchivedReceipt(${r.id})">
+                        <i class="bi bi-eye"></i> مشاهده
+                    </button>
+                </td>
+            </tr>
+        `;
+    }).join('');
+    
+    document.getElementById('paginationInfo').textContent = 
+        `نمایش ${(startIndex + 1).toLocaleString('fa-IR')} تا ${endIndex.toLocaleString('fa-IR')} از ${allArchivedReceipts.length.toLocaleString('fa-IR')}`;
+    
+    renderPaginationButtons();
+}
+
+// ===== Render Pagination Buttons =====
+function renderPaginationButtons() {
+    const container = document.getElementById('paginationButtons');
+    
+    let buttons = '';
+    
+    buttons += `
+        <button class="btn btn-sm btn-outline-secondary" onclick="goToPage(${currentPage - 1})" ${currentPage <= 1 ? 'disabled' : ''}>
+            <i class="bi bi-chevron-right"></i>
+        </button>
+    `;
+    
+    const maxVisible = 5;
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+    let endPage = Math.min(totalPages, startPage + maxVisible - 1);
+    
+    if (endPage - startPage < maxVisible - 1) {
+        startPage = Math.max(1, endPage - maxVisible + 1);
+    }
+    
+    if (startPage > 1) {
+        buttons += `<button class="btn btn-sm btn-outline-secondary" onclick="goToPage(1)">۱</button>`;
+        if (startPage > 2) buttons += '<span style="color:#6a7099;">...</span>';
+    }
+    
+    for (let i = startPage; i <= endPage; i++) {
+        const activeClass = i === currentPage ? 'btn-primary-glass' : 'btn-outline-secondary';
+        buttons += `<button class="btn btn-sm ${activeClass}" onclick="goToPage(${i})">${i.toLocaleString('fa-IR')}</button>`;
+    }
+    
+    if (endPage < totalPages) {
+        if (endPage < totalPages - 1) buttons += '<span style="color:#6a7099;">...</span>';
+        buttons += `<button class="btn btn-sm btn-outline-secondary" onclick="goToPage(${totalPages})">${totalPages.toLocaleString('fa-IR')}</button>`;
+    }
+    
+    buttons += `
+        <button class="btn btn-sm btn-outline-secondary" onclick="goToPage(${currentPage + 1})" ${currentPage >= totalPages ? 'disabled' : ''}>
+            <i class="bi bi-chevron-left"></i>
+        </button>
+    `;
+    
+    container.innerHTML = buttons;
+}
+
+// ===== Go To Page =====
+function goToPage(page) {
+    if (page < 1 || page > totalPages) return;
+    currentPage = page;
+    renderArchivedTable();
+}
+
+// ===== View Archived Receipt =====
+function viewArchivedReceipt(id) {
+    fetch('/admin/api/receipts?archived=true')
+        .then(r => r.json())
+        .then(res => {
+            if (res.status === 'success') {
+                const receipt = res.data.find(r => r.id === id);
+                if (!receipt) return;
+                
+                document.getElementById('archivedModalImage').src = '/' + receipt.image_path;
+                document.getElementById('archivedModalUser').textContent = receipt.username || 'نامشخص';
+                document.getElementById('archivedModalUserId').textContent = `ID: ${receipt.user_id}`;
+                document.getElementById('archivedModalService').textContent = receipt.service_name;
+                document.getElementById('archivedModalDetails').textContent = `${receipt.service_details?.volume || ''} GB - ${receipt.service_details?.duration || ''} ماه`;
+                
+                const statusText = receipt.status === 'approved' ? '✅ تایید شده' : '❌ رد شده';
+                document.getElementById('archivedModalStatus').textContent = statusText;
+                document.getElementById('archivedModalDate').textContent = receipt.processed_at ? new Date(receipt.processed_at).toLocaleString('fa-IR') : '—';
+                document.getElementById('archivedModalMessage').textContent = receipt.admin_message || '—';
+                
+                new bootstrap.Modal(document.getElementById('archivedReceiptModal')).show();
+            }
+        });
+}
+
+// ===== Toggle Archived Image =====
+function toggleArchivedImage() {
+    const img = document.getElementById('archivedModalImage');
+    if (img.style.maxHeight === '90vh') {
+        img.style.maxHeight = '50vh';
+    } else {
+        img.style.maxHeight = '90vh';
+    }
+}
+
+// ===== Init =====
+document.addEventListener('DOMContentLoaded', function() {
+    loadReportData();
+    loadArchivedReceipts();
+});
+</script>
+
+<style>
+    .status-archived-approved {
+        background: rgba(40, 167, 69, 0.15);
+        color: #28a745;
+        padding: 3px 12px;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        border: 1px solid rgba(40, 167, 69, 0.2);
+        display: inline-block;
+    }
+    .status-archived-rejected {
+        background: rgba(220, 53, 69, 0.15);
+        color: #dc3545;
+        padding: 3px 12px;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        border: 1px solid rgba(220, 53, 69, 0.2);
+        display: inline-block;
+    }
+    .btn-sm-view-archived {
+        background: rgba(13, 110, 253, 0.15);
+        color: #0d6efd;
+        border: 1px solid rgba(13, 110, 253, 0.2);
+        padding: 3px 12px;
+        border-radius: 6px;
+        font-size: 0.7rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .btn-sm-view-archived:hover {
+        background: rgba(13, 110, 253, 0.25);
+    }
+</style>
+{% endblock %}

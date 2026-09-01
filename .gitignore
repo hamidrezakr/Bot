@@ -21,6 +21,7 @@ ENV/
 *.db
 *.sqlite
 *.sqlite3
+data/
 
 # Environment Variables
 .env
@@ -31,6 +32,10 @@ ENV/
 *.log
 bot.log
 logs/
+
+# Receipts & Photos
+receipts/
+broadcast_photos/
 
 # IDE
 .vscode/
@@ -45,3 +50,8 @@ Thumbs.db
 # Docker
 *.pid
 *.pid.lock
+docker-compose.override.yml
+
+# Backup
+*.bak
+*.backup

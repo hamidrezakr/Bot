@@ -1,0 +1,308 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h1 class="page-title">📦 مدیریت سرویس‌ها</h1>
+        <p class="text-muted small">لیست و مدیریت سرویس‌های فروش</p>
+    </div>
+    <button class="btn-success-glass" data-bs-toggle="modal" data-bs-target="#serviceModal">
+        <i class="bi bi-plus-lg"></i> افزودن سرویس
+    </button>
+</div>
+
+<!-- Table -->
+<div class="glass-card p-0 overflow-hidden">
+    <div class="table-responsive">
+        <table class="table table-dark table-hover mb-0" style="background:transparent;">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>نام سرویس</th>
+                    <th>دسته‌بندی</th>
+                    <th>پنل</th>
+                    <th>Inbound</th>
+                    <th>حجم</th>
+                    <th>دوره</th>
+                    <th>قیمت</th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+            <tbody id="servicesTableBody">
+                <!-- داده از JS -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- ===== MODAL ===== -->
+<div class="modal fade" id="serviceModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content" style="background:#0b0e1a;border:1px solid rgba(255,255,255,0.06);">
+            <div class="modal-header border-secondary border-opacity-10">
+                <h5 class="modal-title" id="serviceModalTitle">➕ افزودن سرویس</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="serviceId">
+
+                <div class="row">
+                    <div class="col-md-6 mb-2">
+                        <label class="form-label text-muted small">نام سرویس</label>
+                        <input type="text" class="form-control bg-dark text-white border-secondary" id="serviceName" placeholder="مثال: پلن طلایی">
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <label class="form-label text-muted small">دسته‌بندی</label>
+                        <select class="form-select bg-dark text-white border-secondary" id="serviceCategory">
+                            <option value="">انتخاب کنید...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-2">
+                        <label class="form-label text-muted small">پنل</label>
+                        <select class="form-select bg-dark text-white border-secondary" id="servicePanel" onchange="loadInbounds()">
+                            <option value="">انتخاب کنید...</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <label class="form-label text-muted small">Inbound</label>
+                        <select class="form-select bg-dark text-white border-secondary" id="serviceInbound">
+                            <option value="">ابتدا پنل را انتخاب کنید...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3 mb-2">
+                        <label class="form-label text-muted small">حجم (GB)</label>
+                        <div class="d-flex gap-2">
+                            <input type="number" class="form-control bg-dark text-white border-secondary" id="serviceVolume" placeholder="مقدار" min="0">
+                            <button class="btn btn-sm btn-outline-secondary" onclick="setUnlimited('volume')">نامحدود</button>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <label class="form-label text-muted small">دوره (ماه)</label>
+                        <input type="number" class="form-control bg-dark text-white border-secondary" id="serviceDuration" placeholder="مثلاً 1" min="1">
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <label class="form-label text-muted small">تعداد کاربر</label>
+                        <div class="d-flex gap-2">
+                            <input type="number" class="form-control bg-dark text-white border-secondary" id="serviceUsers" placeholder="مقدار" min="0">
+                            <button class="btn btn-sm btn-outline-secondary" onclick="setUnlimited('users')">نامحدود</button>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <label class="form-label text-muted small">قیمت (تومان)</label>
+                        <input type="number" class="form-control bg-dark text-white border-secondary" id="servicePrice" placeholder="مثلاً 150000" min="0">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer border-secondary border-opacity-10">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">لغو</button>
+                <button type="button" class="btn btn-primary" onclick="saveService()">ذخیره</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// ===== Load Categories =====
+function loadCategories() {
+    fetch('/admin/api/categories')
+        .then(r => r.json())
+        .then(res => {
+            if (res.status === 'success') {
+                const select = document.getElementById('serviceCategory');
+                select.innerHTML = '<option value="">انتخاب کنید...</option>';
+                res.data.forEach(c => {
+                    select.innerHTML += `<option value="${c.id}">${c.name}</option>`;
+                });
+            }
+        });
+}
+
+// ===== Load Panels =====
+function loadPanels() {
+    fetch('/admin/api/panels')
+        .then(r => r.json())
+        .then(res => {
+            if (res.status === 'success') {
+                const select = document.getElementById('servicePanel');
+                select.innerHTML = '<option value="">انتخاب کنید...</option>';
+                res.data.forEach(p => {
+                    select.innerHTML += `<option value="${p.id}" data-inbounds='${JSON.stringify(p.inbound_ids || [])}'>${p.name}</option>`;
+                });
+            }
+        });
+}
+
+// ===== Load Inbounds based on Panel =====
+function loadInbounds() {
+    const panelSelect = document.getElementById('servicePanel');
+    const inboundSelect = document.getElementById('serviceInbound');
+    const selected = panelSelect.options[panelSelect.selectedIndex];
+    
+    inboundSelect.innerHTML = '<option value="">ابتدا پنل را انتخاب کنید...</option>';
+    
+    if (selected && selected.value) {
+        try {
+            const inbounds = JSON.parse(selected.getAttribute('data-inbounds') || '[]');
+            if (inbounds.length === 0) {
+                inboundSelect.innerHTML = '<option value="">هیچ Inboundی موجود نیست</option>';
+            } else {
+                inboundSelect.innerHTML = '<option value="">انتخاب کنید...</option>';
+                inbounds.forEach(id => {
+                    inboundSelect.innerHTML += `<option value="${id}">${id}</option>`;
+                });
+            }
+        } catch(e) {
+            inboundSelect.innerHTML = '<option value="">خطا در بارگذاری</option>';
+        }
+    }
+}
+
+// ===== Set Unlimited =====
+function setUnlimited(type) {
+    const input = document.getElementById(type === 'volume' ? 'serviceVolume' : 'serviceUsers');
+    if (input.value === 'unlimited' || input.value === '') {
+        input.value = '';
+        input.placeholder = 'مقدار';
+        input.type = 'number';
+        input.min = 0;
+    } else {
+        input.value = 'unlimited';
+        input.placeholder = 'نامحدود';
+        input.type = 'text';
+    }
+}
+
+// ===== Save Service =====
+function saveService() {
+    const data = {
+        name: document.getElementById('serviceName').value.trim(),
+        category_id: document.getElementById('serviceCategory').value || null,
+        panel_id: document.getElementById('servicePanel').value || null,
+        inbound_id: document.getElementById('serviceInbound').value || null,
+        volume: document.getElementById('serviceVolume').value || null,
+        duration: document.getElementById('serviceDuration').value || null,
+        users: document.getElementById('serviceUsers').value || null,
+        price: document.getElementById('servicePrice').value || null,
+    };
+
+    if (!data.name) {
+        alert('لطفاً نام سرویس را وارد کنید');
+        return;
+    }
+
+    const id = document.getElementById('serviceId').value;
+    const url = id ? `/admin/api/services/${id}` : '/admin/api/services';
+    const method = id ? 'PUT' : 'POST';
+
+    fetch(url, {
+        method: method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    })
+    .then(r => r.json())
+    .then(res => {
+        if (res.status === 'success') {
+            bootstrap.Modal.getInstance(document.getElementById('serviceModal')).hide();
+            loadServices();
+            alert('✅ سرویس ذخیره شد');
+        } else {
+            alert('❌ خطا: ' + res.message);
+        }
+    });
+}
+
+// ===== Load Services =====
+function loadServices() {
+    fetch('/admin/api/services')
+        .then(r => r.json())
+        .then(res => {
+            if (res.status === 'success') {
+                const tbody = document.getElementById('servicesTableBody');
+                if (res.data.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="9" class="text-center" style="color:rgba(255,255,255,0.4);">هیچ سرویسی ثبت نشده</td></tr>`;
+                    return;
+                }
+                tbody.innerHTML = res.data.map((s, i) => `
+                    <tr>
+                        <td style="color:rgba(255,255,255,0.4);">${i+1}</td>
+                        <td style="color:#ffffff;font-weight:500;">${s.name}</td>
+                        <td style="color:#d4d4d8;">${s.category_name || '—'}</td>
+                        <td style="color:#d4d4d8;">${s.panel_name || '—'}</td>
+                        <td style="color:#d4d4d8;">${s.inbound_id || '—'}</td>
+                        <td style="color:#d4d4d8;">${s.volume === 'unlimited' ? '♾️' : (s.volume || '—')}</td>
+                        <td style="color:#d4d4d8;">${s.duration || '—'} ماه</td>
+                        <td style="color:#d4d4d8;">${s.price ? Number(s.price).toLocaleString() : '—'}</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-info" onclick="editService(${s.id})"><i class="bi bi-pencil"></i></button>
+                            <button class="btn btn-sm btn-outline-danger" onclick="deleteService(${s.id})"><i class="bi bi-trash"></i></button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        });
+}
+// ===== Edit Service =====
+function editService(id) {
+    fetch('/admin/api/services')
+        .then(r => r.json())
+        .then(res => {
+            const s = res.data.find(x => x.id === id);
+            if (s) {
+                document.getElementById('serviceId').value = s.id;
+                document.getElementById('serviceName').value = s.name;
+                document.getElementById('serviceCategory').value = s.category_id || '';
+                document.getElementById('servicePanel').value = s.panel_id || '';
+                setTimeout(loadInbounds, 200);
+                setTimeout(() => {
+                    document.getElementById('serviceInbound').value = s.inbound_id || '';
+                }, 300);
+                document.getElementById('serviceVolume').value = s.volume || '';
+                document.getElementById('serviceDuration').value = s.duration || '';
+                document.getElementById('serviceUsers').value = s.users || '';
+                document.getElementById('servicePrice').value = s.price || '';
+                document.getElementById('serviceModalTitle').textContent = '✏️ ویرایش سرویس';
+                new bootstrap.Modal(document.getElementById('serviceModal')).show();
+            }
+        });
+}
+
+// ===== Delete Service =====
+function deleteService(id) {
+    if (!confirm('حذف شود؟')) return;
+    fetch(`/admin/api/services/${id}`, { method: 'DELETE' })
+        .then(r => r.json())
+        .then(res => {
+            if (res.status === 'success') {
+                loadServices();
+                alert('✅ حذف شد');
+            }
+        });
+}
+
+// ===== Reset Modal =====
+document.getElementById('serviceModal').addEventListener('hidden.bs.modal', function() {
+    document.getElementById('serviceId').value = '';
+    document.getElementById('serviceName').value = '';
+    document.getElementById('serviceCategory').value = '';
+    document.getElementById('servicePanel').value = '';
+    document.getElementById('serviceInbound').innerHTML = '<option value="">ابتدا پنل را انتخاب کنید...</option>';
+    document.getElementById('serviceVolume').value = '';
+    document.getElementById('serviceDuration').value = '';
+    document.getElementById('serviceUsers').value = '';
+    document.getElementById('servicePrice').value = '';
+    document.getElementById('servicePaymentLink').value = '';
+    document.getElementById('serviceModalTitle').textContent = '➕ افزودن سرویس';
+});
+
+// ===== Load =====
+loadCategories();
+loadPanels();
+loadServices();
+</script>
+{% endblock %}

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود - Space Gate</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --void: #05060f;
+            --panel-solid: #141a38;
+            --line: #2a3162;
+            --accent-violet: #7c5cff;
+            --accent-cyan: #33e0ff;
+            --text-hi: #f4f3ff;
+            --text-mid: #a9aed6;
+            --text-low: #6a7099;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            background: var(--void);
+            color: var(--text-hi);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                radial-gradient(1.5px 1.5px at 20px 30px, rgba(51, 224, 255, 0.6), transparent),
+                radial-gradient(1.5px 1.5px at 40px 70px, rgba(124, 92, 255, 0.5), transparent),
+                radial-gradient(1px 1px at 50px 160px, rgba(255, 255, 255, 0.5), transparent),
+                radial-gradient(2px 2px at 90px 40px, rgba(51, 224, 255, 0.4), transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.4), transparent);
+            background-size: 400px 400px;
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .login-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 420px;
+        }
+        .login-card {
+            background: linear-gradient(180deg, #12173d, #0d1130);
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            padding: 35px 30px;
+            animation: slideUp 0.5s ease;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .login-title {
+            font-weight: 900;
+            font-size: 1.5rem;
+            background: linear-gradient(90deg, #33e0ff, #7c5cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .login-subtitle {
+            text-align: center;
+            color: var(--text-low);
+            font-size: 0.85rem;
+            margin-bottom: 25px;
+        }
+        .form-control {
+            background: #ffffff0d;
+            border: 1px solid var(--line);
+            color: var(--text-hi);
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 0.9rem;
+        }
+        .form-control:focus {
+            border-color: #7c5cff66;
+            box-shadow: 0 0 0 3px #7c5cff14;
+            outline: none;
+        }
+        .form-label {
+            color: var(--text-mid);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .btn-login {
+            background: linear-gradient(90deg, #7c5cff, #5c3fe0);
+            border: none;
+            color: #fff;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1rem;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px -10px rgba(124, 92, 255, 0.6);
+        }
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 34px -8px rgba(124, 92, 255, 0.8);
+        }
+        .btn-login:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .captcha-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .captcha-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: var(--accent-cyan);
+            background: #ffffff0d;
+            padding: 8px 15px;
+            border-radius: 8px;
+            border: 1px solid var(--line);
+            user-select: none;
+        }
+        .error-message {
+            background: rgba(220, 53, 69, 0.15);
+            border: 1px solid rgba(220, 53, 69, 0.3);
+            color: #dc3545;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <h2 class="login-title">🚀 Space Gate</h2>
+            <p class="login-subtitle">ورود به پنل مدیریت</p>
+            
+            {% if error %}
+            <div class="error-message">{{ error }}</div>
+            {% endif %}
+            
+            {% if not locked %}
+            <form id="loginForm">
+                <div class="mb-3">
+                    <label class="form-label">نام کاربری</label>
+                    <input type="text" class="form-control" id="username" required autocomplete="username">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">رمز عبور</label>
+                    <input type="password" class="form-control" id="password" required autocomplete="current-password">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">کپچا</label>
+                    <div class="captcha-box">
+                        <span class="captcha-text" id="captchaDisplay">{{ captcha_text }}</span>
+                        <button type="button" class="btn btn-sm btn-outline-info" onclick="refreshCaptcha()">
+                            <i class="bi bi-arrow-clockwise"></i>
+                        </button>
+                    </div>
+                    <input type="text" class="form-control mt-2" id="captcha" placeholder="متن بالا را وارد کنید" required>
+                    <input type="hidden" id="captchaKey" value="{{ captcha_key }}">
+                </div>
+                <button type="submit" class="btn-login" id="loginBtn">ورود</button>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        async function refreshCaptcha() {
+            // Refresh page to get new captcha
+            window.location.reload();
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const btn = document.getElementById('loginBtn');
+            btn.disabled = true;
+            btn.textContent = 'در حال بررسی...';
+            
+            const data = {
+                username: document.getElementById('username').value,
+                password: document.getElementById('password').value,
+                captcha: document.getElementById('captcha').value,
+                captcha_key: document.getElementById('captchaKey').value
+            };
+            
+            try {
+                const response = await fetch('/admin/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    window.location.href = '/admin/dashboard';
+                } else {
+                    alert(result.message);
+                    window.location.reload();
+                }
+            } catch (error) {
+                alert('خطا در ارتباط با سرور');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'ورود';
+            }
+        });
+    </script>
+</body>
+</html>
