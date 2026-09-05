@@ -653,3 +653,22 @@ hr {
     color: #b8bdd6 !important;
 }
 
+/* ===== Modal Header - Fix close button position ===== */
+.modal-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modal-header .btn-close {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0;
+}
+
+.modal-title {
+    margin-left: 30px;
+}

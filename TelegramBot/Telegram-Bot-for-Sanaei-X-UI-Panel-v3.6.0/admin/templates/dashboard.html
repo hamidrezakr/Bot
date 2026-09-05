@@ -256,7 +256,7 @@ function renderActivities(activities) {
                  style="border-bottom: 1px solid rgba(255,255,255,0.06); border-right: 3px solid ${borderColor}; padding-right: 10px;">
                 <span style="font-size:1.2rem;">${icon}</span>
                 <div class="flex-grow-1">
-                    <p class="mb-0" style="color:#d0d4e8;font-size:0.9rem;">${a.title}</p>
+                    <p class="mb-0" style="color:#d0d4e8;font-size:0.9rem; unicode-bidi: plaintext; text-align: right;">${a.title}</p>${a.user ? `<span style="color:#33e0ff;font-size:0.75rem;margin-right:10px;">👤 ${a.user}</span>` : ''}
                     <small style="color:#b8bdd6;">${timeStr}</small>
                 </div>
             </div>

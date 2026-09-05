@@ -145,7 +145,65 @@
             </div>
         </div>
     </div>
+        <!-- ============================================================ -->
+    <!-- ACTIVITIES SECTION -->
+    <!-- ============================================================ -->
+    <div class="mt-4 pt-4" style="border-top: 1px solid rgba(255,255,255,0.1);">
+        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+            <div class="d-flex align-items-center gap-3">
+                <h3 class="page-title" style="font-size:1.3rem;">📋 فعالیت‌ها</h3>
+                <span class="badge bg-info bg-opacity-25 text-info" id="activitiesCount">۰ فعالیت</span>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <select class="form-select" id="activityType" style="width:auto;background:#141a38;color:#f4f3ff;border:1px solid #2a3162;" onchange="loadActivities()">
+                    <option value="all">همه</option>
+                    <option value="user_register">ثبت‌نام کاربر</option>
+                    <option value="online_purchase">خرید آنلاین</option>
+                    <option value="online_renewal">تمدید آنلاین</option>
+                    <option value="receipt_purchase">خرید با رسید</option>
+                    <option value="receipt_renewal">تمدید با رسید</option>
+                    <option value="test_account">اکانت تست</option>
+                    <option value="referral">رفرال</option>
+                    <option value="sales_purchase">خرید همکار</option>
+                    <option value="sales_renewal">تمدید همکار</option>
+                </select>
+                <select class="form-select" id="activityPerPage" style="width:auto;background:#141a38;color:#f4f3ff;border:1px solid #2a3162;" onchange="loadActivities()">
+                    <option value="25">۲۵ تایی</option>
+                    <option value="50">۵۰ تایی</option>
+                    <option value="100">۱۰۰ تایی</option>
+                </select>
+                <button class="btn btn-sm btn-outline-info" onclick="loadActivities()">
+                    <i class="bi bi-arrow-clockwise"></i> بروزرسانی
+                </button>
+            </div>
+        </div>
 
+        <div class="glass-card p-0 overflow-hidden">
+            <div class="table-responsive">
+                <table class="table table-dark table-hover mb-0" style="background:transparent;">
+                    <thead>
+                        <tr>
+                            <th style="width:4%;">#</th>
+                            <th style="width:15%;">تاریخ</th>
+                            <th style="width:15%;">کاربر</th>
+                            <th style="width:12%;">نوع فعالیت</th>
+                            <th style="width:54%;">جزئیات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="activitiesBody">
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center p-3" style="border-top:1px solid rgba(255,255,255,0.1);">
+                <div style="color:#a9aed6;font-size:0.85rem;" id="activitiesPaginationInfo">
+                    نمایش ۱ تا ۲۵ از ۱۰۰
+                </div>
+                <div class="d-flex gap-1" id="activitiesPaginationButtons">
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- ============================================================ -->
     <!-- ARCHIVED RECEIPTS SECTION -->
     <!-- ============================================================ -->
@@ -377,6 +435,7 @@ function renderServiceChart(serviceData) {
 // ===== Apply Filters =====
 function applyFilters() {
     loadReportData();
+    loadActivities();
 }
 
 // ===== Clear Filters =====
@@ -384,6 +443,7 @@ function clearFilters() {
     document.getElementById('dateFrom').value = '';
     document.getElementById('dateTo').value = '';
     loadReportData();
+    loadActivities();
 }
 
 // ===== Pagination Variables =====
@@ -551,7 +611,143 @@ function toggleArchivedImage() {
 document.addEventListener('DOMContentLoaded', function() {
     loadReportData();
     loadArchivedReceipts();
+     loadActivities();
 });
+
+// ===== Activities Pagination Variables =====
+let currentActivityPage = 1;
+let totalActivityPages = 1;
+let activityItemsPerPage = 25;
+
+// ===== Load Activities =====
+function loadActivities() {
+    const dateFrom = document.getElementById('dateFrom').value;
+    const dateTo = document.getElementById('dateTo').value;
+    const activityType = document.getElementById('activityType').value;
+    activityItemsPerPage = parseInt(document.getElementById('activityPerPage').value);
+
+    let url = `/admin/api/activities?page=${currentActivityPage}&per_page=${activityItemsPerPage}&type=${activityType}`;
+    if (dateFrom) url += `&date_from=${dateFrom}`;
+    if (dateTo) url += `&date_to=${dateTo}`;
+
+    fetch(url)
+        .then(r => r.json())
+        .then(res => {
+            if (res.status === 'success') {
+                const data = res.data || [];
+                totalActivityPages = res.total_pages || 1;
+                document.getElementById('activitiesCount').textContent = `${res.total.toLocaleString('fa-IR')} فعالیت`;
+                renderActivitiesTable(data);
+            }
+        });
+}
+
+// ===== Render Activities Table =====
+function renderActivitiesTable(activities) {
+    const tbody = document.getElementById('activitiesBody');
+
+    if (!activities || activities.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted py-4">هیچ فعالیتی یافت نشد</td></tr>';
+        document.getElementById('activitiesPaginationInfo').textContent = '۰ فعالیت';
+        document.getElementById('activitiesPaginationButtons').innerHTML = '';
+        return;
+    }
+
+    const startIndex = (currentActivityPage - 1) * activityItemsPerPage;
+    const totalCount = activities.length;
+
+    tbody.innerHTML = activities.map((a, i) => {
+        const globalIndex = startIndex + i + 1;
+        const timeStr = a.time ? new Date(a.time).toLocaleString('fa-IR') : '—';
+        const icon = a.icon || '📌';
+
+        const typeColors = {
+            'user_register': '#33e0ff',
+            'online_purchase': '#28a745',
+            'online_renewal': '#ffc107',
+            'receipt_purchase': '#28a745',
+            'receipt_renewal': '#ffc107',
+            'test_account': '#ffb84d',
+            'referral': '#7c5cff',
+            'sales_purchase': '#fd7e14',
+            'sales_renewal': '#fd7e14'
+        };
+
+        const typeColor = typeColors[a.type] || '#a9aed6';
+
+        return `
+            <tr>
+                <td style="color:#6a7099;">${globalIndex.toLocaleString('fa-IR')}</td>
+                <td style="color:#a9aed6;font-size:0.75rem;">${timeStr}</td>
+                <td style="color:#f4f3ff;">${a.user || '—'}</td>
+                <td>
+                    <span style="background:${typeColor}1a;color:${typeColor};padding:3px 12px;border-radius:20px;font-size:0.7rem;border:1px solid ${typeColor}33;display:inline-block;">
+                        ${icon} ${a.type_text}
+                    </span>
+                </td>
+                <td style="color:#d0d4e8;">${a.details}</td>
+            </tr>
+        `;
+    }).join('');
+
+    const endIndex = Math.min(startIndex + activityItemsPerPage, startIndex + activities.length);
+    document.getElementById('activitiesPaginationInfo').textContent =
+        `نمایش ${(startIndex + 1).toLocaleString('fa-IR')} تا ${endIndex.toLocaleString('fa-IR')} از ${totalActivityPages * activityItemsPerPage}`;
+
+    renderActivitiesPagination();
+}
+
+// ===== Render Activities Pagination =====
+function renderActivitiesPagination() {
+    const container = document.getElementById('activitiesPaginationButtons');
+
+    let buttons = '';
+
+    buttons += `
+        <button class="btn btn-sm btn-outline-secondary" onclick="goToActivityPage(${currentActivityPage - 1})" ${currentActivityPage <= 1 ? 'disabled' : ''}>
+            <i class="bi bi-chevron-right"></i>
+        </button>
+    `;
+
+    const maxVisible = 5;
+    let startPage = Math.max(1, currentActivityPage - Math.floor(maxVisible / 2));
+    let endPage = Math.min(totalActivityPages, startPage + maxVisible - 1);
+
+    if (endPage - startPage < maxVisible - 1) {
+        startPage = Math.max(1, endPage - maxVisible + 1);
+    }
+
+    if (startPage > 1) {
+        buttons += `<button class="btn btn-sm btn-outline-secondary" onclick="goToActivityPage(1)">۱</button>`;
+        if (startPage > 2) buttons += '<span style="color:#6a7099;">...</span>';
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+        const activeClass = i === currentActivityPage ? 'btn-primary-glass' : 'btn-outline-secondary';
+        buttons += `<button class="btn btn-sm ${activeClass}" onclick="goToActivityPage(${i})">${i.toLocaleString('fa-IR')}</button>`;
+    }
+
+    if (endPage < totalActivityPages) {
+        if (endPage < totalActivityPages - 1) buttons += '<span style="color:#6a7099;">...</span>';
+        buttons += `<button class="btn btn-sm btn-outline-secondary" onclick="goToActivityPage(${totalActivityPages})">${totalActivityPages.toLocaleString('fa-IR')}</button>`;
+    }
+
+    buttons += `
+        <button class="btn btn-sm btn-outline-secondary" onclick="goToActivityPage(${currentActivityPage + 1})" ${currentActivityPage >= totalActivityPages ? 'disabled' : ''}>
+            <i class="bi bi-chevron-left"></i>
+        </button>
+    `;
+
+    container.innerHTML = buttons;
+}
+
+// ===== Go To Activity Page =====
+function goToActivityPage(page) {
+    if (page < 1 || page > totalActivityPages) return;
+    currentActivityPage = page;
+    loadActivities();
+}
+
 </script>
 
 <style>

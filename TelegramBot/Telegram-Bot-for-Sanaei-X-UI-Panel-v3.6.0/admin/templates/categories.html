@@ -71,6 +71,7 @@ function loadCategories() {
                         <td style="color:#ffffff;font-weight:500;">${c.name}</td>
                         <td><small style="color:rgba(255,255,255,0.4);">${c.created_at ? new Date(c.created_at).toLocaleDateString('fa-IR') : '—'}</small></td>
                         <td>
+			    <button class="btn btn-sm btn-outline-primary me-1" onclick="editCategory(${c.id}, '${c.name}')"><i class="bi bi-pencil"></i></button>
                             <button class="btn btn-sm btn-outline-danger" onclick="deleteCategory(${c.id})"><i class="bi bi-trash"></i></button>
                         </td>
                     </tr>
@@ -121,6 +122,14 @@ function deleteCategory(id) {
                 alert('✅ حذف شد');
             }
         });
+}
+
+// ===== Edit Category =====
+function editCategory(id, name) {
+    document.getElementById('categoryId').value = id;
+    document.getElementById('categoryName').value = name;
+    document.getElementById('categoryModalTitle').textContent = '✏️ ویرایش دسته‌بندی';
+    new bootstrap.Modal(document.getElementById('categoryModal')).show();
 }
 
 // ===== Reset Modal =====

@@ -4,7 +4,7 @@ Message handler module for processing Telegram messages.
 
 import logging
 import httpx
-from datetime import datetime  # ← اضافه شد
+from datetime import datetime  
 from typing import Optional
 from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import ContextTypes
@@ -16,6 +16,19 @@ from api.handlers.keyboard_builder import KeyboardBuilder
 from services.user_service import UserService
 from services.subscription_service import SubscriptionService
 
+def escape_markdown(text: str) -> str:
+    """Escape Markdown special characters in text."""
+    if not text:
+        return text
+    
+    # Escape special characters
+    special_chars = ['_']
+    
+    escaped = text
+    for char in special_chars:
+        escaped = escaped.replace(char, '\\' + char)
+    
+    return escaped
 
 class MessageHandler:
     """
@@ -157,9 +170,10 @@ class MessageHandler:
             else:
                 welcome_text = welcome_template.replace("{first_name}", user.first_name or "کاربر")
 
-
+            welcome_text = escape_markdown(welcome_text)
             await update.message.reply_text(
                 text=welcome_text,
+                parse_mode="Markdown",
                 reply_markup=self.keyboard_builder.create_main_menu()
             )
             logger.info(f"Main menu sent to user: {user.id}")
@@ -371,12 +385,6 @@ class MessageHandler:
                 service_id = int(callback_data.split("_")[1])
                 await self.handle_purchase(query, service_id)
 
-            elif callback_data.startswith("duration_"):
-                parts = callback_data.split("_")
-                category_id = int(parts[1])
-                duration = int(parts[2])
-                await self._handle_duration_selection(query, category_id, duration)
-
             elif callback_data.startswith("send_receipt_"):
                 service_id = int(callback_data.split("_")[2])
                 await self.handle_receipt_upload(query, service_id, is_renewal=False)
@@ -397,7 +405,12 @@ class MessageHandler:
                         "❌ خطا. لطفاً دوباره از دکمه تمدید استفاده کنید.",
                         reply_markup=self.keyboard_builder.create_main_menu()
                     )
-
+            elif callback_data.startswith("renew_duration_"):
+                parts = callback_data.split("_")
+                panel_id = int(parts[2])
+                duration = int(parts[3])
+                await self._handle_renew_duration_selection(query, panel_id, duration)
+                
             elif callback_data.startswith("renew_purchase_"):
                 service_id = int(callback_data.split("_")[2])
                 await self.handle_renew_purchase(query, service_id)
@@ -437,8 +450,10 @@ class MessageHandler:
                 await self.handle_test_category_selection(query, category_id)
 
             elif callback_data.startswith("test_panel_"):
-                panel_id = int(callback_data.split("_")[2])
-                await self.handle_test_panel_selection(query, panel_id)
+                parts = callback_data.split("_")
+                category_id = int(parts[2])
+                panel_id = int(parts[3])
+                await self.handle_test_panel_selection(query, category_id, panel_id)
                 
             elif callback_data == "subordinates":
                 await self.handle_subordinates(query)
@@ -486,8 +501,29 @@ class MessageHandler:
                 await self.handle_sales_send_to_support(query)
 
             elif callback_data == "sales_purchase":
-                await self.handle_sales_purchase(query)
+                 await self.handle_sales_purchase(query)
+            
+            elif callback_data.startswith("sales_category_"):
+                category_id = int(callback_data.split("_")[2])
+                await self.handle_sales_category_selection(query, category_id)
 
+            elif callback_data.startswith("sales_panel_"):
+                parts = callback_data.split("_")
+                category_id = int(parts[2])
+                panel_id = int(parts[3])
+                await self.handle_sales_panel_selection(query, category_id, panel_id)
+
+            elif callback_data.startswith("sales_duration_"):
+                parts = callback_data.split("_")
+                category_id = int(parts[2])
+                panel_id = int(parts[3])
+                duration = int(parts[4])
+                await self._handle_sales_duration_selection(query, category_id, panel_id, duration)
+
+            elif callback_data.startswith("sales_service_"):
+                service_id = int(callback_data.split("_")[2])
+                await self.handle_sales_service_selection(query, service_id)
+                
             elif callback_data == "sales_renew":
                 await self.handle_sales_renew(query)
 
@@ -513,6 +549,19 @@ class MessageHandler:
             elif callback_data.startswith("sales_settle_pay_"):
                 amount = int(callback_data.split("_")[3])
                 await self.handle_sales_settle_payment(query, amount)
+
+            elif callback_data.startswith("panel_"):
+                parts = callback_data.split("_")
+                category_id = int(parts[1])
+                panel_id = int(parts[2])
+                await self.handle_panel_selection(query, category_id, panel_id)
+
+            elif callback_data.startswith("duration_"):
+                parts = callback_data.split("_")
+                category_id = int(parts[1])
+                panel_id = int(parts[2])
+                duration = int(parts[3])
+                await self._handle_duration_selection(query, category_id, panel_id, duration)
             # ============================================================
             # Default / Unknown
             # ============================================================
@@ -583,11 +632,21 @@ class MessageHandler:
         ]
         return InlineKeyboardMarkup(keyboard)
 
-    async def _handle_duration_selection(self, query, category_id: int, duration: int) -> None:
-        """Handle duration selection - filter services by duration."""
+    async def _handle_duration_selection(self, query, category_id: int, panel_id: int, duration: int) -> None:
+        """Handle duration selection - filter services by duration and panel."""
         category_name = await self._get_category_name(category_id)
-        await self._show_duration_menu(query, category_id, category_name, duration)
-
+        
+        # Get panel name
+        async with httpx.AsyncClient(timeout=10.0) as client:
+            response = await client.get(
+                f"{settings.API_BASE_URL}/admin/api/public/panel/{panel_id}"
+            )
+            panel_data = response.json()
+        
+        panel_name = panel_data.get("data", {}).get("name", "نامشخص") if panel_data.get("status") == "success" else "نامشخص"
+        
+        await self._show_duration_menu(query, category_id, panel_id, category_name, panel_name, duration)
+        
     # ============================================================
     # Main Handlers
     # ============================================================
@@ -900,7 +959,7 @@ class MessageHandler:
             )
 
     async def handle_category_selection(self, query, category_id: int) -> None:
-        """Handle category selection - show duration menu with default minimum duration."""
+        """Handle category selection - show available panels for this category."""
         user_id = query.from_user.id
         logger.info(f"Category {category_id} selected by user {user_id}")
 
@@ -909,36 +968,118 @@ class MessageHandler:
 
             async with httpx.AsyncClient(timeout=10.0) as client:
                 response = await client.get(
-                    f"{settings.API_BASE_URL}/admin/api/public/services?category_id={category_id}"
+                    f"{settings.API_BASE_URL}/admin/api/public/panels?category_id={category_id}"
                 )
                 data = response.json()
 
-            services = data.get("data", []) if data.get("status") == "success" else []
+            panels = data.get("data", []) if data.get("status") == "success" else []
 
+            if not panels:
+                await query.edit_message_text(
+                    text=f"📂 **{category_name}**\n\n"
+                         "📭 هیچ پنلی با ظرفیت خالی در این دسته‌بندی موجود نیست.",
+                    parse_mode="Markdown",
+                    reply_markup=await self._get_back_to_categories_keyboard()
+                )
+                return
+
+            keyboard = []
+            for panel in panels:
+                keyboard.append([
+                    InlineKeyboardButton(
+                        text=f"🖥️ {panel['name']}",
+                        callback_data=f"panel_{category_id}_{panel['id']}"
+                    )
+                ])
+
+            keyboard.append([
+                InlineKeyboardButton(
+                    text="🔙 بازگشت به دسته‌بندی‌ها",
+                    callback_data="buy_service"
+                )
+            ])
+            keyboard.append([
+                InlineKeyboardButton(
+                    text="🏠 بازگشت به منو",
+                    callback_data="main_menu",
+                    style="danger"
+                )
+            ])
+
+            await query.edit_message_text(
+                text=f"📂 **{category_name}**\n\n"
+                     f"🖥️ لطفاً پنل مورد نظر را انتخاب کنید:",
+                parse_mode="Markdown",
+                reply_markup=InlineKeyboardMarkup(keyboard)
+            )
+
+        except Exception as e:
+            logger.error(f"Error in handle_category_selection: {str(e)}")
+            await query.edit_message_text(
+                text="❌ خطا در دریافت پنل‌ها. لطفاً مجدداً تلاش کنید.",
+                reply_markup=await self._get_back_to_categories_keyboard()
+            )
+   
+    async def handle_panel_selection(self, query, category_id: int, panel_id: int) -> None:
+        """Handle panel selection - show duration menu for this panel."""
+        user_id = query.from_user.id
+        logger.info(f"Panel {panel_id} selected by user {user_id} for category {category_id}")
+
+        try:
+            # Get panel name
+            async with httpx.AsyncClient(timeout=10.0) as client:
+                response = await client.get(
+                    f"{settings.API_BASE_URL}/admin/api/public/panel/{panel_id}"
+                )
+                panel_data = response.json()
+            
+            panel_name = panel_data.get("data", {}).get("name", "نامشخص") if panel_data.get("status") == "success" else "نامشخص"
+            category_name = await self._get_category_name(category_id)
+            
+            # Get services for this category and panel
+            async with httpx.AsyncClient(timeout=10.0) as client:
+                response = await client.get(
+                    f"{settings.API_BASE_URL}/admin/api/public/services?category_id={category_id}&panel_id={panel_id}"
+                )
+                data = response.json()
+            
+            services = data.get("data", []) if data.get("status") == "success" else []
+            
+            if not services:
+                await query.edit_message_text(
+                    text=f"🖥️ **{panel_name}**\n\n"
+                         "📭 هیچ سرویسی برای این پنل موجود نیست.",
+                    parse_mode="Markdown",
+                    reply_markup=await self._get_back_to_categories_keyboard()
+                )
+                return
+            
             durations = sorted(set(
                 s.get("duration") for s in services
                 if s.get("duration") is not None
             ))
 
             if not durations:
-                await self._show_services_list(query, services, category_name)
+                # No duration - show services directly
+                await self._show_services_list(query, services, category_name, panel_id, panel_name)
                 return
 
             default_duration = durations[0]
-            await self._show_duration_menu(query, category_id, category_name, default_duration)
+            await self._show_duration_menu(query, category_id, panel_id, category_name, panel_name, default_duration)
 
         except Exception as e:
-            logger.error(f"Error in handle_category_selection: {str(e)}")
+            logger.error(f"Error in handle_panel_selection: {str(e)}")
             await query.edit_message_text(
                 text="❌ خطا در دریافت سرویس‌ها. لطفاً مجدداً تلاش کنید.",
                 reply_markup=await self._get_back_to_categories_keyboard()
             )
-
-    async def _show_duration_menu(self, query, category_id: int, category_name: str, selected_duration: int = None) -> None:
-        """Show duration menu with services filtered by duration."""
+            
+            
+    async def _show_duration_menu(self, query, category_id: int, panel_id: int, category_name: str, panel_name: str, selected_duration: int = None) -> None:
+        """Show duration menu with services filtered by duration and panel."""
         async with httpx.AsyncClient(timeout=10.0) as client:
             response = await client.get(
-                f"{settings.API_BASE_URL}/admin/api/public/services?category_id={category_id}"
+                f"{settings.API_BASE_URL}/admin/api/public/services?category_id={category_id}&panel_id={panel_id}"
             )
             data = response.json()
 
@@ -950,7 +1091,7 @@ class MessageHandler:
         ))
 
         if not durations:
-            await self._show_services_list(query, services, category_name)
+            await self._show_services_list(query, services, category_name, panel_id, panel_name)
             return
 
         if selected_duration is None:
@@ -969,7 +1110,7 @@ class MessageHandler:
             duration_buttons.append(
                 InlineKeyboardButton(
                     text=button_text,
-                    callback_data=f"duration_{category_id}_{d}",
+                    callback_data=f"duration_{category_id}_{panel_id}_{d}",
                     style=style
                 )
             )
@@ -981,8 +1122,6 @@ class MessageHandler:
         if filtered_services:
             for service in filtered_services:
                 service_name = service.get('name', 'نامشخص')
-                
-                panel_name = service.get('panel_name', 'نامشخص')
                 
                 users = service.get('users', 'نامحدود')
                 if users and users != "unlimited":
@@ -996,7 +1135,7 @@ class MessageHandler:
                 else:
                     price_display = "تماس"
                 
-                button_text = f"📦 {service_name} | {panel_name} | 👥{users_display} | 💰{price_display}"
+                button_text = f"📦 {service_name} | 👥{users_display} | 💰{price_display}"
                 
                 keyboard.append([
                     InlineKeyboardButton(
@@ -1016,8 +1155,8 @@ class MessageHandler:
 
         keyboard.append([
             InlineKeyboardButton(
-                text="🔙 بازگشت به دسته‌بندی‌ها",
-                callback_data="buy_service"
+                text="🔙 بازگشت به پنل‌ها",
+                callback_data=f"category_{category_id}"
             )
         ])
         keyboard.append([
@@ -1028,22 +1167,22 @@ class MessageHandler:
             )
         ])
 
-        duration_text = f" (مدت: {selected_duration} ماه)" if selected_duration else ""
         await query.edit_message_text(
-            text=f"📂 **{category_name}**{duration_text}\n\n"
-                 f"لطفاً مدت زمان مورد نظر را انتخاب کنید، سپس سرویس مورد نظر را انتخاب کنید:",
+            text=f"📂 **{category_name}**\n"
+                 f"🖥️ **پنل:** {panel_name}\n"
+                 f"📅 **مدت:** {selected_duration} ماه\n\n"
+                 f"لطفاً سرویس مورد نظر را انتخاب کنید:",
             parse_mode="Markdown",
             reply_markup=InlineKeyboardMarkup(keyboard)
         )
-
-    async def _show_services_list(self, query, services: list, category_name: str) -> None:
+        
+    
+    async def _show_services_list(self, query, services: list, category_name: str, panel_id: int = None, panel_name: str = None) -> None:
         """Show services list without duration filtering."""
         keyboard = []
 
         for service in services:
             service_name = service.get('name', 'نامشخص')
-            
-            panel_name = service.get('panel_name', 'نامشخص')
             
             users = service.get('users', 'نامحدود')
             if users and users != "unlimited":
@@ -1057,7 +1196,7 @@ class MessageHandler:
             else:
                 price_display = "تماس"
             
-            button_text = f"📦 {service_name} | {panel_name} | 👥{users_display} | 💰{price_display}"
+            button_text = f"📦 {service_name} | 👥{users_display} | 💰{price_display}"
             
             keyboard.append([
                 InlineKeyboardButton(
@@ -1069,7 +1208,7 @@ class MessageHandler:
 
         keyboard.append([
             InlineKeyboardButton(
-                text="🔙 بازگشت به دسته‌بندی‌ها",
+                text="🔙 بازگشت به پنل‌ها",
                 callback_data="buy_service"
             )
         ])
@@ -1081,11 +1220,14 @@ class MessageHandler:
             )
         ])
 
+        panel_text = f"\n🖥️ **پنل:** {panel_name}" if panel_name else ""
         await query.edit_message_text(
-            text=f"📂 **{category_name}**\n\nلطفاً یکی از سرویس‌های زیر را انتخاب کنید:",
+            text=f"📂 **{category_name}**{panel_text}\n\nلطفاً یکی از سرویس‌های زیر را انتخاب کنید:",
             parse_mode="Markdown",
             reply_markup=InlineKeyboardMarkup(keyboard)
-        ) 
+        )
+        
+            
     async def handle_service_selection(self, query, service_id: int) -> None:
         """
         Handle service selection - show service details and buy option.
@@ -1150,7 +1292,7 @@ class MessageHandler:
                 [
                     InlineKeyboardButton(
                         text="🔙 بازگشت به سرویس‌ها",
-                        callback_data=f"category_{service['category_id']}"
+                        callback_data=f"panel_{service['category_id']}_{service['panel_id']}"
                     )
                 ],
                 [
@@ -1343,19 +1485,13 @@ class MessageHandler:
             )
             return
         
-        # ====== موفقیت ======
         self._renewing_users.remove(user_id)
         
-        # ====== نمایش سرویس‌های قابل تمدید ======
         await self._show_renew_services(update.message, user_info)
 
 
     async def _show_renew_services(self, query_or_message, user_info: dict) -> None:
-        """
-        Show available services for renewal based on user type and panel.
-        Works with both query (callback) and message (reply).
-        """
-        # Check if it's a query or message
+        """Show available services for renewal - first show duration menu."""
         if hasattr(query_or_message, 'edit_message_text'):
             is_query = True
             query = query_or_message
@@ -1369,7 +1505,6 @@ class MessageHandler:
         client = user_info.get('client', {})
         panel = user_info.get('panel', {})
         
-        # ====== تشخیص دسته سرویس ======
         is_unlimited = client.get('is_unlimited', False)
         total_bytes = client.get('totalGB', 0)
         if 'is_unlimited' not in client:
@@ -1389,10 +1524,8 @@ class MessageHandler:
                 )
             return
         
-        # ====== دریافت لیست سرویس‌ها ======
-        import httpx
-        async with httpx.AsyncClient(timeout=10.0) as client:
-            response = await client.get(
+        async with httpx.AsyncClient(timeout=10.0) as client_http:
+            response = await client_http.get(
                 f"{settings.API_BASE_URL}/admin/api/services"
             )
             data = response.json()
@@ -1412,7 +1545,6 @@ class MessageHandler:
         
         services = data.get("data", [])
         
-        # ====== فیلتر سرویس‌ها ======
         filtered_services = []
         for service in services:
             if not service.get('is_active'):
@@ -1449,11 +1581,151 @@ class MessageHandler:
                 )
             return
         
-        # ====== ساخت دکمه‌ها ======
+        durations = sorted(set(
+            s.get("duration") for s in filtered_services
+            if s.get("duration") is not None
+        ))
+        
+        if not hasattr(self, '_renew_user_info'):
+            self._renew_user_info = {}
+        self._renew_user_info[user_id] = user_info
+        
+        if not hasattr(self, '_renew_filtered_services'):
+            self._renew_filtered_services = {}
+        self._renew_filtered_services[user_id] = filtered_services
+        
+        if not durations:
+            await self._show_renew_services_list(query_or_message, user_info, filtered_services)
+            return
+        
+        default_duration = durations[0]
+        await self._show_renew_duration_menu(query_or_message, user_info, durations, default_duration)
+
+    async def _show_renew_duration_menu(self, query_or_message, user_info: dict, durations: list, selected_duration: int = None) -> None:
+        """Show duration menu for renewal."""
+        if hasattr(query_or_message, 'edit_message_text'):
+            is_query = True
+            query = query_or_message
+            user_id = query.from_user.id
+        else:
+            is_query = False
+            message = query_or_message
+            user_id = message.chat.id
+        
+        username = user_info.get('email')
+        panel = user_info.get('panel', {})
+        client = user_info.get('client', {})
+        is_unlimited = client.get('is_unlimited', False)
+        total_bytes = client.get('totalGB', 0)
+        if 'is_unlimited' not in client:
+            is_unlimited = total_bytes == 0
+        
+        if selected_duration is None:
+            selected_duration = durations[0]
+        
+        duration_buttons = []
+        for d in durations:
+            if d == selected_duration:
+                button_text = f"🚀 {d} ماه"
+                style = "success"
+            else:
+                button_text = f"📅 {d} ماه"
+                style = None
+            duration_buttons.append(
+                InlineKeyboardButton(
+                    text=button_text,
+                    callback_data=f"renew_duration_{panel.get('id')}_{d}",
+                    style=style
+                )
+            )
+        
         keyboard = []
-        for service in filtered_services:
+        for i in range(0, len(duration_buttons), 4):
+            keyboard.append(duration_buttons[i:i+4])
+        
+        filtered_services = self._renew_filtered_services.get(user_id, [])
+        services_with_duration = [s for s in filtered_services if s.get("duration") == selected_duration]
+        
+        if services_with_duration:
+            for service in services_with_duration:
+                service_name = service.get('name', 'نامشخص')
+                
+                users = service.get('users', 'نامحدود')
+                users_display = users if users and users != "unlimited" else "♾️"
+                
+                price = service.get('price')
+                price_display = f"{int(price):,}" if price else "تماس"
+                
+                button_text = f"📦 {service_name} | 👥{users_display} | 💰{price_display}"
+                
+                keyboard.append([
+                    InlineKeyboardButton(
+                        text=button_text[:60],
+                        callback_data=f"renew_service_{service['id']}",
+                        style="primary"
+                    )
+                ])
+        else:
+            keyboard.append([
+                InlineKeyboardButton(
+                    text="📭 هیچ سرویسی برای این مدت وجود ندارد",
+                    callback_data="noop",
+                    style="danger"
+                )
+            ])
+        
+        keyboard.append([
+            InlineKeyboardButton(
+                text="🔙 بازگشت به منو",
+                callback_data="main_menu",
+                style="danger"
+            )
+        ])
+        
+        message_text = (
+            f"🔄 **تمدید سرویس**\n\n"
+            f"👤 کاربر: `{username}`\n"
+            f"📡 پنل: {panel.get('name', 'نامشخص')}\n"
+            f"📊 نوع: {'♾️ نامحدود' if is_unlimited else '📦 حجمی'}\n"
+            f"📅 مدت: {selected_duration} ماه\n\n"
+            f"لطفاً سرویس مورد نظر را انتخاب کنید:"
+        )
+        
+        if is_query:
+            await query.edit_message_text(
+                message_text,
+                parse_mode="Markdown",
+                reply_markup=InlineKeyboardMarkup(keyboard)
+            )
+        else:
+            await message.reply_text(
+                message_text,
+                parse_mode="Markdown",
+                reply_markup=InlineKeyboardMarkup(keyboard)
+            )
+            
+    async def _show_renew_services_list(self, query_or_message, user_info: dict, services: list) -> None:
+        """Show services list for renewal without duration filtering."""
+        if hasattr(query_or_message, 'edit_message_text'):
+            is_query = True
+            query = query_or_message
+            user_id = query.from_user.id
+        else:
+            is_query = False
+            message = query_or_message
+            user_id = message.chat.id
+        
+        username = user_info.get('email')
+        panel = user_info.get('panel', {})
+        client = user_info.get('client', {})
+        is_unlimited = client.get('is_unlimited', False)
+        total_bytes = client.get('totalGB', 0)
+        if 'is_unlimited' not in client:
+            is_unlimited = total_bytes == 0
+        
+        keyboard = []
+        for service in services:
             service_name = service.get('name', 'نامشخص')
-            panel_name = service.get('panel_name', 'نامشخص')
             
             users = service.get('users', 'نامحدود')
             users_display = users if users and users != "unlimited" else "♾️"
@@ -1461,7 +1733,7 @@ class MessageHandler:
             price = service.get('price')
             price_display = f"{int(price):,}" if price else "تماس"
             
-            button_text = f"📦 {service_name} | {panel_name} | 👥{users_display} | 💰{price_display}"
+            button_text = f"📦 {service_name} | 👥{users_display} | 💰{price_display}"
             
             keyboard.append([
                 InlineKeyboardButton(
@@ -1479,18 +1751,12 @@ class MessageHandler:
             )
         ])
         
-        # ====== ذخیره اطلاعات ======
-        if not hasattr(self, '_renew_user_info'):
-            self._renew_user_info = {}
-        self._renew_user_info[user_id] = user_info
-        
-        # ====== ارسال پیام ======
         message_text = (
             f"🔄 **تمدید سرویس**\n\n"
             f"👤 کاربر: `{username}`\n"
             f"📡 پنل: {panel.get('name', 'نامشخص')}\n"
             f"📊 نوع: {'♾️ نامحدود' if is_unlimited else '📦 حجمی'}\n\n"
-            f"لطفاً سرویس مورد نظر برای تمدید را انتخاب کنید:"
+            f"لطفاً سرویس مورد نظر را انتخاب کنید:"
         )
         
         if is_query:
@@ -1505,6 +1771,28 @@ class MessageHandler:
                 parse_mode="Markdown",
                 reply_markup=InlineKeyboardMarkup(keyboard)
             )
+            
+    async def _handle_renew_duration_selection(self, query, panel_id: int, duration: int) -> None:
+        """Handle renewal duration selection."""
+        user_id = query.from_user.id
+        
+        if not hasattr(self, '_renew_user_info') or user_id not in self._renew_user_info:
+            await query.edit_message_text(
+                "❌ خطا در اطلاعات کاربر.",
+                reply_markup=self.keyboard_builder.create_main_menu()
+            )
+            return
+        
+        user_info = self._renew_user_info[user_id]
+        
+        filtered_services = self._renew_filtered_services.get(user_id, [])
+        
+        durations = sorted(set(
+            s.get("duration") for s in filtered_services
+            if s.get("duration") is not None
+        ))
+        
+        await self._show_renew_duration_menu(query, user_info, durations, duration)
         
     async def handle_renew_service_selection(self, query, service_id: int) -> None:
         """
@@ -2196,6 +2484,7 @@ class MessageHandler:
             reply_markup=InlineKeyboardMarkup(keyboard)
         )
 
+
     async def handle_get_test_account(self, query) -> None:
         """Handle get test account - show categories."""
         user_id = query.from_user.id
@@ -2267,61 +2556,66 @@ class MessageHandler:
             parse_mode="Markdown",
             reply_markup=InlineKeyboardMarkup(keyboard)
         )
-
+        
 
     async def handle_test_category_selection(self, query, category_id: int) -> None:
         """Handle test category selection - show panels."""
         user_id = query.from_user.id
         logger.info(f"Test category {category_id} selected by user {user_id}")
 
-        # دریافت سرویس‌های این دسته برای پیدا کردن پنل‌ها
+        category_name = await self._get_category_name(category_id)
+
+        # Get panels for this category
         async with httpx.AsyncClient(timeout=10.0) as client:
             response = await client.get(
-                f"{settings.API_BASE_URL}/admin/api/public/services?category_id={category_id}"
+                f"{settings.API_BASE_URL}/admin/api/public/panels?category_id={category_id}"
             )
             data = response.json()
 
-        services = data.get("data", []) if data.get("status") == "success" else []
+        panels = data.get("data", []) if data.get("status") == "success" else []
 
-        # استخراج پنل‌های یکتا
-        panels_dict = {}
-        for service in services:
-            if service.get('panel_id') and service.get('panel_name'):
-                panels_dict[service['panel_id']] = service['panel_name']
-
-        if not panels_dict:
+        if not panels:
             await query.edit_message_text(
-                "❌ هیچ پنلی برای این دسته‌بندی یافت نشد.",
-                reply_markup=self.keyboard_builder.create_main_menu()
+                text=f"📂 **{category_name}**\n\n"
+                     "📭 هیچ پنلی با ظرفیت خالی در این دسته‌بندی موجود نیست.",
+                parse_mode="Markdown",
+                reply_markup=InlineKeyboardMarkup([
+                    [InlineKeyboardButton("🔙 بازگشت", callback_data="get_test_account")]
+                ])
             )
             return
 
         keyboard = []
-        for panel_id, panel_name in panels_dict.items():
+        for panel in panels:
             keyboard.append([
                 InlineKeyboardButton(
-                    text=f"🖥️ {panel_name}",
-                    callback_data=f"test_panel_{panel_id}"
+                    text=f"🖥️ {panel['name']}",
+                    callback_data=f"test_panel_{category_id}_{panel['id']}"
                 )
             ])
 
         keyboard.append([
             InlineKeyboardButton(
+                text="🔙 بازگشت به دسته‌بندی‌ها",
+                callback_data="get_test_account"
+            )
+        ])
+        keyboard.append([
+            InlineKeyboardButton(
                 text="🔙 بازگشت",
-                callback_data="get_test_account",
+                callback_data="test_account",
                 style="danger"
             )
         ])
 
         await query.edit_message_text(
-            text="🖥️ **انتخاب پنل**\n\n"
-                 "لطفاً پنل مورد نظر را انتخاب کنید:",
+            text=f"📂 **{category_name}**\n\n"
+                 f"🖥️ لطفاً پنل مورد نظر را انتخاب کنید:",
             parse_mode="Markdown",
             reply_markup=InlineKeyboardMarkup(keyboard)
         )
-
-
-    async def handle_test_panel_selection(self, query, panel_id: int) -> None:
+        
+    async def handle_test_panel_selection(self, query, category_id: int, panel_id: int) -> None:
         """Handle test panel selection - create test account."""
         user_id = query.from_user.id
         username = query.from_user.username or "unknown"
@@ -2374,7 +2668,7 @@ class MessageHandler:
             parse_mode="Markdown",
             reply_markup=InlineKeyboardMarkup(keyboard)
         )
-
+        
     async def handle_subordinates(self, query) -> None:
         """Handle subordinates list request - show referral info."""
         user_id = query.from_user.id
@@ -2485,34 +2779,38 @@ class MessageHandler:
         """Handle help request."""
         user_id = query.from_user.id
         logger.info(f"Help requested by user: {user_id}")
-        
-        # ====== ✅ Get help message from settings ======
         async with httpx.AsyncClient(timeout=10.0) as client:
             response = await client.get(f"{settings.API_BASE_URL}/admin/api/settings/messages")
             msg_settings = response.json().get("data", {})
         
         help_text = msg_settings.get("help_message", "❓ **راهنما**")
-
+        
+        help_text = escape_markdown(help_text)
+        
         try:
             await query.edit_message_text(text=help_text, parse_mode="Markdown", reply_markup=self.keyboard_builder.create_sub_menu())
         except BadRequest:
             await query.message.reply_text(text=help_text, parse_mode="Markdown", reply_markup=self.keyboard_builder.create_sub_menu())
 
+            
     async def handle_support(self, query) -> None:
         """Handle support request."""
         user_id = query.from_user.id
         logger.info(f"Support requested by user: {user_id}")
-        # ====== ✅ Get support message from settings ======
         async with httpx.AsyncClient(timeout=10.0) as client:
             response = await client.get(f"{settings.API_BASE_URL}/admin/api/settings/messages")
             msg_settings = response.json().get("data", {})
         
         support_text = msg_settings.get("support_message", "🆘 **پشتیبانی**")
+        
+        support_text = escape_markdown(support_text)
+        
         try:
             await query.edit_message_text(text=support_text, parse_mode="Markdown", reply_markup=self.keyboard_builder.create_sub_menu())
         except BadRequest:
             await query.message.reply_text(text=support_text, parse_mode="Markdown", reply_markup=self.keyboard_builder.create_sub_menu())
 
+            
     async def show_main_menu(self, query) -> None:
         """Show main menu."""
         user_id = query.from_user.id
@@ -2537,24 +2835,20 @@ class MessageHandler:
         """Handle connection guide request."""
         user_id = query.from_user.id
         logger.info(f"Connection guide requested by user: {user_id}")
-        text = (
-            "📖 **راهنمای اتصال**\n\n"
-            "1️⃣ ابتدا سرویس مورد نظر را خریداری کنید\n"
-            "2️⃣ از بخش 'وضعیت من' اطلاعات اتصال را دریافت کنید\n"
-            "3️⃣ از نرم‌افزارهای زیر استفاده کنید:\n"
-            "   • Windows: v2rayN / Nekoray\n"
-            "   • Android: V2RayNG\n"
-            "   • iOS: Shadowrocket\n"
-            "   • macOS: V2RayX / Nekoray\n\n"
-            "🔗 لینک‌های دانلود:\n"
-            "• v2rayNG: [لینک]\n"
-            "• Shadowrocket: [لینک]"
-        )
+        
+        async with httpx.AsyncClient(timeout=10.0) as client:
+            response = await client.get(f"{settings.API_BASE_URL}/admin/api/settings/messages")
+            msg_settings = response.json().get("data", {})
+        
+        text = msg_settings.get("connection_guide_message", "📖 **راهنمای اتصال**")
+        
+        text = escape_markdown(text)
+        
         try:
             await query.edit_message_text(text=text, parse_mode="Markdown", reply_markup=self.keyboard_builder.create_service_menu())
         except BadRequest:
             await query.message.reply_text(text=text, parse_mode="Markdown", reply_markup=self.keyboard_builder.create_service_menu())
-
+            
 
     async def handle_online_payment(self, query, service_id: int, is_renewal: bool = False):
         """Handle online payment for service."""
@@ -2903,16 +3197,6 @@ class MessageHandler:
         
         discount_state["discount_applied"] = not discount_state["discount_applied"]
        
-        if discount_state["discount_applied"] and not is_renewal:
-            # Apply referral discount (mark as used)
-            async with httpx.AsyncClient(timeout=10.0) as client:
-                response = await client.post(
-                    f"{settings.API_BASE_URL}/admin/api/referrals/apply",
-                    json={"user_id": user_id}
-                )
-                apply_result = response.json()
-                logger.info(f"Apply referral result: {apply_result}")
-
         original_price = discount_state.get("original_price", 0)
         accumulated_discount = discount_state.get("accumulated_discount", 0)
         referral_discount = discount_state.get("referral_discount", 0)
@@ -3246,28 +3530,26 @@ class MessageHandler:
             )
             return
         
+        # ====== نمایش پیام به کاربر ======
         message = (
-            f"📝 **درخواست همکاری در فروش**\n\n"
-            f"👤 **اطلاعات شما:**\n"
-            f"   • ID تلگرام: `{user_id}`\n"
-            f"   • نام کاربری: @{username}\n"
-            f"   • نام: {first_name}\n\n"
-            f"📋 **درخواست:** همراهی در فروش\n\n"
-            f"برای تکمیل درخواست، روی دکمه زیر کلیک کنید:"
+            f"✅ **درخواست شما ثبت شد!**\n\n"
+            f"📋 درخواست شما در حال بررسی است.\n"
+            f"پس از تأیید یا رد، از طریق ربات به شما اطلاع داده می‌شود.\n\n"
+            f"📞 **پشتیبانی:** `@shell_man`\n\n"  # ← با backtick
+            f"برای ارتباط مستقیم با پشتیبانی، روی دکمه زیر کلیک کنید:"
         )
         
         keyboard = [
             [
                 InlineKeyboardButton(
-                    "📤 ارسال به پشتیبانی",
-                    callback_data="sales_send_to_support",
-                    style="primary"
+                    "🆘 رفتن به پشتیبانی",
+                    url="https://t.me/shell_man"
                 )
             ],
             [
                 InlineKeyboardButton(
-                    "🔙 بازگشت",
-                    callback_data="sales_partner"
+                    "🔙 بازگشت به منو",
+                    callback_data="main_menu"
                 )
             ]
         ]
@@ -3277,50 +3559,7 @@ class MessageHandler:
             parse_mode="Markdown",
             reply_markup=InlineKeyboardMarkup(keyboard)
         )
-
-    async def handle_sales_send_to_support(self, query) -> None:
-        """Send sales request to support."""
-        user_id = query.from_user.id
-        user = query.from_user
-        username = user.username or "نامشخص"
-        first_name = user.first_name or "کاربر"
         
-        # Send message to support
-        support_message = (
-            f"📝 **درخواست همکاری در فروش**\n\n"
-            f"👤 ID: `{user_id}`\n"
-            f"📧 Username: @{username}\n"
-            f"📋 Name: {first_name}\n"
-            f"🤝 درخواست همراهی در فروش"
-        )
-        
-        try:
-            from api.routes.webhook import application
-            # Send to support chat (you need to set support_chat_id)
-            support_chat_id = "-1001882797591"  # کانال یا ادمین
-            await application.bot.send_message(
-                chat_id=support_chat_id,
-                text=support_message,
-                parse_mode="Markdown"
-            )
-        except Exception as e:
-            logger.error(f"Error sending to support: {str(e)}")
-        
-        await query.edit_message_text(
-            f"✅ **درخواست شما ارسال شد!**\n\n"
-            f"اطلاعات شما برای پشتیبانی ارسال شد.\n"
-            f"برای ادامه گفتگو به پشتیبانی مراجعه کنید:\n\n"
-            f"🆘 @shell_man",
-            parse_mode="Markdown",
-            reply_markup=InlineKeyboardMarkup([
-                [
-                    InlineKeyboardButton("🆘 رفتن به پشتیبانی", url="https://t.me/shell_man")
-                ],
-                [
-                    InlineKeyboardButton("🔙 بازگشت به منو", callback_data="main_menu")
-                ]
-            ])
-        )
 
     async def handle_sales_purchase(self, query) -> None:
         """Handle sales partner purchase - show categories."""
@@ -3344,10 +3583,369 @@ class MessageHandler:
             )
             return
         
-        # Show categories (same as normal purchase)
-        await self.handle_buy_service(query)
+        # Show categories
+        try:
+            async with httpx.AsyncClient(timeout=10.0) as client:
+                response = await client.get(f"{settings.API_BASE_URL}/admin/api/public/categories")
+                data = response.json()
 
-       
+            if data.get("status") != "success":
+                await query.edit_message_text(
+                    text="❌ خطا در دریافت دسته‌بندی‌ها.",
+                    reply_markup=InlineKeyboardMarkup([
+                        [InlineKeyboardButton("🔙 بازگشت", callback_data="sales_partner")]
+                    ])
+                )
+                return
+
+            categories = data.get("data", [])
+
+            if not categories:
+                await query.edit_message_text(
+                    text="📭 هیچ دسته‌بندی موجود نیست.",
+                    parse_mode="Markdown",
+                    reply_markup=InlineKeyboardMarkup([
+                        [InlineKeyboardButton("🔙 بازگشت", callback_data="sales_partner")]
+                    ])
+                )
+                return
+
+            keyboard = []
+            for cat in categories:
+                keyboard.append([
+                    InlineKeyboardButton(
+                        text=f"📂 {cat['name']}",
+                        callback_data=f"sales_category_{cat['id']}"
+                    )
+                ])
+
+            keyboard.append([
+                InlineKeyboardButton(
+                    text="🔙 بازگشت",
+                    callback_data="sales_partner"
+                )
+            ])
+
+            await query.edit_message_text(
+                text="📋 **دسته‌بندی سرویس‌ها**\n\n"
+                     f"📊 محدودیت باقی‌مانده: {remaining} اکانت\n\n"
+                     "لطفاً یک دسته‌بندی را انتخاب کنید:",
+                parse_mode="Markdown",
+                reply_markup=InlineKeyboardMarkup(keyboard)
+            )
+
+        except Exception as e:
+            logger.error(f"Error in handle_sales_purchase: {str(e)}")
+            await query.edit_message_text(
+                text="❌ خطا در دریافت سرویس‌ها.",
+                reply_markup=InlineKeyboardMarkup([
+                    [InlineKeyboardButton("🔙 بازگشت", callback_data="sales_partner")]
+                ])
+            )
+            
+    async def handle_sales_category_selection(self, query, category_id: int) -> None:
+        """Handle sales category selection - show panels."""
+        user_id = query.from_user.id
+        logger.info(f"Sales category {category_id} selected by user {user_id}")
+
+        try:
+            category_name = await self._get_category_name(category_id)
+
+            async with httpx.AsyncClient(timeout=10.0) as client:
+                response = await client.get(
+                    f"{settings.API_BASE_URL}/admin/api/public/panels?category_id={category_id}"
+                )
+                data = response.json()
+
+            panels = data.get("data", []) if data.get("status") == "success" else []
+
+            if not panels:
+                await query.edit_message_text(
+                    text=f"📂 **{category_name}**\n\n"
+                         "📭 هیچ پنلی با ظرفیت خالی در این دسته‌بندی موجود نیست.",
+                    parse_mode="Markdown",
+                    reply_markup=InlineKeyboardMarkup([
+                        [InlineKeyboardButton("🔙 بازگشت", callback_data="sales_purchase")]
+                    ])
+                )
+                return
+
+            keyboard = []
+            for panel in panels:
+                keyboard.append([
+                    InlineKeyboardButton(
+                        text=f"🖥️ {panel['name']}",
+                        callback_data=f"sales_panel_{category_id}_{panel['id']}"
+                    )
+                ])
+
+            keyboard.append([
+                InlineKeyboardButton(
+                    text="🔙 بازگشت به دسته‌بندی‌ها",
+                    callback_data="sales_purchase"
+                )
+            ])
+            keyboard.append([
+                InlineKeyboardButton(
+                    text="🔙 بازگشت به پنل همکاری",
+                    callback_data="sales_partner",
+                    style="danger"
+                )
+            ])
+
+            await query.edit_message_text(
+                text=f"📂 **{category_name}**\n\n"
+                     f"🖥️ لطفاً پنل مورد نظر را انتخاب کنید:",
+                parse_mode="Markdown",
+                reply_markup=InlineKeyboardMarkup(keyboard)
+            )
+
+        except Exception as e:
+            logger.error(f"Error in handle_sales_category_selection: {str(e)}")
+            await query.edit_message_text(
+                text="❌ خطا در دریافت پنل‌ها.",
+                reply_markup=InlineKeyboardMarkup([
+                    [InlineKeyboardButton("🔙 بازگشت", callback_data="sales_purchase")]
+                ])
+            )
+    
+    async def handle_sales_panel_selection(self, query, category_id: int, panel_id: int) -> None:
+        """Handle sales panel selection - show duration menu."""
+        user_id = query.from_user.id
+        logger.info(f"Sales panel {panel_id} selected by user {user_id}")
+
+        try:
+            # Get panel name
+            async with httpx.AsyncClient(timeout=10.0) as client:
+                response = await client.get(
+                    f"{settings.API_BASE_URL}/admin/api/public/panel/{panel_id}"
+                )
+                panel_data = response.json()
+            
+            panel_name = panel_data.get("data", {}).get("name", "نامشخص") if panel_data.get("status") == "success" else "نامشخص"
+            category_name = await self._get_category_name(category_id)
+            
+            # Get services for this category and panel
+            async with httpx.AsyncClient(timeout=10.0) as client:
+                response = await client.get(
+                    f"{settings.API_BASE_URL}/admin/api/public/services?category_id={category_id}&panel_id={panel_id}"
+                )
+                data = response.json()
+            
+            services = data.get("data", []) if data.get("status") == "success" else []
+            
+            if not services:
+                await query.edit_message_text(
+                    text=f"🖥️ **{panel_name}**\n\n"
+                         "📭 هیچ سرویسی برای این پنل موجود نیست.",
+                    parse_mode="Markdown",
+                    reply_markup=InlineKeyboardMarkup([
+                        [InlineKeyboardButton("🔙 بازگشت", callback_data=f"sales_category_{category_id}")]
+                    ])
+                )
+                return
+            
+            durations = sorted(set(
+                s.get("duration") for s in services
+                if s.get("duration") is not None
+            ))
+
+            if not durations:
+                # No duration - show services directly
+                await self._show_sales_services_list(query, services, category_name, panel_id, panel_name)
+                return
+
+            default_duration = durations[0]
+            await self._show_sales_duration_menu(query, category_id, panel_id, category_name, panel_name, default_duration)
+
+        except Exception as e:
+            logger.error(f"Error in handle_sales_panel_selection: {str(e)}")
+            await query.edit_message_text(
+                text="❌ خطا در دریافت سرویس‌ها.",
+                reply_markup=InlineKeyboardMarkup([
+                    [InlineKeyboardButton("🔙 بازگشت", callback_data="sales_purchase")]
+                ])
+            )
+            
+    async def _show_sales_duration_menu(self, query, category_id: int, panel_id: int, category_name: str, panel_name: str, selected_duration: int = None) -> None:
+        """Show duration menu for sales partner with services filtered by duration and panel."""
+        async with httpx.AsyncClient(timeout=10.0) as client:
+            response = await client.get(
+                f"{settings.API_BASE_URL}/admin/api/public/services?category_id={category_id}&panel_id={panel_id}"
+            )
+            data = response.json()
+
+        services = data.get("data", []) if data.get("status") == "success" else []
+
+        durations = sorted(set(
+            s.get("duration") for s in services
+            if s.get("duration") is not None
+        ))
+
+        if not durations:
+            await self._show_sales_services_list(query, services, category_name, panel_id, panel_name)
+            return
+
+        if selected_duration is None:
+            selected_duration = durations[0]
+
+        filtered_services = [s for s in services if s.get("duration") == selected_duration]
+
+        duration_buttons = []
+        for d in durations:
+            if d == selected_duration:
+                button_text = f"🚀 {d} ماه"
+                style = "success"
+            else:
+                button_text = f"📅 {d} ماه"
+                style = None
+            duration_buttons.append(
+                InlineKeyboardButton(
+                    text=button_text,
+                    callback_data=f"sales_duration_{category_id}_{panel_id}_{d}",
+                    style=style
+                )
+            )
+
+        keyboard = []
+        for i in range(0, len(duration_buttons), 4):
+            keyboard.append(duration_buttons[i:i+4])
+
+        if filtered_services:
+            for service in filtered_services:
+                service_name = service.get('name', 'نامشخص')
+                
+                users = service.get('users', 'نامحدود')
+                if users and users != "unlimited":
+                    users_display = users
+                else:
+                    users_display = "♾️"
+                
+                price = service.get('price')
+                if price:
+                    price_display = f"{int(price):,}"
+                else:
+                    price_display = "تماس"
+                
+                button_text = f"📦 {service_name} | 👥{users_display} | 💰{price_display}"
+                
+                keyboard.append([
+                    InlineKeyboardButton(
+                        text=button_text[:60], 
+                        callback_data=f"sales_service_{service['id']}",
+                        style="primary"
+                    )
+                ])
+        else:
+            keyboard.append([
+                InlineKeyboardButton(
+                    text="📭 هیچ سرویسی برای این مدت وجود ندارد",
+                    callback_data="noop",
+                    style="danger"
+                )
+            ])
+
+        keyboard.append([
+            InlineKeyboardButton(
+                text="🔙 بازگشت به پنل‌ها",
+                callback_data=f"sales_category_{category_id}"
+            )
+        ])
+        keyboard.append([
+            InlineKeyboardButton(
+                text="🏠 بازگشت به پنل همکاری",
+                callback_data="sales_partner",
+                style="danger"
+            )
+        ])
+
+        await query.edit_message_text(
+            text=f"📂 **{category_name}**\n"
+                 f"🖥️ **پنل:** {panel_name}\n"
+                 f"📅 **مدت:** {selected_duration} ماه\n\n"
+                 f"لطفاً سرویس مورد نظر را انتخاب کنید:",
+            parse_mode="Markdown",
+            reply_markup=InlineKeyboardMarkup(keyboard)
+        )
+   
+    async def _show_sales_services_list(self, query, services: list, category_name: str, panel_id: int = None, panel_name: str = None) -> None:
+        """Show services list for sales partner without duration filtering."""
+        keyboard = []
+
+        for service in services:
+            service_name = service.get('name', 'نامشخص')
+            
+            users = service.get('users', 'نامحدود')
+            if users and users != "unlimited":
+                users_display = users
+            else:
+                users_display = "♾️"
+            
+            price = service.get('price')
+            if price:
+                price_display = f"{int(price):,}"
+            else:
+                price_display = "تماس"
+            
+            button_text = f"📦 {service_name} | 👥{users_display} | 💰{price_display}"
+            
+            keyboard.append([
+                InlineKeyboardButton(
+                    text=button_text[:60],
+                    callback_data=f"sales_service_{service['id']}",
+                    style="primary"
+                )
+            ])
+
+        keyboard.append([
+            InlineKeyboardButton(
+                text="🔙 بازگشت به پنل‌ها",
+                callback_data="sales_purchase"
+            )
+        ])
+        keyboard.append([
+            InlineKeyboardButton(
+                text="🏠 بازگشت به پنل همکاری",
+                callback_data="sales_partner",
+                style="danger"
+            )
+        ])
+
+        panel_text = f"\n🖥️ **پنل:** {panel_name}" if panel_name else ""
+        await query.edit_message_text(
+            text=f"📂 **{category_name}**{panel_text}\n\nلطفاً یکی از سرویس‌های زیر را انتخاب کنید:",
+            parse_mode="Markdown",
+            reply_markup=InlineKeyboardMarkup(keyboard)
+        )
+   
+    async def _handle_sales_duration_selection(self, query, category_id: int, panel_id: int, duration: int) -> None:
+        """Handle sales duration selection."""
+        category_name = await self._get_category_name(category_id)
+        
+        # Get panel name
+        async with httpx.AsyncClient(timeout=10.0) as client:
+            response = await client.get(
+                f"{settings.API_BASE_URL}/admin/api/public/panel/{panel_id}"
+            )
+            panel_data = response.json()
+        
+        panel_name = panel_data.get("data", {}).get("name", "نامشخص") if panel_data.get("status") == "success" else "نامشخص"
+        
+        await self._show_sales_duration_menu(query, category_id, panel_id, category_name, panel_name, duration)
+        
+    async def handle_sales_service_selection(self, query, service_id: int) -> None:
+        """Handle sales service selection - direct purchase for partner."""
+        user_id = query.from_user.id
+        logger.info(f"Sales service {service_id} selected by user {user_id}")
+
+        # Get partner info
+        async with httpx.AsyncClient(timeout=10.0) as client:
+            response = await client.get(f"{settings.API_BASE_URL}/admin/api/sales/check/{user_id}")
+            partner_data = response.json().get("data", {})
+
+        # Direct purchase
+        await self.handle_partner_purchase(query, service_id, partner_data)
+        
     async def handle_sales_list_accounts(self, query) -> None:
         """Show partner's accounts list."""
         user_id = query.from_user.id

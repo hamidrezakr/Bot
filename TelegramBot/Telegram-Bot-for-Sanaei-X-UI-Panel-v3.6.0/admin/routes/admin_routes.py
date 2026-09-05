@@ -18,7 +18,7 @@ import string
 from core.logging import logger
 from services.user_service import UserService
 from services.subscription_service import SubscriptionService
-from core.config import settings
+from core.config import settings, get_timezone
 
 # ==============================================
 # Database Setup
@@ -311,6 +311,10 @@ class SalesPartnerDB(Base):
     discount_percent = Column(Integer, default=0)
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime, default=datetime.now)
+    debt_started_at = Column(DateTime, nullable=True)
+    debt_deadline = Column(DateTime, nullable=True)
+    total_debt = Column(Integer, default=0)
+    debt_days = Column(Integer, default=7)
 
 
 class SalesTransactionDB(Base):
@@ -353,7 +357,9 @@ class MessageSettingsDB(Base):
     welcome_message = Column(Text, nullable=True)
     support_message = Column(Text, nullable=True)
     help_message = Column(Text, nullable=True)
+    connection_guide_message = Column(Text, nullable=True)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
+
 
 # ==============================================
 # Helper Functions for User Generation
@@ -888,6 +894,40 @@ async def create_category(request: Request):
         return {"status": "success", "message": "دسته‌بندی با موفقیت اضافه شد", "data": {"id": new_category.id, "name": new_category.name}}
     except Exception as e:
         logger.error(f"Error creating category: {str(e)}")
+        return {"status": "error", "message": str(e)}
+
+@router.put("/api/categories/{category_id}")
+async def update_category(category_id: int, request: Request):
+    """Update a category."""
+    try:
+        data = await request.json()
+        name = data.get("name", "").strip()
+        if not name:
+            return {"status": "error", "message": "نام دسته‌بندی الزامی است"}
+        
+        db = SessionLocal()
+        category = db.query(CategoryDB).filter(CategoryDB.id == category_id).first()
+        if not category:
+            db.close()
+            return {"status": "error", "message": "دسته‌بندی پیدا نشد"}
+        
+        # Check for duplicate name
+        existing = db.query(CategoryDB).filter(
+            CategoryDB.name == name,
+            CategoryDB.id != category_id
+        ).first()
+        if existing:
+            db.close()
+            return {"status": "error", "message": "این نام قبلاً ثبت شده است"}
+        
+        category.name = name
+        db.commit()
+        db.close()
+        
+        logger.info(f"Category updated: ID {category_id}, New name: {name}")
+        return {"status": "success", "message": "دسته‌بندی با موفقیت ویرایش شد"}
+    except Exception as e:
+        logger.error(f"Error updating category: {str(e)}")
         return {"status": "error", "message": str(e)}
 
 
@@ -1588,12 +1628,59 @@ async def get_public_categories():
         logger.error(f"Error getting public categories: {str(e)}")
         return {"status": "error", "message": str(e)}
 
+@router.get("/api/public/panels")
+async def get_public_panels(category_id: int = None):
+    """
+    Get panels for a specific category.
+    Only returns panels that are active and not full.
+    """
+    try:
+        db = SessionLocal()
+        
+        # Get active services in this category
+        query = db.query(ServiceDB).filter(ServiceDB.is_active == True)
+        if category_id:
+            query = query.filter(ServiceDB.category_id == category_id)
+        
+        services = query.all()
+        
+        # Extract unique panel_ids
+        panel_ids = set()
+        for s in services:
+            if s.panel_id:
+                panel_ids.add(s.panel_id)
+        
+        if not panel_ids:
+            db.close()
+            return {"status": "success", "data": []}
+        
+        # Get panels that are active and not full
+        panels = db.query(PanelDB).filter(
+            PanelDB.id.in_(panel_ids),
+            PanelDB.is_active == True,
+            PanelDB.is_full == False
+        ).all()
+        
+        result = []
+        for p in panels:
+            result.append({
+                "id": p.id,
+                "name": p.name
+            })
+        
+        db.close()
+        return {"status": "success", "data": result}
+    except Exception as e:
+        logger.error(f"Error getting public panels: {str(e)}")
+        return {"status": "error", "message": str(e)}
+
 
 @router.get("/api/public/services")
-async def get_public_services(category_id: int = None):
+async def get_public_services(category_id: int = None, panel_id: int = None):
     """
     Get services for bot.
     If category_id is provided, filter by category.
+    If panel_id is provided, filter by panel.
     """
     try:
         db = SessionLocal()
@@ -1601,6 +1688,8 @@ async def get_public_services(category_id: int = None):
         query = db.query(ServiceDB).filter(ServiceDB.is_active == True)
         if category_id:
             query = query.filter(ServiceDB.category_id == category_id)
+        if panel_id:
+            query = query.filter(ServiceDB.panel_id == panel_id)
 
         services = query.all()
 
@@ -1688,7 +1777,7 @@ async def create_receipt(request: Request):
             image_filename=data.get("image_filename"),
             status="pending",
             is_renewal=data.get("is_renewal", False),
-            renew_user_info=data.get("renew_user_info")  # ← اضافه شد
+            renew_user_info=data.get("renew_user_info")  
         )
 
         db.add(new_receipt)
@@ -1719,7 +1808,6 @@ async def approve_receipt(receipt_id: int):
         is_renewal = getattr(receipt, 'is_renewal', False)
         logger.info(f"Processing receipt {receipt_id} - is_renewal: {is_renewal}")
 
-        # ====== ذخیره اطلاعات receipt قبل از بستن سشن ======
         receipt_user_id = receipt.user_id
         receipt_service_id = receipt.service_id
         receipt_username = receipt.username or "کاربر"
@@ -1748,7 +1836,6 @@ async def approve_receipt(receipt_id: int):
             username = renew_user_info.get('email')
             client_data = renew_user_info.get('client', {})
 
-            # ====== ذخیره اطلاعات panel قبل از بستن سشن ======
             panel_url = panel.url.rstrip("/")
             panel_api_token = panel.api_token
             panel_sub_url = panel.sub_url or ""
@@ -1760,7 +1847,6 @@ async def approve_receipt(receipt_id: int):
 
             logger.info(f"Renewing user: {username} in panel: {panel_name}")
 
-            # ====== محاسبه زمان باقی‌مانده ======
             current_expiry_time = client_data.get('expiryTime', 0)
             remaining_days = 0
 
@@ -1770,16 +1856,13 @@ async def approve_receipt(receipt_id: int):
                 if remaining_days < 0:
                     remaining_days = 0
 
-            # ====== محاسبه زمان جدید ======
             duration_months = service.duration or 1
             new_days = duration_months * 30
             total_days = remaining_days + new_days
 
-            # ====== محاسبه تاریخ انقضای جدید ======
             new_expiry_time = int((datetime.now() + timedelta(days=total_days)).timestamp() * 1000)
             new_expiry_date = datetime.now() + timedelta(days=total_days)
 
-            # ====== محاسبه حجم باقی‌مانده ======
             current_total_bytes = client_data.get('totalGB', 0)
             current_used_bytes = client_data.get('usedGB', 0)
             
@@ -1804,7 +1887,6 @@ async def approve_receipt(receipt_id: int):
                 new_volume_bytes = 0
                 new_total_bytes = 0
 
-            # ====== آماده‌سازی داده برای بروزرسانی ======
             update_data = {
                 "email": username,
                 "totalGB": new_total_bytes,
@@ -1821,7 +1903,6 @@ async def approve_receipt(receipt_id: int):
                 "Content-Type": "application/json"
             }
 
-            # ====== ارسال درخواست به پنل ======
             async with httpx.AsyncClient(timeout=30.0, verify=False) as http_client:
                 update_resp = await http_client.post(
                     f"{panel_url}/panel/api/clients/update/{username}",
@@ -1838,9 +1919,10 @@ async def approve_receipt(receipt_id: int):
                     db.close()
                     return {"status": "error", "message": result.get("msg", "خطا در تمدید")}
 
-            # ====== ذخیره در دیتابیس ======
             receipt.status = "approved"
             receipt.processed_at = datetime.now()
+            receipt.client_email = email
+            receipt.client_sub_id = client_sub_id
             receipt.is_archived = True
             receipt.archived_at = datetime.now()
             db.commit()
@@ -1849,16 +1931,22 @@ async def approve_receipt(receipt_id: int):
             # ====== ✅ Apply recurring discount for referrer ======
             try:
                 async with httpx.AsyncClient(timeout=10.0) as client:
-                    recurring_response = await client.post(
+                    # Apply first purchase referral discount
+                    await client.post(
+                        f"http://localhost:8000/admin/api/referrals/apply",
+                        json={"user_id": receipt_user_id}
+                    )
+                    # Apply recurring discount for referrer
+                    await client.post(
                         f"http://localhost:8000/admin/api/referrals/apply-recurring",
                         json={"user_id": receipt_user_id}
                     )
                     recurring_result = recurring_response.json()
                     logger.info(f"Recurring discount applied: {recurring_result}")
             except Exception as e:
-                logger.error(f"Error applying recurring discount: {str(e)}")
+                logger.error(f"Error applying referral discounts: {str(e)}")
 
-            # ====== ارسال پیام موفقیت به کاربر ======
+                
             client_sub_id = client_data.get('subId', '')
             full_sub_url = f"{panel_sub_url.rstrip('/')}/{client_sub_id}" if panel_sub_url and client_sub_id else panel_sub_url
 
@@ -2041,7 +2129,7 @@ async def approve_receipt(receipt_id: int):
                 "",
                 f"📧 **یوزرنیم:** `{email}`",
                 f"📦 **حجم:** {volume_display} GB",
-                f"⏰ **مدت اعتبار:** {duration_months} روز",
+                f"⏰ **مدت اعتبار:** {duration_months} ماه",
                 "",
                 f"🔗 **لینک سابسکریپشن:** ",
                 f"{full_sub_url}",
@@ -2220,7 +2308,8 @@ async def check_test_account_eligibility(user_id: int):
             return {"status": "success", "data": {"can_get": False, "reason": "disabled"}}
 
         # محاسبه شروع هفته (شنبه)
-        today = datetime.now().date()
+        tehran_tz = get_timezone()
+        today = datetime.now(tehran_tz).date()
         days_since_saturday = (today.weekday() + 2) % 7
         week_start = today - timedelta(days=days_since_saturday)
         week_start_datetime = datetime.combine(week_start, datetime.min.time())
@@ -2277,7 +2366,8 @@ async def create_test_account(request: Request):
             return {"status": "error", "message": "اکانت تست غیرفعال است"}
         
         # بررسی محدودیت
-        today = datetime.now().date()
+        tehran_tz = get_timezone()
+        today = datetime.now(tehran_tz).date()
         days_since_saturday = (today.weekday() + 2) % 7
         week_start = today - timedelta(days=days_since_saturday)
         week_start_datetime = datetime.combine(week_start, datetime.min.time())
@@ -2326,7 +2416,8 @@ async def create_test_account(request: Request):
         
         # ساخت نام کاربری با تاریخ شمسی
         import jdatetime
-        today_jalali = jdatetime.date.fromgregorian(date=datetime.now().date())
+        tehran_tz = get_timezone()
+        today_jalali = jdatetime.date.fromgregorian(date=datetime.now(tehran_tz).date())
         jalali_str = f"{today_jalali.year:04d}{today_jalali.month:02d}{today_jalali.day:02d}"
         
         client_email = f"test_{jalali_str}_{clean_telegram_username}_{test_number}"
@@ -2599,12 +2690,11 @@ async def test_payment_request(request: Request):
         logger.info(f"🧪 Test payment request received:")
         logger.info(f"   Amount: {amount}")
         
-        # ارسال درخواست به زرین‌پال (sandbox)
         zarinpal_url = "https://sandbox.zarinpal.com/pg/v4/payment/request.json"
         
         payment_data = {
             "merchant_id": "00000000-0000-0000-0000-000000000000",  # Sandbox
-            "amount": amount,
+            "amount": amount * 10,
             "callback_url": "https://bot.spacegate.ir/admin/api/payment/callback",
             "description": "تست پرداخت"
         }
@@ -2762,10 +2852,12 @@ async def create_payment(request: Request):
             zarinpal_url = "https://api.zarinpal.com/pg/v4/payment/request.json"
 
         callback_url = "https://bot.spacegate.ir/admin/api/payment/callback"
+        
+        amount_rial = amount * 10
 
         payment_data = {
             "merchant_id": merchant_id,
-            "amount": amount,
+            "amount": amount_rial,
             "callback_url": callback_url,
             "description": f"خرید سرویس {service_id} - کاربر {user_id}",
             "metadata": {
@@ -2865,7 +2957,7 @@ async def payment_callback(request: Request):
             
             verify_data = {
                 "merchant_id": payment_setting.merchant_id,
-                "amount": payment.amount,
+                "amount": payment.amount * 10,
                 "authority": authority
             }
             
@@ -2920,7 +3012,6 @@ async def payment_callback(request: Request):
                         result = await process_online_purchase(payment, db)
                     
                     if result.get("status") == "success":
-                        # بروزرسانی پرداخت
                         payment.status = "paid"
                         payment.ref_id = ref_id
                         payment.paid_at = datetime.now()
@@ -2928,12 +3019,25 @@ async def payment_callback(request: Request):
                         payment.client_sub_id = result.get("data", {}).get("client_sub_id")
                         db.commit()
                         
-                        # ارسال پیام به کاربر در تلگرام
+                        try:
+                            async with httpx.AsyncClient(timeout=10.0) as client:
+                                await client.post(
+                                    f"http://localhost:8000/admin/api/referrals/apply",
+                                    json={"user_id": payment.user_id}
+                                )
+                                await client.post(
+                                    f"http://localhost:8000/admin/api/referrals/apply-recurring",
+                                    json={"user_id": payment.user_id}
+                                )
+                        except Exception as e:
+                            logger.error(f"Error applying referral discounts: {str(e)}")
+
+
+
                         await send_payment_success_message(payment.user_id, result.get("data", {}), payment.is_renewal)
                         
                         db.close()
                         
-                        # نمایش صفحه رسید HTML
                         return templates.TemplateResponse("payment_result.html", {
                             "request": request,
                             "success": True,
@@ -3185,7 +3289,7 @@ async def send_payment_success_message(user_id: int, data: dict, is_renewal: boo
                 f"📧 **یوزرنیم:** `{data.get('client_email')}`\n"
                 f"🖥️ **پنل:** {data.get('panel_name')}\n"
                 f"📊 **حجم:** {data.get('volume')}\n"
-                f"⏰ **مدت:** {data.get('duration')} روز\n\n"
+                f"⏰ **مدت:** {data.get('duration')} ماه\n\n"
                 f"🔗 **لینک سابسکریپشن:**\n{data.get('sub_url')}\n\n"
                 f"💡 برای مشاهده اطلاعات از بخش 'وضعیت من' استفاده کنید."
             )
@@ -3195,7 +3299,7 @@ async def send_payment_success_message(user_id: int, data: dict, is_renewal: boo
                 f"📧 **یوزرنیم:** `{data.get('client_email')}`\n"
                 f"🖥️ **پنل:** {data.get('panel_name')}\n"
                 f"📦 **حجم:** {data.get('volume')} GB\n"
-                f"⏰ **مدت اعتبار:** {data.get('duration')} روز\n\n"
+                f"⏰ **مدت اعتبار:** {data.get('duration')} ماه\n\n"
                 f"🔗 **لینک سابسکریپشن:**\n{data.get('sub_url')}\n\n"
                 f"📱 **نحوه استفاده:**\n"
                 f"لینک سابسکریپشن را در اپلیکیشن خود وارد کنید.\n\n"
@@ -3449,7 +3553,7 @@ async def register_referral(request: Request):
             "message": "کد رفرال با موفقیت ثبت شد",
             "data": {
                 "referral_id": new_referral.id,
-                "discount_percent": referral.discount_percent 
+                "discount_percent": new_referral.discount_percent
             }
         }
     except Exception as e:
@@ -3954,7 +4058,8 @@ async def get_dashboard_stats():
     """Get all dashboard statistics."""
     try:
         db = SessionLocal()
-        today = datetime.now().date()
+        tehran_tz = get_timezone()
+        today = datetime.now(tehran_tz).date()
         today_start = datetime.combine(today, datetime.min.time())
         today_end = datetime.combine(today, datetime.max.time())
 
@@ -3991,7 +4096,6 @@ async def get_dashboard_stats():
             ReceiptDB.created_at >= today_start,
             ReceiptDB.created_at <= today_end
         ).count()
-        
 
         # Test accounts
         test_accounts_today = db.query(TestAccountDB).filter(
@@ -4021,7 +4125,7 @@ async def get_dashboard_stats():
                 "users_count": panel.users_count,
                 "is_full": panel.is_full
             })
-        
+
         # Sales partners
         pending_sales_requests = db.query(SalesRequestDB).filter(
             SalesRequestDB.status == "pending"
@@ -4031,13 +4135,9 @@ async def get_dashboard_stats():
             SalesPartnerDB.is_active == True
         ).count()
 
-        # Recent activities
-        recent_receipts = db.query(ReceiptDB).order_by(ReceiptDB.created_at.desc()).limit(5).all()
-        recent_payments = db.query(PaymentDB).filter(PaymentDB.status == "paid").order_by(PaymentDB.paid_at.desc()).limit(5).all()
-
-                # ====== Recent Activities (Complete) ======
+        # ====== Recent Activities ======
         activities = []
-        
+
         # 1. New users (last 3)
         new_users = db.query(UserDB).order_by(UserDB.created_at.desc()).limit(3).all()
         for u in new_users:
@@ -4046,25 +4146,48 @@ async def get_dashboard_stats():
                 "type": "user",
                 "icon": "👤",
                 "title": f"کاربر جدید: {display_name}",
-                "time": u.created_at.isoformat() if u.created_at else None
+                "time": u.created_at.astimezone(tehran_tz).isoformat() if u.created_at else None
             })
-        
+
         # 2. Online payments paid (last 3)
         paid_payments = db.query(PaymentDB).filter(
             PaymentDB.status == "paid"
         ).order_by(PaymentDB.paid_at.desc()).limit(3).all()
+        
         for p in paid_payments:
+            user = db.query(UserDB).filter(UserDB.user_id == p.user_id).first()
+            if user:
+                user_display = user.username or user.first_name or str(p.user_id)
+            else:
+                user_display = str(p.user_id)
+            
+            service = db.query(ServiceDB).filter(ServiceDB.id == p.service_id).first()
+            service_name = service.name if service else "سرویس نامشخص"
+            
+            panel_name = "پنل نامشخص"
+            if service and service.panel_id:
+                panel = db.query(PanelDB).filter(PanelDB.id == service.panel_id).first()
+                if panel:
+                    panel_name = panel.name
+            
+            if p.is_renewal:
+                title = f" تمدید آنلاین:  {service_name} - {panel_name} - {p.amount:,} تومان"
+            else:
+                title = f" پرداخت آنلاین: {service_name} - {panel_name} - {p.amount:,} تومان"
+            
             activities.append({
                 "type": "payment",
-                "icon": "💳",
-                "title": f"پرداخت آنلاین موفق: {p.amount:,} تومان",
-                "time": p.paid_at.isoformat() if p.paid_at else None
+                "icon": "💳" if not p.is_renewal else "🔄",
+                "user": user_display,
+                "title": title,
+                "time": p.paid_at.astimezone(tehran_tz).isoformat() if p.paid_at else None
             })
-        
+
         # 3. New receipts (last 3)
         recent_receipts = db.query(ReceiptDB).order_by(
             ReceiptDB.created_at.desc()
         ).limit(3).all()
+        
         for r in recent_receipts:
             display_name = r.username or str(r.user_id)
             status_text = {
@@ -4072,42 +4195,97 @@ async def get_dashboard_stats():
                 "approved": "تایید شده",
                 "rejected": "رد شده"
             }.get(r.status, r.status)
+            
+            panel_name = "پنل نامشخص"
+            if r.service_details and isinstance(r.service_details, dict):
+                panel_name = r.service_details.get("panel_name", "پنل نامشخص")
+            else:
+                service = db.query(ServiceDB).filter(ServiceDB.id == r.service_id).first()
+                if service and service.panel_id:
+                    panel = db.query(PanelDB).filter(PanelDB.id == service.panel_id).first()
+                    if panel:
+                        panel_name = panel.name
+            
+            title = f" رسید {status_text}: {r.service_name} - {panel_name}"
+            
             activities.append({
                 "type": "receipt",
                 "icon": "📋",
-                "title": f"رسید {status_text}: {display_name}",
-                "time": r.created_at.isoformat() if r.created_at else None
+                "user": user_display,
+                "title": title,
+                "time": r.created_at.astimezone(tehran_tz).isoformat() if r.created_at else None
             })
-        
+
         # 4. Test accounts (last 2)
         recent_tests = db.query(TestAccountDB).order_by(
             TestAccountDB.created_at.desc()
         ).limit(2).all()
+        
         for t in recent_tests:
+            user = db.query(UserDB).filter(UserDB.user_id == t.user_id).first()
+            if user:
+                user_display = user.username or user.first_name or str(t.user_id)
+            else:
+                user_display = str(t.user_id)
+            
+            title = f" اکانت تست ساخته شد: {t.panel_name or 'پنل نامشخص'}"
+            
             activities.append({
                 "type": "test",
                 "icon": "🎁",
-                "title": f"اکانت تست ساخته شد: {t.client_email}",
-                "time": t.created_at.isoformat() if t.created_at else None
+                "user": user_display,
+                "title": title,
+                "time": t.created_at.astimezone(tehran_tz).isoformat() if t.created_at else None
             })
-        
+
         # 5. New referrals (last 2)
         recent_refs = db.query(ReferralDB).order_by(
             ReferralDB.created_at.desc()
         ).limit(2).all()
+        
         for ref in recent_refs:
+            user = db.query(UserDB).filter(UserDB.user_id == ref.referred_id).first()
+            if user:
+                user_display = user.username or user.first_name or str(ref.referred_id)
+            else:
+                user_display = str(ref.referred_id)
+            
+            title = f" رفرال جدید: کاربر {user_display}"
+            
             activities.append({
                 "type": "referral",
                 "icon": "🔗",
-                "title": f"رفرال جدید: کاربر {ref.referred_id}",
-                "time": ref.created_at.isoformat() if ref.created_at else None
+                "user": user_display,
+                "title": title,
+                "time": ref.created_at.astimezone(tehran_tz).isoformat() if ref.created_at else None
             })
-        
-        # Sort by time (newest first) and limit to 10
-        activities.sort(key=lambda x: x.get("time") or "", reverse=True)
-        activities = activities[:10]
 
-        # Sort activities by time
+        # 6. Sales partner transactions (last 2)
+        recent_sales = db.query(SalesTransactionDB).order_by(
+            SalesTransactionDB.created_at.desc()
+        ).limit(2).all()
+        
+        for st in recent_sales:
+            partner_user = db.query(UserDB).filter(UserDB.user_id == st.partner_user_id).first()
+            if partner_user:
+                partner_display = partner_user.username or partner_user.first_name or str(st.partner_user_id)
+            else:
+                partner_display = str(st.partner_user_id)
+            
+            if st.transaction_type == "purchase":
+                title = f" خرید همکار: {st.client_email} - {st.service_name} - {st.price:,} تومان"
+            else:
+                title = f" تمدید همکار: {st.client_email} - {st.service_name} - {st.price:,} تومان"
+            
+            activities.append({
+                "type": "sales",
+                "icon": "🤝",
+                "user": partner_display,
+                "title": title,
+                "time": st.created_at.astimezone(tehran_tz).isoformat() if st.created_at else None
+            })
+
+        # Sort by time (newest first) and limit to 10
         activities.sort(key=lambda x: x.get("time") or "", reverse=True)
         activities = activities[:10]
 
@@ -4153,7 +4331,6 @@ async def get_dashboard_stats():
         logger.error(f"Error getting dashboard stats: {str(e)}")
         return {"status": "error", "message": str(e)}
 
-
 # ==============================================
 # REPORTS API
 # ==============================================
@@ -4165,8 +4342,9 @@ async def get_report_stats(date_from: str = None, date_to: str = None):
         db = SessionLocal()
 
         # Parse dates
-        from_date = datetime.strptime(date_from, "%Y-%m-%d") if date_from else datetime.now() - timedelta(days=30)
-        to_date = datetime.strptime(date_to, "%Y-%m-%d") if date_to else datetime.now()
+        tehran_tz = get_timezone()
+        from_date = datetime.strptime(date_from, "%Y-%m-%d") if date_from else datetime.now(tehran_tz) - timedelta(days=30)
+        to_date = datetime.strptime(date_to, "%Y-%m-%d") if date_to else datetime.now(tehran_tz)
         from_start = datetime.combine(from_date.date(), datetime.min.time())
         to_end = datetime.combine(to_date.date(), datetime.max.time())
 
@@ -4308,6 +4486,232 @@ async def get_report_stats(date_from: str = None, date_to: str = None):
         logger.error(f"Error getting report stats: {str(e)}")
         return {"status": "error", "message": str(e)}
 
+
+@router.get("/api/activities")
+async def get_activities(
+    date_from: str = None,
+    date_to: str = None,
+    type: str = "all",
+    page: int = 1,
+    per_page: int = 25
+):
+    """Get all activities with pagination."""
+    try:
+        db = SessionLocal()
+        tehran_tz = get_timezone()
+
+        # Parse dates
+        from_date = datetime.strptime(date_from, "%Y-%m-%d") if date_from else datetime.now(tehran_tz) - timedelta(days=30)
+        to_date = datetime.strptime(date_to, "%Y-%m-%d") if date_to else datetime.now(tehran_tz)
+        from_start = datetime.combine(from_date.date(), datetime.min.time())
+        to_end = datetime.combine(to_date.date(), datetime.max.time())
+
+        activities = []
+
+        # Helper function to get user display name
+        def get_user_display(user_id):
+            user = db.query(UserDB).filter(UserDB.user_id == user_id).first()
+            if user:
+                return user.username or user.first_name or str(user_id)
+            return str(user_id)
+
+        # Helper function to get service info
+        def get_service_info(service_id):
+            service = db.query(ServiceDB).filter(ServiceDB.id == service_id).first()
+            if service:
+                service_name = service.name
+                panel_name = "پنل نامشخص"
+                if service.panel_id:
+                    panel = db.query(PanelDB).filter(PanelDB.id == service.panel_id).first()
+                    if panel:
+                        panel_name = panel.name
+                return service_name, panel_name
+            return "سرویس نامشخص", "پنل نامشخص"
+
+        # 1. User registrations
+        if type in ["all", "user_register"]:
+            users = db.query(UserDB).filter(
+                UserDB.created_at >= from_start,
+                UserDB.created_at <= to_end
+            ).all()
+            for u in users:
+                activities.append({
+                    "type": "user_register",
+                    "type_text": "ثبت‌نام کاربر",
+                    "icon": "👤",
+                    "user": get_user_display(u.user_id),
+                    "details": f"کاربر جدید: {get_user_display(u.user_id)}",
+                    "time": u.created_at.astimezone(tehran_tz).isoformat() if u.created_at else None
+                })
+
+        # 2. Online payments (purchase and renewal)
+        if type in ["all", "online_purchase", "online_renewal"]:
+            payments = db.query(PaymentDB).filter(
+                PaymentDB.status == "paid",
+                PaymentDB.paid_at >= from_start,
+                PaymentDB.paid_at <= to_end
+            ).all()
+            for p in payments:
+                service_name, panel_name = get_service_info(p.service_id)
+                user_display = get_user_display(p.user_id)
+                if p.is_renewal:
+                    if type in ["all", "online_renewal"]:
+                        activities.append({
+                            "type": "online_renewal",
+                            "type_text": "تمدید آنلاین",
+                            "icon": "🔄",
+                            "user": user_display,
+                            "details": f"{service_name} - {panel_name} - {p.amount:,} تومان",
+                            "time": p.paid_at.astimezone(tehran_tz).isoformat() if p.paid_at else None
+                        })
+                else:
+                    if type in ["all", "online_purchase"]:
+                        activities.append({
+                            "type": "online_purchase",
+                            "type_text": "خرید آنلاین",
+                            "icon": "💳",
+                            "user": user_display,
+                            "details": f"{service_name} - {panel_name} - {p.amount:,} تومان",
+                            "time": p.paid_at.astimezone(tehran_tz).isoformat() if p.paid_at else None
+                        })
+
+        # 3. Receipts (approved - purchase and renewal)
+        if type in ["all", "receipt_purchase", "receipt_renewal"]:
+            receipts = db.query(ReceiptDB).filter(
+                ReceiptDB.created_at >= from_start,
+                ReceiptDB.created_at <= to_end
+            ).all()
+            for r in receipts:
+                user_display = r.username or str(r.user_id)
+                panel_name = "پنل نامشخص"
+                if r.service_details and isinstance(r.service_details, dict):
+                    panel_name = r.service_details.get("panel_name", "پنل نامشخص")
+                else:
+                    service = db.query(ServiceDB).filter(ServiceDB.id == r.service_id).first()
+                    if service and service.panel_id:
+                        panel = db.query(PanelDB).filter(PanelDB.id == service.panel_id).first()
+                        if panel:
+                            panel_name = panel.name
+
+                amount = 0
+                if r.service_details and isinstance(r.service_details, dict):
+                    amount = r.service_details.get("price", 0)
+
+                status_text = {
+                    "pending": "در انتظار",
+                    "approved": "تایید شده",
+                    "rejected": "رد شده"
+                }.get(r.status, r.status)
+
+                if r.is_renewal:
+                    if type in ["all", "receipt_renewal"]:
+                        activities.append({
+                            "type": "receipt_renewal",
+                            "type_text": "تمدید با رسید",
+                            "icon": "🔄",
+                            "user": user_display,
+                            "details": f"{r.service_name} - {panel_name} - {amount:,} تومان - {status_text}",
+                            "time": r.created_at.astimezone(tehran_tz).isoformat() if r.created_at else None
+                        })
+                else:
+                    if type in ["all", "receipt_purchase"]:
+                        activities.append({
+                            "type": "receipt_purchase",
+                            "type_text": "خرید با رسید",
+                            "icon": "📋",
+                            "user": user_display,
+                            "details": f"{r.service_name} - {panel_name} - {amount:,} تومان - {status_text}",
+                            "time": r.created_at.astimezone(tehran_tz).isoformat() if r.created_at else None
+                        })
+                        
+        # 4. Test accounts
+        if type in ["all", "test_account"]:
+            tests = db.query(TestAccountDB).filter(
+                TestAccountDB.created_at >= from_start,
+                TestAccountDB.created_at <= to_end
+            ).all()
+            for t in tests:
+                user_display = get_user_display(t.user_id)
+                activities.append({
+                    "type": "test_account",
+                    "type_text": "اکانت تست",
+                    "icon": "🎁",
+                    "user": user_display,
+                    "details": f"{t.panel_name or 'پنل نامشخص'}",
+                    "time": t.created_at.astimezone(tehran_tz).isoformat() if t.created_at else None
+                })
+
+        # 5. Referrals
+        if type in ["all", "referral"]:
+            refs = db.query(ReferralDB).filter(
+                ReferralDB.created_at >= from_start,
+                ReferralDB.created_at <= to_end
+            ).all()
+            for ref in refs:
+                user_display = get_user_display(ref.referred_id)
+                referrer_display = get_user_display(ref.referrer_id)
+                activities.append({
+                    "type": "referral",
+                    "type_text": "رفرال",
+                    "icon": "🔗",
+                    "user": user_display,
+                    "details": f"کاربر {user_display} توسط {referrer_display} معرفی شد",
+                    "time": ref.created_at.astimezone(tehran_tz).isoformat() if ref.created_at else None
+                })
+
+        # 6. Sales partner transactions
+        if type in ["all", "sales_purchase", "sales_renewal"]:
+            sales_transactions = db.query(SalesTransactionDB).filter(
+                SalesTransactionDB.created_at >= from_start,
+                SalesTransactionDB.created_at <= to_end
+            ).all()
+            for st in sales_transactions:
+                partner_display = get_user_display(st.partner_user_id)
+                if st.transaction_type == "purchase":
+                    if type in ["all", "sales_purchase"]:
+                        activities.append({
+                            "type": "sales_purchase",
+                            "type_text": "خرید همکار",
+                            "icon": "🤝",
+                            "user": partner_display,
+                            "details": f"{st.client_email} - {st.service_name} - {st.price:,} تومان",
+                            "time": st.created_at.astimezone(tehran_tz).isoformat() if st.created_at else None
+                        })
+                else:
+                    if type in ["all", "sales_renewal"]:
+                        activities.append({
+                            "type": "sales_renewal",
+                            "type_text": "تمدید همکار",
+                            "icon": "🤝",
+                            "user": partner_display,
+                            "details": f"{st.client_email} - {st.service_name} - {st.price:,} تومان",
+                            "time": st.created_at.astimezone(tehran_tz).isoformat() if st.created_at else None
+                        })
+
+        db.close()
+
+        # Sort by time descending
+        activities.sort(key=lambda x: x.get("time") or "", reverse=True)
+
+        # Pagination
+        total_count = len(activities)
+        total_pages = (total_count + per_page - 1) // per_page if total_count > 0 else 1
+        start_idx = (page - 1) * per_page
+        end_idx = min(start_idx + per_page, total_count)
+        page_data = activities[start_idx:end_idx]
+
+        return {
+            "status": "success",
+            "data": page_data,
+            "total": total_count,
+            "page": page,
+            "per_page": per_page,
+            "total_pages": total_pages
+        }
+    except Exception as e:
+        logger.error(f"Error getting activities: {str(e)}")
+        return {"status": "error", "message": str(e)}
+
 # ==============================================
 # SALES PARTNER API
 # ==============================================
@@ -4375,12 +4779,20 @@ async def check_sales_partner(user_id: int):
             db.close()
             return {"status": "success", "data": {"is_partner": False}}
         
+        now = datetime.now()
+        days_remaining = None
+        if partner.debt_deadline and partner.total_debt > 0:
+            days_remaining = (partner.debt_deadline - now).days
+        
         result = {
             "is_partner": True,
             "max_purchases": partner.max_purchases,
             "used_purchases": partner.used_purchases,
             "remaining_purchases": partner.max_purchases - partner.used_purchases,
-            "discount_percent": partner.discount_percent
+            "discount_percent": partner.discount_percent,
+            "total_debt": partner.total_debt or 0,
+            "debt_deadline": partner.debt_deadline.isoformat() if partner.debt_deadline else None,
+            "days_remaining": days_remaining
         }
         db.close()
         return {"status": "success", "data": result}
@@ -4389,14 +4801,20 @@ async def check_sales_partner(user_id: int):
         return {"status": "error", "message": str(e)}
 
 
+
 @router.get("/api/sales/partners")
 async def get_sales_partners():
     """Get all sales partners."""
     try:
         db = SessionLocal()
         partners = db.query(SalesPartnerDB).all()
+        now = datetime.now()
         result = []
         for p in partners:
+            days_remaining = None
+            if p.debt_deadline and p.total_debt > 0:
+                days_remaining = (p.debt_deadline - now).days
+            
             result.append({
                 "id": p.id,
                 "user_id": p.user_id,
@@ -4406,14 +4824,18 @@ async def get_sales_partners():
                 "remaining": p.max_purchases - p.used_purchases,
                 "discount_percent": p.discount_percent,
                 "is_active": p.is_active,
-                "created_at": p.created_at.isoformat() if p.created_at else None
+                "created_at": p.created_at.isoformat() if p.created_at else None,
+                "total_debt": p.total_debt or 0,
+                "debt_started_at": p.debt_started_at.isoformat() if p.debt_started_at else None,
+                "debt_deadline": p.debt_deadline.isoformat() if p.debt_deadline else None,
+                "days_remaining": days_remaining,
+                "debt_days": p.debt_days or 7
             })
         db.close()
         return {"status": "success", "data": result}
     except Exception as e:
         logger.error(f"Error getting sales partners: {str(e)}")
         return {"status": "error", "message": str(e)}
-
 
 @router.post("/api/sales/partners")
 async def create_sales_partner(request: Request):
@@ -4424,6 +4846,7 @@ async def create_sales_partner(request: Request):
         username = data.get("username")
         max_purchases = int(data.get("max_purchases", 10))
         discount_percent = int(data.get("discount_percent", 0))
+        debt_days = int(data.get("debt_days", 7))
         
         if not user_id:
             return {"status": "error", "message": "user_id الزامی است"}
@@ -4441,7 +4864,8 @@ async def create_sales_partner(request: Request):
             max_purchases=max_purchases,
             used_purchases=0,
             discount_percent=discount_percent,
-            is_active=True
+            is_active=True,
+            debt_days=debt_days
         )
         db.add(new_partner)
         db.commit()
@@ -4471,6 +4895,8 @@ async def update_sales_partner(partner_id: int, request: Request):
             partner.discount_percent = int(data["discount_percent"])
         if "is_active" in data:
             partner.is_active = data["is_active"]
+        if "debt_days" in data:
+            partner.debt_days = int(data["debt_days"])
         
         db.commit()
         db.close()
@@ -4479,6 +4905,7 @@ async def update_sales_partner(partner_id: int, request: Request):
     except Exception as e:
         logger.error(f"Error updating sales partner: {str(e)}")
         return {"status": "error", "message": str(e)}
+
 
 
 @router.delete("/api/sales/partners/{partner_id}")
@@ -4562,11 +4989,19 @@ async def get_sales_settlement(user_id: int):
     try:
         db = SessionLocal()
         
-        # Unsettled transactions
         transactions = db.query(SalesTransactionDB).filter(
             SalesTransactionDB.partner_user_id == user_id,
             SalesTransactionDB.is_settled == False
         ).all()
+        
+        partner = db.query(SalesPartnerDB).filter(
+            SalesPartnerDB.user_id == user_id
+        ).first()
+        
+        now = datetime.now()
+        days_remaining = None
+        if partner and partner.debt_deadline:
+            days_remaining = (partner.debt_deadline - now).days
         
         purchases = []
         renewals = []
@@ -4598,13 +5033,14 @@ async def get_sales_settlement(user_id: int):
                 "renewals": renewals,
                 "purchase_count": len(purchases),
                 "renewal_count": len(renewals),
-                "total_amount": total
+                "total_amount": total,
+                "debt_deadline": partner.debt_deadline.isoformat() if partner and partner.debt_deadline else None,
+                "days_remaining": days_remaining
             }
         }
     except Exception as e:
         logger.error(f"Error getting settlement: {str(e)}")
         return {"status": "error", "message": str(e)}
-
 
 # ==============================================
 # SALES REQUEST APPROVE/REJECT API
@@ -4617,6 +5053,7 @@ async def approve_sales_request(request_id: int, request: Request):
         data = await request.json()
         max_purchases = int(data.get("max_purchases", 10))
         discount_percent = int(data.get("discount_percent", 0))
+        debt_days = int(data.get("debt_days", 7))
         
         db = SessionLocal()
         
@@ -4625,6 +5062,8 @@ async def approve_sales_request(request_id: int, request: Request):
             db.close()
             return {"status": "error", "message": "درخواست پیدا نشد"}
         
+        request_user_id = sales_request.user_id
+        
         # Create partner
         new_partner = SalesPartnerDB(
             user_id=sales_request.user_id,
@@ -4632,7 +5071,8 @@ async def approve_sales_request(request_id: int, request: Request):
             max_purchases=max_purchases,
             used_purchases=0,
             discount_percent=discount_percent,
-            is_active=True
+            is_active=True,
+            debt_days=debt_days
         )
         db.add(new_partner)
         
@@ -4642,17 +5082,18 @@ async def approve_sales_request(request_id: int, request: Request):
         db.commit()
         db.close()
         
-        # Notify user via Telegram
+        # ====== Notify user via Telegram ======
         try:
             from api.routes.webhook import application
             await application.bot.send_message(
-                chat_id=sales_request.user_id,
+                chat_id=request_user_id,
                 text="🎉 **درخواست همکاری شما تایید شد!**\n\n"
-                     f"📊 محدودیت: {max_purchases} اکانت\n"
-                     f"🎁 تخفیف: {discount_percent}%\n\n"
-                     "از دکمه 'همکاری در فروش' در منوی اصلی استفاده کنید.",
+                     f"📊 محدودیت خرید: {max_purchases} اکانت\n"
+                     f"🎁 درصد تخفیف: {discount_percent}%\n\n"
+                     "✅ از این پس می‌توانید از دکمه '🤝 همکاری در فروش' در منوی اصلی استفاده کنید.",
                 parse_mode="Markdown"
             )
+            logger.info(f"Approval notification sent to user {request_user_id}")
         except Exception as e:
             logger.error(f"Error notifying partner: {str(e)}")
         
@@ -4660,7 +5101,6 @@ async def approve_sales_request(request_id: int, request: Request):
     except Exception as e:
         logger.error(f"Error approving sales request: {str(e)}")
         return {"status": "error", "message": str(e)}
-
 
 @router.post("/api/sales/requests/{request_id}/reject")
 async def reject_sales_request(request_id: int):
@@ -4672,15 +5112,30 @@ async def reject_sales_request(request_id: int):
             db.close()
             return {"status": "error", "message": "درخواست پیدا نشد"}
         
+        request_user_id = sales_request.user_id
+        
         sales_request.status = "rejected"
         db.commit()
         db.close()
+        
+        try:
+            from api.routes.webhook import application
+            await application.bot.send_message(
+                chat_id=request_user_id,
+                text="❌ **درخواست همکاری شما رد شد.**\n\n"
+                     "متأسفانه درخواست شما مورد تأیید قرار نگرفت.\n"
+                     "در صورت نیاز به اطلاعات بیشتر، با پشتیبانی تماس بگیرید:\n\n"
+                     "🆘 `@shell_man`",  
+                parse_mode="Markdown"
+            )
+            logger.info(f"Rejection notification sent to user {request_user_id}")
+        except Exception as e:
+            logger.error(f"Error notifying partner: {str(e)}")
         
         return {"status": "success", "message": "درخواست رد شد"}
     except Exception as e:
         logger.error(f"Error rejecting sales request: {str(e)}")
         return {"status": "error", "message": str(e)}
-
 
 @router.post("/api/sales/create-account")
 async def create_sales_account(request: Request):
@@ -4819,6 +5274,14 @@ async def create_sales_account(request: Request):
         # Update partner used count
         partner.used_purchases += 1
         
+                # Update debt tracking
+        if partner.debt_started_at is None:
+            partner.debt_started_at = datetime.now()
+            partner.debt_deadline = datetime.now() + timedelta(days=partner.debt_days or 7)
+
+        partner.total_debt = (partner.total_debt or 0) + price
+
+
         # ====== ✅ Save remaining BEFORE commit ======
         remaining_after = partner.max_purchases - partner.used_purchases
         
@@ -4962,6 +5425,15 @@ async def renew_sales_account(request: Request):
         db.add(transaction)
 
         partner.used_purchases += 1
+        
+                # Update debt tracking
+        if partner.debt_started_at is None:
+            partner.debt_started_at = datetime.now()
+            partner.debt_deadline = datetime.now() + timedelta(days=partner.debt_days or 7)
+
+        partner.total_debt = (partner.total_debt or 0) + price
+
+
         remaining_after = partner.max_purchases - partner.used_purchases
 
         db.commit()
@@ -5131,6 +5603,56 @@ async def deactivate_all_partner_accounts(partner_id: int):
 
 
 
+async def deactivate_partner_accounts_by_user_id(user_id: int, db=None):
+    """Internal function to deactivate all accounts of a partner by user_id."""
+    should_close = False
+    if db is None:
+        db = SessionLocal()
+        should_close = True
+
+    try:
+        transactions = db.query(SalesTransactionDB).filter(
+            SalesTransactionDB.partner_user_id == user_id,
+            SalesTransactionDB.is_settled == False
+        ).all()
+
+        for t in transactions:
+            try:
+                service = db.query(ServiceDB).filter(ServiceDB.id == t.service_id).first()
+                if not service:
+                    continue
+
+                panel = db.query(PanelDB).filter(PanelDB.id == service.panel_id).first()
+                if not panel:
+                    continue
+
+                panel_url = panel.url.rstrip("/")
+                panel_api_token = panel.api_token
+
+                headers = {
+                    "accept": "application/json",
+                    "Authorization": f"Bearer {panel_api_token}",
+                    "Content-Type": "application/json"
+                }
+
+                update_data = {
+                    "email": t.client_email,
+                    "enable": False
+                }
+
+                async with httpx.AsyncClient(timeout=30.0, verify=False) as http_client:
+                    await http_client.post(
+                        f"{panel_url}/panel/api/clients/update/{t.client_email}",
+                        headers=headers,
+                        json=update_data
+                    )
+            except Exception as e:
+                logger.error(f"Error deactivating account {t.client_email}: {str(e)}")
+    finally:
+        if should_close and db:
+            db.close()
+
+
 @router.post("/api/sales/settle-payment")
 async def settle_sales_payment(request: Request):
     """Mark all transactions as settled and reset used_purchases."""
@@ -5146,13 +5668,16 @@ async def settle_sales_payment(request: Request):
             SalesTransactionDB.is_settled == False
         ).update({"is_settled": True})
 
-        # Reset used_purchases
+        # Reset partner
         partner = db.query(SalesPartnerDB).filter(
             SalesPartnerDB.user_id == partner_user_id
         ).first()
 
         if partner:
             partner.used_purchases = 0
+            partner.total_debt = 0
+            partner.debt_started_at = None
+            partner.debt_deadline = None
 
         db.commit()
         db.close()
@@ -5161,6 +5686,7 @@ async def settle_sales_payment(request: Request):
     except Exception as e:
         logger.error(f"Error settling payment: {str(e)}")
         return {"status": "error", "message": str(e)}
+
 
 @router.post("/api/sales/daily-reminder")
 async def send_daily_reminder():
@@ -5216,6 +5742,47 @@ async def send_daily_reminder():
         logger.error(f"Error sending reminders: {str(e)}")
         return {"status": "error", "message": str(e)}
 
+@router.post("/api/sales/check-deadlines")
+async def check_debt_deadlines():
+    """Check debt deadlines and deactivate accounts if overdue."""
+    try:
+        db = SessionLocal()
+        tehran_tz = get_timezone()
+        now = datetime.now(tehran_tz)
+
+        # Find partners with overdue debt
+        overdue_partners = db.query(SalesPartnerDB).filter(
+            SalesPartnerDB.debt_deadline != None,
+            SalesPartnerDB.debt_deadline < now,
+            SalesPartnerDB.total_debt > 0,
+            SalesPartnerDB.is_active == True
+        ).all()
+
+        for partner in overdue_partners:
+            # Deactivate all partner accounts
+            await deactivate_partner_accounts_by_user_id(partner.user_id, db)
+
+            # Send message to partner
+            try:
+                from api.routes.webhook import application
+                await application.bot.send_message(
+                    chat_id=partner.user_id,
+                    text="❌ **غیرفعال‌سازی اکانت‌ها**\n\n"
+                         "بدلیل عدم تسویه حساب، اکانت‌های شما غیرفعال شده است.\n"
+                         "با پرداخت صورت حساب، اکانت‌های شما مجدد فعال خواهد شد.",
+                    parse_mode="Markdown"
+                )
+                logger.info(f"Overdue notification sent to partner {partner.user_id}")
+            except Exception as e:
+                logger.error(f"Error notifying partner {partner.user_id}: {str(e)}")
+
+        db.close()
+        return {"status": "success", "message": f"{len(overdue_partners)} همکار غیرفعال شد"}
+    except Exception as e:
+        logger.error(f"Error checking debt deadlines: {str(e)}")
+        return {"status": "error", "message": str(e)}
+
+
 # ==============================================
 # MESSAGE SETTINGS API
 # ==============================================
@@ -5231,7 +5798,8 @@ async def get_message_settings():
             setting = MessageSettingsDB(
                 welcome_message="👋 سلام {first_name} عزیز!\nبه ربات مدیریت سرویس‌ها خوش آمدید.\n\nلطفاً یکی از گزینه‌های زیر را انتخاب کنید:",
                 support_message="🆘 **پشتیبانی**\n\nبرای ارتباط با تیم پشتیبانی:\n💬 تلگرام: @SupportBot\n⏰ ساعات پاسخگویی: ۹ صبح تا ۱۲ شب",
-                help_message="❓ **راهنما**\n\n🔹 **وضعیت من**: نمایش وضعیت\n🔹 **خرید سرویس**: خرید جدید\n🔹 **تمدید سرویس**: تمدید فعلی\n🔹 **اکانت تست**: تست 24 ساعته\n🔹 **زیر مجموعه‌ها**: لینک رفرال\n🔹 **پشتیبانی**: ارتباط با ما"
+                help_message="❓ **راهنما**\n\n🔹 **وضعیت من**: نمایش وضعیت\n🔹 **خرید سرویس**: خرید جدید\n🔹 **تمدید سرویس**: تمدید فعلی\n🔹 **اکانت تست**: تست 24 ساعته\n🔹 **زیر مجموعه‌ها**: لینک رفرال\n🔹 **پشتیبانی**: ارتباط با ما",
+                connection_guide_message="📖 **راهنمای اتصال**\n\n1️⃣ ابتدا سرویس مورد نظر را خریداری کنید\n2️⃣ از بخش 'وضعیت من' اطلاعات اتصال را دریافت کنید\n3️⃣ از نرم‌افزارهای زیر استفاده کنید:\n   • Windows: v2rayN / Nekoray\n   • Android: V2RayNG\n   • iOS: Shadowrocket\n   • macOS: V2RayX / Nekoray\n\n🔗 لینک‌های دانلود:\n• v2rayNG: لینک\n• Shadowrocket: لینک"
             )
             db.add(setting)
             db.commit()
@@ -5240,14 +5808,14 @@ async def get_message_settings():
         result = {
             "welcome_message": setting.welcome_message or "",
             "support_message": setting.support_message or "",
-            "help_message": setting.help_message or ""
+            "help_message": setting.help_message or "",
+            "connection_guide_message": setting.connection_guide_message or ""
         }
         db.close()
         return {"status": "success", "data": result}
     except Exception as e:
         logger.error(f"Error getting message settings: {str(e)}")
         return {"status": "error", "message": str(e)}
-
 
 @router.post("/api/settings/messages")
 async def save_message_settings(request: Request):
@@ -5264,6 +5832,7 @@ async def save_message_settings(request: Request):
         setting.welcome_message = data.get("welcome_message", "")
         setting.support_message = data.get("support_message", "")
         setting.help_message = data.get("help_message", "")
+        setting.connection_guide_message = data.get("connection_guide_message", "")
         setting.updated_at = datetime.now()
         
         db.commit()
@@ -5273,7 +5842,6 @@ async def save_message_settings(request: Request):
     except Exception as e:
         logger.error(f"Error saving message settings: {str(e)}")
         return {"status": "error", "message": str(e)}
-
 
 # ==============================================
 # GIFT ACCOUNT SETTINGS API
@@ -5514,7 +6082,8 @@ async def cleanup_gift_accounts():
             db.close()
             return {"status": "error", "message": "کانال تنظیم نشده"}
 
-        now = datetime.now()
+        tehran_tz = get_timezone()
+        now = datetime.now(tehran_tz)
         expired_accounts = db.query(GiftAccountDB).filter(
             GiftAccountDB.is_deleted == False,
             GiftAccountDB.expires_at <= now
@@ -5569,6 +6138,5 @@ async def cleanup_gift_accounts():
     except Exception as e:
         logger.error(f"Error cleaning gift accounts: {str(e)}")
         return {"status": "error", "message": str(e)}
-
 
 

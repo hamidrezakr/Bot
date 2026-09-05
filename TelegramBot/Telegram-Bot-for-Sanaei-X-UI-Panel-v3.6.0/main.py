@@ -14,7 +14,7 @@ import uvicorn
 import asyncio
 import httpx
 
-from core.config import settings
+from core.config import settings, get_timezone
 from core.logging import logger
 from api.routes import webhook
 
@@ -52,7 +52,8 @@ async def gift_account_scheduler():
             
             
             try:
-                now = datetime.now()
+                tehran_tz = get_timezone()
+                now = datetime.now(tehran_tz)
                 if last_sent_date != now.date():
                     async with httpx.AsyncClient(timeout=10.0) as client:
                         response = await client.get(
@@ -101,7 +102,9 @@ async def weekly_test_account_cleanup():
 async def daily_sales_reminder():
     while True:
         try:
-            now = datetime.now()
+            tehran_tz = get_timezone()
+            now = datetime.now(tehran_tz)
+
             end_of_day = datetime(now.year, now.month, now.day, 23, 59, 0)
             wait_seconds = (end_of_day - now).total_seconds()
             if wait_seconds > 0:
@@ -111,10 +114,18 @@ async def daily_sales_reminder():
                     "http://localhost:8000/admin/api/sales/daily-reminder"
                 )
                 logger.info(f"Daily reminder sent: {response.status_code}")
+                
+                # Check debt deadlines
+                await client.post(
+                    "http://localhost:8000/admin/api/sales/check-deadlines"
+                )
+                logger.info("Debt deadlines checked")
             await asyncio.sleep(86400)
         except Exception as e:
             logger.error(f"Error in daily reminder: {str(e)}")
             await asyncio.sleep(3600)
+
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):

@@ -379,6 +379,26 @@
 		</form>
 	    </div>
 	</div>
+	<!-- Connection Guide Settings -->
+        <div class="col-xl-6">
+            <div class="settings-card">
+                <h5 class="mb-3"><i class="bi bi-book"></i> راهنمای اتصال</h5>
+                <p class="text-muted small">متن دکمه "راهنمای اتصال" در ربات</p>
+
+                <form id="connectionGuideForm">
+                    <div class="mb-3">
+                        <label class="form-label">متن راهنمای اتصال</label>
+                        <textarea class="form-control" id="connectionGuideMessage" rows="10"></textarea>
+                        <small class="form-text">این متن وقتی کاربر دکمه "راهنمای اتصال" را می‌زند نمایش داده می‌شود</small>
+                    </div>
+
+                    <button type="button" class="btn-primary-glass" onclick="saveConnectionGuide()">
+                        <i class="bi bi-save"></i> ذخیره راهنمای اتصال
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
     </div>
     <div class="row g-4 mt-3">
         <!-- Info -->
@@ -472,6 +492,27 @@ function saveMessageSettings() {
     .then(res => {
         if (res.status === 'success') {
             alert('✅ پیام‌ها ذخیره شد');
+        } else {
+            alert('❌ ' + res.message);
+        }
+    });
+}
+
+// ===== Save Connection Guide =====
+function saveConnectionGuide() {
+    const data = {
+        connection_guide_message: document.getElementById('connectionGuideMessage').value
+    };
+
+    fetch('/admin/api/settings/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    })
+    .then(r => r.json())
+    .then(res => {
+        if (res.status === 'success') {
+            alert('✅ راهنمای اتصال ذخیره شد');
         } else {
             alert('❌ ' + res.message);
         }
@@ -734,6 +775,7 @@ document.addEventListener('DOMContentLoaded', function() {  //
     loadReferralSettings();
     loadChannelSettings();
     loadMessageSettings();
+    loadConnectionGuide();
     loadGiftPanels();
 
     document.querySelectorAll('#referralForm input').forEach(el => {

@@ -59,12 +59,14 @@
                                 <th style="width:10%;">محدودیت</th>
                                 <th style="width:10%;">استفاده شده</th>
                                 <th style="width:10%;">تخفیف %</th>
+				<th style="width:12%;">بدهی (تومان)</th>
+				<th style="width:10%;">مهلت</th>
                                 <th style="width:10%;">وضعیت</th>
                                 <th style="width:25%;">عملیات</th>
                             </tr>
                         </thead>
                         <tbody id="partnersBody">
-                            <tr><td colspan="8" class="text-center text-muted py-3">در حال بارگذاری...</td></tr>
+                            <tr><td colspan="10" class="text-center text-muted py-3">در حال بارگذاری...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -91,6 +93,10 @@
                     <label class="form-label">درصد تخفیف</label>
                     <input type="number" class="form-control" id="approveDiscountPercent" value="0" min="0" max="100">
                 </div>
+		<div class="mb-3">
+		    <label class="form-label">مهلت پرداخت (روز)</label>
+		    <input type="number" class="form-control" id="approveDebtDays" value="7" min="1" max="30">
+		</div>
             </div>
             <div class="modal-footer border-secondary border-opacity-10">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">لغو</button>
@@ -118,6 +124,10 @@
                     <label class="form-label">درصد تخفیف</label>
                     <input type="number" class="form-control" id="editDiscountPercent" min="0" max="100">
                 </div>
+		<div class="mb-3">
+		    <label class="form-label">مهلت پرداخت (روز)</label>
+		    <input type="number" class="form-control" id="editDebtDays" min="1" max="30">
+		</div>
             </div>
             <div class="modal-footer border-secondary border-opacity-10">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">لغو</button>
@@ -192,6 +202,18 @@ function loadPartners() {
                         ? '<span class="badge-status healthy">✅ فعال</span>' 
                         : '<span class="badge-status offline">⛔ غیرفعال</span>';
                     
+		    const debtDisplay = (p.total_debt || 0) > 0 
+		        ? `<span style="color:#ff6b6b;font-weight:bold;">${(p.total_debt || 0).toLocaleString('fa-IR')}</span>`
+			: '<span style="color:#a9aed6;">—</span>';
+
+	      	    const deadlineDisplay = p.debt_deadline 
+		        ? (p.days_remaining !== null && p.days_remaining !== undefined
+		 	   ? (p.days_remaining >= 0 
+		              ? `<span style="color:#ffd93d;">${p.days_remaining} روز</span>`
+			      : '<span style="color:#ff6b6b;font-weight:bold;">منقضی شده</span>')
+			   : '<span style="color:#a9aed6;">—</span>')
+			: '<span style="color:#a9aed6;">—</span>';
+			
                     return `
                         <tr>
                             <td style="color:#6a7099;">${(i+1).toLocaleString('fa-IR')}</td>
@@ -200,9 +222,11 @@ function loadPartners() {
                             <td style="color:#d0d4e8;">${p.max_purchases}</td>
                             <td style="color:#a9aed6;">${p.used_purchases}</td>
                             <td style="color:#33e0ff;">${p.discount_percent}%</td>
+			    <td>${debtDisplay}</td>
+			   <td>${deadlineDisplay}</td>
                             <td>${statusBadge}</td>
                             <td>
-                                <button class="btn btn-sm btn-primary me-1" onclick="openEditModal(${p.id}, ${p.max_purchases}, ${p.discount_percent})">
+                                <button class="btn btn-sm btn-primary me-1" onclick="openEditModal(${p.id}, ${p.max_purchases}, ${p.discount_percent}, ${p.debt_days || 7})">
                                     <i class="bi bi-pencil"></i>
                                 </button>
                                 <button class="btn btn-sm btn-warning me-1" onclick="togglePartner(${p.id}, ${!p.is_active})">
@@ -227,6 +251,7 @@ function openApproveModal(requestId) {
     document.getElementById('approveRequestId').value = requestId;
     document.getElementById('approveMaxPurchases').value = 10;
     document.getElementById('approveDiscountPercent').value = 0;
+    document.getElementById('approveDebtDays').value = 7;
     new bootstrap.Modal(document.getElementById('approveModal')).show();
 }
 
@@ -235,15 +260,17 @@ function approveRequest() {
     const requestId = document.getElementById('approveRequestId').value;
     const maxPurchases = document.getElementById('approveMaxPurchases').value;
     const discountPercent = document.getElementById('approveDiscountPercent').value;
-    
+    const debtDays = document.getElementById('approveDebtDays').value;
+
     fetch(`/admin/api/sales/requests/${requestId}/approve`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             max_purchases: parseInt(maxPurchases),
-            discount_percent: parseInt(discountPercent)
+            discount_percent: parseInt(discountPercent),
+            debt_days: parseInt(debtDays)
         })
-    })
+    })    
     .then(r => r.json())
     .then(res => {
         if (res.status === 'success') {
@@ -271,10 +298,11 @@ function rejectRequest(requestId) {
 }
 
 // ===== Open Edit Modal =====
-function openEditModal(partnerId, maxPurchases, discountPercent) {
+function openEditModal(partnerId, maxPurchases, discountPercent, debtDays) {
     document.getElementById('editPartnerId').value = partnerId;
     document.getElementById('editMaxPurchases').value = maxPurchases;
     document.getElementById('editDiscountPercent').value = discountPercent;
+    document.getElementById('editDebtDays').value = debtDays || 7;
     new bootstrap.Modal(document.getElementById('editPartnerModal')).show();
 }
 
@@ -283,13 +311,15 @@ function updatePartner() {
     const partnerId = document.getElementById('editPartnerId').value;
     const maxPurchases = document.getElementById('editMaxPurchases').value;
     const discountPercent = document.getElementById('editDiscountPercent').value;
-    
+    const debtDays = document.getElementById('editDebtDays').value;
+
     fetch(`/admin/api/sales/partners/${partnerId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             max_purchases: parseInt(maxPurchases),
-            discount_percent: parseInt(discountPercent)
+            discount_percent: parseInt(discountPercent),
+            debt_days: parseInt(debtDays)
         })
     })
     .then(r => r.json())
