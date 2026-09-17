@@ -437,30 +437,31 @@ async def get_user_format_settings_helper() -> dict:
 
 
 async def get_last_user_number() -> int:
-    """
-    Get the last used number from settings or receipts.
-    
-    Returns:
-        int: Last used number or default start number
-    """
+    """Get the last used number from settings or receipts."""
     try:
         db = SessionLocal()
         setting = db.query(SettingsDB).filter(SettingsDB.key == "last_user_number").first()
         if setting:
             db.close()
             return setting.value
-        
+
+        # Get user format settings for start_number
+        format_settings = db.query(SettingsDB).filter(SettingsDB.key == "user_format").first()
+        start_number = 1000
+        if format_settings and format_settings.value:
+            start_number = format_settings.value.get("start_number", 1000)
+
         last_receipt = db.query(ReceiptDB).filter(
             ReceiptDB.client_email.isnot(None)
         ).order_by(ReceiptDB.id.desc()).first()
         db.close()
-        
+
         if last_receipt and last_receipt.client_email:
-            match = re.search(r'user_(\d+)_', last_receipt.client_email)
+            match = re.search(r'(\d+)', last_receipt.client_email)
             if match:
                 return int(match.group(1))
-        
-        return 1000
+
+        return start_number
     except Exception as e:
         logger.error(f"Error getting last user number: {str(e)}")
         return 1000
@@ -487,35 +488,29 @@ async def update_last_user_number(number: int) -> None:
         logger.error(f"Error updating last user number: {str(e)}")
 
 async def generate_username(user_id: int) -> str:
-    """
-    Generate a username based on settings.
-    
-    Args:
-        user_id: Telegram user ID (unused but kept for consistency)
-    
-    Returns:
-        str: Generated username
-    """
-    settings = await get_user_format_settings_helper()
-    prefix = settings.get("prefix", "user_")
-    
-    # ====== دریافت آخرین شماره و افزایش ======
+    """Generate a username based on settings."""
+    format_settings = await get_user_format_settings_helper()
+    prefix = format_settings.get("prefix", "user_")
+    start_number = format_settings.get("start_number", 1000)
+
     last_number = await get_last_user_number()
-    next_number = last_number + 1
     
-    # ====== ساخت نام کاربری ======
+    # Use max of last_number and start_number
+    if last_number < start_number:
+        next_number = start_number
+    else:
+        next_number = last_number + 1
+
     username = f"{prefix}{next_number}"
-    
-    if settings.get("use_random_suffix", True):
-        length = settings.get("random_suffix_length", 8)
+
+    if format_settings.get("use_random_suffix", True):
+        length = format_settings.get("random_suffix_length", 8)
         suffix = ''.join(secrets.choice(string.ascii_lowercase + string.digits) for _ in range(length))
         username = f"{username}_{suffix}"
-    
-    # ====== ذخیره شماره جدید ======
-    await update_last_user_number(next_number)
-    
-    return username
 
+    await update_last_user_number(next_number)
+
+    return username
 # ==============================================
 # API ENDPOINTS FOR RECEIPTS
 # ==============================================
@@ -1903,7 +1898,25 @@ async def approve_receipt(receipt_id: int):
                 "Content-Type": "application/json"
             }
 
+            # ====== Step 1: Reset traffic ======
             async with httpx.AsyncClient(timeout=30.0, verify=False) as http_client:
+                reset_url = f"{panel_url}/panel/api/clients/resetTraffic/{username}"
+                reset_resp = await http_client.post(
+                    reset_url,
+                    headers=headers,
+                    data=""
+                )
+                
+                if reset_resp.status_code != 200:
+                    db.close()
+                    return {"status": "error", "message": f"خطا در ریست ترافیک: {reset_resp.text}"}
+                
+                reset_result = reset_resp.json()
+                if not reset_result.get("success"):
+                    db.close()
+                    return {"status": "error", "message": reset_result.get("msg", "خطا در ریست ترافیک")}
+                
+                # ====== Step 2: Update client ======
                 update_resp = await http_client.post(
                     f"{panel_url}/panel/api/clients/update/{username}",
                     headers=headers,
@@ -2022,10 +2035,8 @@ async def approve_receipt(receipt_id: int):
 
             logger.info(f"✅ Creating new user - Panel: {panel_name}, Service: {service_name}")
 
-            # ====== ساخت نام کاربری ======
             email = await generate_username(receipt_user_id)
 
-            # ====== محاسبه حجم ======
             if service_volume and service_volume != "unlimited":
                 try:
                     totalGB = int(service_volume) * 1073741824
@@ -2034,14 +2045,12 @@ async def approve_receipt(receipt_id: int):
             else:
                 totalGB = 0
 
-            # ====== محاسبه تاریخ انقضا ======
             duration_months = service_duration or 1
             expiry_time = int((datetime.now() + timedelta(days=duration_months * 30)).timestamp() * 1000)
             expiry_date = datetime.now() + timedelta(days=duration_months * 30)
 
             limit_ip = 3 if totalGB == 0 else 0
 
-            # ====== دریافت Inbound IDs ======
             inbound_ids = []
             if service_inbound_id:
                 try:
@@ -2053,11 +2062,9 @@ async def approve_receipt(receipt_id: int):
                 db.close()
                 return {"status": "error", "message": "هیچ Inboundی برای این سرویس تعریف نشده است"}
 
-            # ====== ساخت subId ======
             import uuid
             client_sub_id = str(uuid.uuid4())
 
-            # ====== آماده‌سازی داده کاربر ======
             client_data = {
                 "client": {
                     "email": email,
@@ -3247,6 +3254,22 @@ async def process_online_renewal(payment, db):
         }
         
         async with httpx.AsyncClient(timeout=30.0, verify=False) as http_client:
+            # ====== Step 1: Reset traffic ======
+            reset_url = f"{panel_url}/panel/api/clients/resetTraffic/{username}"
+            reset_resp = await http_client.post(
+                reset_url,
+                headers=headers,
+                data=""
+            )
+            
+            if reset_resp.status_code != 200:
+                return {"status": "error", "message": "خطا در ریست ترافیک"}
+            
+            reset_result = reset_resp.json()
+            if not reset_result.get("success"):
+                return {"status": "error", "message": reset_result.get("msg", "خطا در ریست ترافیک")}
+            
+            # ====== Step 2: Update client ======
             response = await http_client.post(
                 f"{panel_url}/panel/api/clients/update/{username}",
                 headers=headers,
@@ -3259,6 +3282,7 @@ async def process_online_renewal(payment, db):
             result = response.json()
             if not result.get("success"):
                 return {"status": "error", "message": result.get("msg", "خطا در تمدید")}
+
         
         client_sub_id = client_data.get('subId', '')
         sub_url = f"{panel_sub_url.rstrip('/')}/{client_sub_id}" if panel_sub_url and client_sub_id else None
@@ -3289,7 +3313,7 @@ async def send_payment_success_message(user_id: int, data: dict, is_renewal: boo
                 f"📧 **یوزرنیم:** `{data.get('client_email')}`\n"
                 f"🖥️ **پنل:** {data.get('panel_name')}\n"
                 f"📊 **حجم:** {data.get('volume')}\n"
-                f"⏰ **مدت:** {data.get('duration')} ماه\n\n"
+                f"⏰ **مدت:** {data.get('duration')} روز\n\n"
                 f"🔗 **لینک سابسکریپشن:**\n{data.get('sub_url')}\n\n"
                 f"💡 برای مشاهده اطلاعات از بخش 'وضعیت من' استفاده کنید."
             )
@@ -5395,6 +5419,24 @@ async def renew_sales_account(request: Request):
         }
 
         async with httpx.AsyncClient(timeout=30.0, verify=False) as http_client:
+            # ====== Step 1: Reset traffic ======
+            reset_url = f"{panel_url}/panel/api/clients/resetTraffic/{username}"
+            reset_resp = await http_client.post(
+                reset_url,
+                headers=headers,
+                data=""
+            )
+            
+            if reset_resp.status_code != 200:
+                db.close()
+                return {"status": "error", "message": "خطا در ریست ترافیک"}
+            
+            reset_result = reset_resp.json()
+            if not reset_result.get("success"):
+                db.close()
+                return {"status": "error", "message": reset_result.get("msg", "خطا در ریست ترافیک")}
+            
+            # ====== Step 2: Update client ======
             response = await http_client.post(
                 f"{panel_url}/panel/api/clients/update/{username}",
                 headers=headers,
@@ -5409,6 +5451,7 @@ async def renew_sales_account(request: Request):
             if not result.get("success"):
                 db.close()
                 return {"status": "error", "message": result.get("msg", "خطا")}
+
 
         # Record transaction
         transaction = SalesTransactionDB(

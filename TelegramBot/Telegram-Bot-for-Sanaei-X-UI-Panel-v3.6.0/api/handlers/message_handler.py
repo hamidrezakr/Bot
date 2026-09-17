@@ -527,6 +527,12 @@ class MessageHandler:
             elif callback_data == "sales_renew":
                 await self.handle_sales_renew(query)
 
+            elif callback_data.startswith("sales_renew_duration_"):
+                parts = callback_data.split("_")
+                panel_id = int(parts[3])
+                duration = int(parts[4])
+                await self._handle_sales_renew_duration_selection(query, panel_id, duration)
+            
             elif callback_data == "sales_status_check":
                 await self.handle_sales_status_check(query)
 
@@ -4254,7 +4260,7 @@ class MessageHandler:
         
 
     async def _show_sales_renew_services(self, update: Update, user_info: dict) -> None:
-        """Show services for sales partner renewal."""
+        """Show services for sales partner renewal - with duration menu."""
         user_id = update.effective_user.id
         username = user_info.get('email')
         client = user_info.get('client', {})
@@ -4266,6 +4272,12 @@ class MessageHandler:
             is_unlimited = total_bytes == 0
 
         panel_id = panel.get('id')
+        if not panel_id:
+            await update.message.reply_text(
+                "❌ اطلاعات پنل یافت نشد.",
+                reply_markup=self.keyboard_builder.create_main_menu()
+            )
+            return
 
         # Get services
         async with httpx.AsyncClient(timeout=10.0) as client_http:
@@ -4297,20 +4309,144 @@ class MessageHandler:
             )
             return
 
-        # Store user info for renewal
+        # Store user info and filtered services
         if not hasattr(self, '_sales_renew_user_info'):
             self._sales_renew_user_info = {}
         self._sales_renew_user_info[user_id] = user_info
 
-        # Build keyboard
+        if not hasattr(self, '_sales_renew_filtered_services'):
+            self._sales_renew_filtered_services = {}
+        self._sales_renew_filtered_services[user_id] = filtered_services
+
+        # Extract durations
+        durations = sorted(set(
+            s.get("duration") for s in filtered_services
+            if s.get("duration") is not None
+        ))
+
+        if not durations:
+            # No duration - show services directly
+            await self._show_sales_renew_services_list(update, user_info, filtered_services)
+            return
+
+        default_duration = durations[0]
+        await self._show_sales_renew_duration_menu(update, user_info, durations, default_duration)
+    
+    async def _handle_sales_renew_duration_selection(self, query, panel_id: int, duration: int) -> None:
+        """Handle sales renewal duration selection."""
+        user_id = query.from_user.id
+
+        if not hasattr(self, '_sales_renew_user_info') or user_id not in self._sales_renew_user_info:
+            await query.edit_message_text(
+                "❌ خطا در اطلاعات کاربر.",
+                reply_markup=self.keyboard_builder.create_main_menu()
+            )
+            return
+
+        user_info = self._sales_renew_user_info[user_id]
+        filtered_services = self._sales_renew_filtered_services.get(user_id, [])
+
+        durations = sorted(set(
+            s.get("duration") for s in filtered_services
+            if s.get("duration") is not None
+        ))
+
+        # Since this is a callback query, we need to use edit_message_text
+        # Convert update to query-like behavior
+        await self._show_sales_renew_duration_menu_callback(query, user_info, durations, duration)
+    
+    async def _show_sales_renew_duration_menu_callback(self, query, user_info: dict, durations: list, selected_duration: int = None) -> None:
+        """Show duration menu for sales partner renewal (callback version)."""
+        user_id = query.from_user.id
+        username = user_info.get('email')
+        panel = user_info.get('panel', {})
+        client = user_info.get('client', {})
+        is_unlimited = client.get('is_unlimited', False)
+
+        if selected_duration is None:
+            selected_duration = durations[0]
+
+        duration_buttons = []
+        for d in durations:
+            if d == selected_duration:
+                button_text = f"🚀 {d} ماه"
+                style = "success"
+            else:
+                button_text = f"📅 {d} ماه"
+                style = None
+            duration_buttons.append(
+                InlineKeyboardButton(
+                    text=button_text,
+                    callback_data=f"sales_renew_duration_{panel.get('id')}_{d}",
+                    style=style
+                )
+            )
+
         keyboard = []
-        for service in filtered_services:
+        for i in range(0, len(duration_buttons), 4):
+            keyboard.append(duration_buttons[i:i+4])
+
+        filtered_services = self._sales_renew_filtered_services.get(user_id, [])
+        services_with_duration = [s for s in filtered_services if s.get("duration") == selected_duration]
+
+        if services_with_duration:
+            for service in services_with_duration:
+                service_name = service.get('name', 'نامشخص')
+                users = service.get('users', 'نامحدود')
+                users_display = users if users and users != "unlimited" else "♾️"
+                price = service.get('price')
+                price_display = f"{int(price):,}" if price else "تماس"
+
+                button_text = f"📦 {service_name} | 👥{users_display} | 💰{price_display}"
+
+                keyboard.append([
+                    InlineKeyboardButton(
+                        text=button_text[:60],
+                        callback_data=f"sales_renew_service_{service['id']}",
+                        style="primary"
+                    )
+                ])
+        else:
+            keyboard.append([
+                InlineKeyboardButton(
+                    text="📭 هیچ سرویسی برای این مدت وجود ندارد",
+                    callback_data="noop",
+                    style="danger"
+                )
+            ])
+
+        keyboard.append([
+            InlineKeyboardButton("🔙 بازگشت", callback_data="sales_partner")
+        ])
+
+        await query.edit_message_text(
+            f"🔄 **تمدید سرویس - همکاری**\n\n"
+            f"👤 کاربر: `{username}`\n"
+            f"📡 پنل: {panel.get('name', 'نامشخص')}\n"
+            f"📊 نوع: {'♾️ نامحدود' if is_unlimited else '📦 حجمی'}\n"
+            f"📅 مدت: {selected_duration} ماه\n\n"
+            f"لطفاً سرویس مورد نظر را انتخاب کنید:",
+            parse_mode="Markdown",
+            reply_markup=InlineKeyboardMarkup(keyboard)
+        )
+        
+    async def _show_sales_renew_services_list(self, update: Update, user_info: dict, services: list) -> None:
+        """Show services list for sales partner renewal without duration filtering."""
+        user_id = update.effective_user.id
+        username = user_info.get('email')
+        panel = user_info.get('panel', {})
+        client = user_info.get('client', {})
+        is_unlimited = client.get('is_unlimited', False)
+
+        keyboard = []
+        for service in services:
             service_name = service.get('name', 'نامشخص')
-            panel_name = service.get('panel_name', 'نامشخص')
+            users = service.get('users', 'نامحدود')
+            users_display = users if users and users != "unlimited" else "♾️"
             price = service.get('price')
             price_display = f"{int(price):,}" if price else "تماس"
 
-            button_text = f"📦 {service_name} | {panel_name} | 💰{price_display}"
+            button_text = f"📦 {service_name} | 👥{users_display} | 💰{price_display}"
 
             keyboard.append([
                 InlineKeyboardButton(
@@ -4327,12 +4463,92 @@ class MessageHandler:
         await update.message.reply_text(
             f"🔄 **تمدید سرویس - همکاری**\n\n"
             f"👤 کاربر: `{username}`\n"
-            f"📡 پنل: {panel.get('name', 'نامشخص')}\n\n"
+            f"📡 پنل: {panel.get('name', 'نامشخص')}\n"
+            f"📊 نوع: {'♾️ نامحدود' if is_unlimited else '📦 حجمی'}\n\n"
             f"لطفاً سرویس مورد نظر را انتخاب کنید:",
             parse_mode="Markdown",
             reply_markup=InlineKeyboardMarkup(keyboard)
         )
+        
+    async def _show_sales_renew_duration_menu(self, update: Update, user_info: dict, durations: list, selected_duration: int = None) -> None:
+        """Show duration menu for sales partner renewal."""
+        user_id = update.effective_user.id
+        username = user_info.get('email')
+        panel = user_info.get('panel', {})
+        client = user_info.get('client', {})
+        is_unlimited = client.get('is_unlimited', False)
+        total_bytes = client.get('totalGB', 0)
+        if 'is_unlimited' not in client:
+            is_unlimited = total_bytes == 0
 
+        if selected_duration is None:
+            selected_duration = durations[0]
+
+        # Build duration buttons
+        duration_buttons = []
+        for d in durations:
+            if d == selected_duration:
+                button_text = f"🚀 {d} ماه"
+                style = "success"
+            else:
+                button_text = f"📅 {d} ماه"
+                style = None
+            duration_buttons.append(
+                InlineKeyboardButton(
+                    text=button_text,
+                    callback_data=f"sales_renew_duration_{panel.get('id')}_{d}",
+                    style=style
+                )
+            )
+
+        keyboard = []
+        for i in range(0, len(duration_buttons), 4):
+            keyboard.append(duration_buttons[i:i+4])
+
+        # Show services with selected duration
+        filtered_services = self._sales_renew_filtered_services.get(user_id, [])
+        services_with_duration = [s for s in filtered_services if s.get("duration") == selected_duration]
+
+        if services_with_duration:
+            for service in services_with_duration:
+                service_name = service.get('name', 'نامشخص')
+                users = service.get('users', 'نامحدود')
+                users_display = users if users and users != "unlimited" else "♾️"
+                price = service.get('price')
+                price_display = f"{int(price):,}" if price else "تماس"
+
+                button_text = f"📦 {service_name} | 👥{users_display} | 💰{price_display}"
+
+                keyboard.append([
+                    InlineKeyboardButton(
+                        text=button_text[:60],
+                        callback_data=f"sales_renew_service_{service['id']}",
+                        style="primary"
+                    )
+                ])
+        else:
+            keyboard.append([
+                InlineKeyboardButton(
+                    text="📭 هیچ سرویسی برای این مدت وجود ندارد",
+                    callback_data="noop",
+                    style="danger"
+                )
+            ])
+
+        keyboard.append([
+            InlineKeyboardButton("🔙 بازگشت", callback_data="sales_partner")
+        ])
+
+        await update.message.reply_text(
+            f"🔄 **تمدید سرویس - همکاری**\n\n"
+            f"👤 کاربر: `{username}`\n"
+            f"📡 پنل: {panel.get('name', 'نامشخص')}\n"
+            f"📊 نوع: {'♾️ نامحدود' if is_unlimited else '📦 حجمی'}\n"
+            f"📅 مدت: {selected_duration} ماه\n\n"
+            f"لطفاً سرویس مورد نظر را انتخاب کنید:",
+            parse_mode="Markdown",
+            reply_markup=InlineKeyboardMarkup(keyboard)
+        )
 
     async def handle_sales_renew_service_selection(self, query, service_id: int) -> None:
         """Handle service selection for sales partner renewal - DIRECT renewal."""
