@@ -100,31 +100,31 @@ async def weekly_test_account_cleanup():
 
 # ===== DAILY SALES REMINDER =====
 async def daily_sales_reminder():
+    last_run_date = None
     while True:
         try:
             tehran_tz = get_timezone()
             now = datetime.now(tehran_tz)
 
-            end_of_day = datetime(now.year, now.month, now.day, 23, 59, 0)
-            wait_seconds = (end_of_day - now).total_seconds()
-            if wait_seconds > 0:
-                await asyncio.sleep(wait_seconds)
-            async with httpx.AsyncClient(timeout=30.0) as client:
-                response = await client.post(
-                    "http://localhost:8000/admin/api/sales/daily-reminder"
-                )
-                logger.info(f"Daily reminder sent: {response.status_code}")
-                
-                # Check debt deadlines
-                await client.post(
-                    "http://localhost:8000/admin/api/sales/check-deadlines"
-                )
-                logger.info("Debt deadlines checked")
-            await asyncio.sleep(86400)
+            # Run once per day at 23:59
+            if now.hour == 23 and now.minute >= 59 and last_run_date != now.date():
+                async with httpx.AsyncClient(timeout=30.0) as client:
+                    response = await client.post(
+                        "http://localhost:8000/admin/api/sales/daily-reminder"
+                    )
+                    logger.info(f"Daily reminder sent: {response.status_code}")
+
+                    # Check debt deadlines
+                    await client.post(
+                        "http://localhost:8000/admin/api/sales/check-deadlines"
+                    )
+                    logger.info("Debt deadlines checked")
+                last_run_date = now.date()
+
         except Exception as e:
             logger.error(f"Error in daily reminder: {str(e)}")
-            await asyncio.sleep(3600)
 
+        await asyncio.sleep(60)  # Check every minute
 
 
 @asynccontextmanager
@@ -149,6 +149,9 @@ async def lifespan(app: FastAPI):
     gift_task = asyncio.create_task(gift_account_scheduler())
     logger.info("🎁 Gift account scheduler started")
 
+    panels_task = asyncio.create_task(panels_auto_refresh())
+    logger.info("🔄 Panels auto refresh task started")
+
     yield
     
 
@@ -164,6 +167,11 @@ async def lifespan(app: FastAPI):
     reminder_task.cancel()
     try:
         await reminder_task
+    except asyncio.CancelledError:
+        pass
+    panels_task.cancel()
+    try:
+        await panels_task
     except asyncio.CancelledError:
         pass
 
@@ -212,6 +220,27 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# ===== PANELS AUTO REFRESH =====
+async def panels_auto_refresh():
+    """Refresh all panels every 5 minutes."""
+    logger.info("🔄 Panels auto refresh task started")
+
+    while True:
+        try:
+            async with httpx.AsyncClient(timeout=60.0) as client:
+                response = await client.post(
+                    "http://localhost:8000/admin/api/panels/refresh-all"
+                )
+                if response.status_code == 200:
+                    result = response.json()
+                    logger.info(f"✅ Panels refreshed: {result.get('message')}")
+                else:
+                    logger.error(f"❌ Panels refresh failed: {response.status_code}")
+        except Exception as e:
+            logger.error(f"❌ Error in panels auto refresh: {str(e)}")
+
+        await asyncio.sleep(300)  # 5 minutes
 
 # Auth middleware
 @app.middleware("http")

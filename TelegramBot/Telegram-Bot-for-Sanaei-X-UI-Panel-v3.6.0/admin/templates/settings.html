@@ -518,6 +518,19 @@ function saveConnectionGuide() {
         }
     });
 }
+
+// ===== Load Connection Guide =====
+function loadConnectionGuide() {
+    fetch('/admin/api/settings/messages')
+        .then(r => r.json())
+        .then(res => {
+            if (res.status === 'success') {
+                const data = res.data;
+                document.getElementById('connectionGuideMessage').value = data.connection_guide_message || '';
+            }
+        });
+}
+
 // ===== Load Channel Settings =====
 function loadChannelSettings() {
     fetch('/admin/api/settings/channel')

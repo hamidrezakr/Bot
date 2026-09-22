@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>در حال انتقال به درگاه پرداخت</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Tahoma, Arial, sans-serif;
+            background: linear-gradient(135deg, #0b0f24 0%, #141a38 100%);
+            color: #f4f3ff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .card {
+            background: rgba(20, 26, 56, 0.9);
+            border: 1px solid #2a3162;
+            border-radius: 16px;
+            padding: 40px 30px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        .icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.7; }
+        }
+        h1 {
+            font-size: 1.3rem;
+            color: #33e0ff;
+            margin-bottom: 15px;
+        }
+        p {
+            color: #a9aed6;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+        .amount {
+            color: #ffb84d;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255, 184, 77, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 184, 77, 0.3);
+        }
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(124, 92, 255, 0.3);
+            border-top-color: #7c5cff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #7c5cff, #5c3fe0);
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-weight: 600;
+            margin-top: 20px;
+            box-shadow: 0 10px 30px -10px rgba(124, 92, 255, 0.6);
+            transition: transform 0.25s ease;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="icon">💳</div>
+        <h1>در حال انتقال به درگاه پرداخت</h1>
+        <p>لطفاً چند لحظه صبر کنید...</p>
+        <div class="spinner"></div>
+        <a href="{{ payment_url }}" class="btn" id="payBtn">ورود به درگاه پرداخت</a>
+        <p style="margin-top:20px;font-size:0.75rem;">اگر به صورت خودکار منتقل نشدید، روی دکمه بالا کلیک کنید.</p>
+    </div>
+    
+    <script>
+        setTimeout(function() {
+            window.location.href = "{{ payment_url }}";
+        }, 1500);
+    </script>
+</body>
+</html>

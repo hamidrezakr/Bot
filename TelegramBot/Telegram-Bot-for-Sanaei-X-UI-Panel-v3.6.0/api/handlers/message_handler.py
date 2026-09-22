@@ -2950,12 +2950,16 @@ class MessageHandler:
             )
             
         payment_url = payment_result["data"]["payment_url"]
+        authority = payment_result["data"]["authority"]
+        
+        # Use review page instead of direct gateway link
+        review_url = f"https://bot.spacegate.ir/admin/payment/review/{authority}"
 
         keyboard = [
             [
                 InlineKeyboardButton(
                     text="💳 رفتن به درگاه پرداخت",
-                    url=payment_url
+                    url=review_url
                 )
             ],
             [
@@ -4922,44 +4926,63 @@ class MessageHandler:
     async def handle_sales_settle_payment(self, query, amount: int) -> None:
         """Handle settlement payment."""
         user_id = query.from_user.id
+
+        try:
+            # Create payment
+            async with httpx.AsyncClient(timeout=30.0) as client:
+                response = await client.post(
+                    f"{settings.API_BASE_URL}/admin/api/payment/create",
+                    json={
+                        "user_id": user_id,
+                        "service_id": 0,
+                        "amount": amount,
+                        "payment_type": "settlement"
+                    }
+                )
+                payment_result = response.json()
+
+            if payment_result.get("status") != "success":
+                await query.edit_message_text(
+                    f"❌ {payment_result.get('message', 'خطا در ساخت پرداخت')}",
+                    reply_markup=InlineKeyboardMarkup([
+                        [InlineKeyboardButton("🔙 بازگشت", callback_data="sales_partner")]
+                    ])
+                )
+                return
+
+            payment_url = payment_result["data"]["payment_url"]
+            authority = payment_result["data"]["authority"]
         
-        # Create payment
-        async with httpx.AsyncClient(timeout=30.0) as client:
-            response = await client.post(
-                f"{settings.API_BASE_URL}/admin/api/payment/create",
-                json={
-                    "user_id": user_id,
-                    "service_id": 0,  # settlement
-                    "amount": amount,
-                    "payment_type": "settlement"
-                }
-            )
-            payment_result = response.json()
-        
-        if payment_result.get("status") != "success":
-            await query.edit_message_text(
-                f"❌ {payment_result.get('message', 'خطا در ساخت پرداخت')}",
-                reply_markup=InlineKeyboardMarkup([
-                    [InlineKeyboardButton("🔙 بازگشت", callback_data="sales_partner")]
-                ])
-            )
-            return
-        
-        payment_url = payment_result["data"]["payment_url"]
-        
-        keyboard = [
-            [
-                InlineKeyboardButton("💳 رفتن به درگاه پرداخت", url=payment_url)
-            ],
-            [
-                InlineKeyboardButton("🔙 بازگشت", callback_data="sales_partner")
+            # Use review page instead of direct gateway link
+            review_url = f"https://bot.spacegate.ir/admin/payment/review/{authority}"
+
+            keyboard = [
+                [
+                    InlineKeyboardButton("💳 رفتن به درگاه پرداخت", url=review_url)
+                ],
+                [
+                    InlineKeyboardButton("🔙 بازگشت", callback_data="sales_partner")
+                ]
             ]
-        ]
-        
-        await query.edit_message_text(
-            f"💳 **پرداخت تسویه**\n\n"
-            f"مبلغ: {amount:,} تومان\n\n"
-            f"پس از پرداخت، محدودیت شما بازنشانی می‌شود.",
-            parse_mode="Markdown",
-            reply_markup=InlineKeyboardMarkup(keyboard)
-        )
+
+            await query.edit_message_text(
+                f"💳 **پرداخت تسویه**\n\n"
+                f"مبلغ: {amount:,} تومان\n\n"
+                f"پس از پرداخت، محدودیت شما بازنشانی می‌شود.",
+                parse_mode="Markdown",
+                reply_markup=InlineKeyboardMarkup(keyboard)
+            )
+
+        except Exception as e:
+            import traceback
+            logger.error(f"Error creating payment: {type(e).__name__}: {str(e)}")
+            logger.error(traceback.format_exc())
+            try:
+                await query.edit_message_text(
+                    f"❌ خطا در ساخت پرداخت: {str(e)}",
+                    reply_markup=InlineKeyboardMarkup([
+                        [InlineKeyboardButton("🔙 بازگشت", callback_data="sales_partner")]
+                    ])
+                )
+            except:
+                pass

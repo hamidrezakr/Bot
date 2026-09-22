@@ -48,6 +48,9 @@ class Settings(BaseSettings):
     # Timezone
     TIMEZONE: str = os.getenv("TIMEZONE", "Asia/Tehran")
 
+    # Zarinpal Custom Subdomain
+    ZARINPAL_SUBDOMAIN: str = os.getenv("ZARINPAL_SUBDOMAIN", "example.com")
+
     class Config:
         env_file = ".env"
         case_sensitive = True

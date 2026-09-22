@@ -8,17 +8,22 @@ services:
     env_file:
       - .env
     volumes:
-      # Database file
       - /data/telegram_bot.db:/app/telegram_bot.db
-      # Receipts directory
       - /data/receipts:/app/receipts
-      # Broadcast photos directory
       - /data/broadcast_photos:/app/broadcast_photos
-      # Log file
       - /data/bot.log:/app/bot.log
     environment:
       - HOST=0.0.0.0
       - PORT=8000
+      - RES_OPTIONS=single-request-reopen
+    # Disable IPv6 in container
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=1
+      - net.ipv6.conf.default.disable_ipv6=1
+    # DNS servers (NEW)
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
     networks:
       - bot-network
     healthcheck:
@@ -36,4 +41,3 @@ services:
 networks:
   bot-network:
     driver: bridge
-

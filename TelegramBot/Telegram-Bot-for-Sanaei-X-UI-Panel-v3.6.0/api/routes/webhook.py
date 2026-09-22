@@ -1,6 +1,14 @@
 """
 Webhook route handler for Telegram updates.
 """
+import socket
+
+# Force IPv4 only (fixes Telegram timeout and IPv6 issues)
+_original_getaddrinfo = socket.getaddrinfo
+def _getaddrinfo_ipv4_only(host, port, family=0, type=0, proto=0, flags=0):
+    return _original_getaddrinfo(host, port, socket.AF_INET, type, proto, flags)
+
+socket.getaddrinfo = _getaddrinfo_ipv4_only
 
 from fastapi import APIRouter, Request, Response
 from telegram import Update

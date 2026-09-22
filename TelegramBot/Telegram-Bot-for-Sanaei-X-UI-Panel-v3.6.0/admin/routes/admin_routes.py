@@ -19,6 +19,7 @@ from core.logging import logger
 from services.user_service import UserService
 from services.subscription_service import SubscriptionService
 from core.config import settings, get_timezone
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 # ==============================================
 # Database Setup
@@ -28,6 +29,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from pydantic import BaseModel, Field
 from datetime import datetime, timedelta
+from fastapi.responses import HTMLResponse
 
 # Setup templates
 templates_dir = Path(__file__).parent.parent / "templates"
@@ -404,6 +406,118 @@ class GiftAccountDB(Base):
     deleted_at = Column(DateTime, nullable=True)
 
 
+def escape_markdown(text: str) -> str:
+    """Escape Markdown special characters in text, except * (for bold)."""
+    if not text:
+        return text
+
+    # Escape all special chars except * (asterisk)
+    special_chars = ['_']
+
+    escaped = text
+    for char in special_chars:
+        escaped = escaped.replace(char, '\\' + char)
+
+    return escaped
+
+async def set_partner_account_state(
+    client_email: str,
+    panel_url: str,
+    panel_api_token: str,
+    enable: bool
+) -> dict:
+    """
+    Set account enable state while preserving all other settings.
+    Reads current data from panel and updates only 'enable' field.
+    """
+    headers = {
+        "accept": "application/json",
+        "Authorization": f"Bearer {panel_api_token}",
+        "Content-Type": "application/json"
+    }
+    
+    try:
+        async with httpx.AsyncClient(timeout=30.0, verify=False) as client:
+            # Step 1: Get inbounds list from panel
+            resp = await client.get(
+                f"{panel_url}/panel/api/inbounds/list",
+                headers=headers
+            )
+            
+            if resp.status_code != 200:
+                return {"success": False, "message": f"خطا در دریافت اطلاعات پنل: {resp.status_code}"}
+            
+            data = resp.json()
+            if not data.get("success") or not data.get("obj"):
+                return {"success": False, "message": "پاسخ نامعتبر از پنل"}
+            
+            # Step 2: Find the client in inbounds
+            client_info = None
+            found_inbound_id = None
+            
+            for inbound in data.get("obj", []):
+                # Parse settings to find client
+                settings_str = inbound.get("settings", "{}")
+                try:
+                    settings_data = json.loads(settings_str) if isinstance(settings_str, str) else settings_str
+                    for client_obj in settings_data.get("clients", []):
+                        if client_obj.get("email") == client_email:
+                            client_info = client_obj
+                            found_inbound_id = inbound.get("id")
+                            break
+                except Exception as e:
+                    logger.warning(f"Error parsing settings: {e}")
+                
+                if client_info:
+                    break
+            
+            if not client_info:
+                return {"success": False, "message": f"کاربر {client_email} در پنل پیدا نشد"}
+            
+            # Step 3: Build update data with ALL original values
+            update_data = {
+                "email": client_email,
+                "enable": enable,
+                "totalGB": client_info.get("totalGB", 0),
+                "expiryTime": client_info.get("expiryTime", 0),
+                "limitIp": client_info.get("limitIp", 0),
+                "tgId": client_info.get("tgId", 0),
+                "subId": client_info.get("subId", ""),
+                "flow": client_info.get("flow", ""),
+                "fingerprint": client_info.get("fingerprint", ""),
+                "alterId": client_info.get("alterId", 0),
+                "id": client_info.get("id", ""),
+                "password": client_info.get("password", ""),
+                "method": client_info.get("method", ""),
+                "security": client_info.get("security", "")
+            }
+            
+            # Remove empty values to avoid issues
+            update_data = {k: v for k, v in update_data.items() if v != "" or k in ["email", "enable"]}
+            
+            logger.info(f"Updating {client_email}: enable={enable}, totalGB={update_data.get('totalGB')}, expiryTime={update_data.get('expiryTime')}")
+            
+            # Step 4: Send update request
+            resp = await client.post(
+                f"{panel_url}/panel/api/clients/update/{client_email}",
+                headers=headers,
+                json=update_data
+            )
+            
+            if resp.status_code != 200:
+                return {"success": False, "message": f"خطا در به‌روزرسانی: {resp.status_code}"}
+            
+            result = resp.json()
+            if not result.get("success"):
+                return {"success": False, "message": result.get("msg", "خطا در به‌روزرسانی")}
+            
+            return {"success": True, "message": "موفق"}
+    
+    except Exception as e:
+        logger.error(f"Error in set_partner_account_state: {str(e)}")
+        return {"success": False, "message": str(e)}
+
+
 async def get_user_format_settings_helper() -> dict:
     """
     Get user format settings from database.
@@ -514,6 +628,40 @@ async def generate_username(user_id: int) -> str:
 # ==============================================
 # API ENDPOINTS FOR RECEIPTS
 # ==============================================
+
+@router.get("/payment/review/{authority}", response_class=HTMLResponse)
+async def payment_review_page(request: Request, authority: str):
+    """Review page before entering payment gateway."""
+    try:
+        db = SessionLocal()
+
+        # Find payment by authority
+        payment = db.query(PaymentDB).filter(PaymentDB.authority == authority).first()
+        if not payment:
+            db.close()
+            return HTMLResponse(content="<h1>پرداخت یافت نشد</h1>", status_code=404)
+
+        payment_setting = db.query(PaymentSettingsDB).first()
+        if not payment_setting:
+            db.close()
+            return HTMLResponse(content="<h1>تنظیمات پرداخت یافت نشد</h1>", status_code=500)
+
+        db.close()
+
+        # Build payment URL
+        if payment_setting.sandbox_mode:
+            payment_url = f"https://sandbox.zarinpal.com/pg/StartPay/{authority}"
+        else:
+            payment_url = f"https://payment.zarinpal.com/pg/StartPay/{authority}"
+
+        return templates.TemplateResponse("payment_review.html", {
+            "request": request,
+            "authority": authority,
+            "payment_url": payment_url
+        })
+    except Exception as e:
+        logger.error(f"Error in payment_review_page: {str(e)}")
+        return HTMLResponse(content=f"<h1>خطا: {str(e)}</h1>", status_code=500)
 
 @router.get("/api/receipts")
 async def get_receipts(archived: bool = False):
@@ -1278,6 +1426,103 @@ async def check_panel_status(panel_id: int):
     except Exception as e:
         logger.error(f"Error checking panel status: {str(e)}")
         return {"status": "error", "message": str(e)}
+
+
+@router.post("/api/panels/refresh-all")
+async def refresh_all_panels():
+    """Refresh all panels information automatically."""
+    try:
+        db = SessionLocal()
+        panels = db.query(PanelDB).all()
+
+        if not panels:
+            db.close()
+            return {"status": "success", "message": "هیچ پنلی ثبت نشده", "data": {"refreshed": 0}}
+
+        refreshed_count = 0
+
+        for panel in panels:
+            try:
+                url = panel.url.rstrip("/")
+                headers = {
+                    "accept": "application/json",
+                    "Authorization": f"Bearer {panel.api_token}"
+                }
+
+                status_data = {}
+                clients_data = []
+
+                async with httpx.AsyncClient(timeout=15.0, verify=False) as client:
+                    # 1. Get server status
+                    try:
+                        resp = await client.get(f"{url}/panel/api/server/status", headers=headers)
+                        if resp.status_code == 200:
+                            status_data = resp.json()
+                    except Exception as e:
+                        logger.warning(f"Could not fetch status for {panel.name}: {str(e)}")
+
+                    # 2. Get clients
+                    try:
+                        resp = await client.get(f"{url}/panel/api/inbounds/list", headers=headers)
+                        if resp.status_code == 200:
+                            data = resp.json()
+                            if data.get("success") and data.get("obj"):
+                                for inbound in data.get("obj", []):
+                                    clients = inbound.get("clientStats", [])
+                                    for client in clients:
+                                        if client.get("enable"):
+                                            clients_data.append(client)
+                    except Exception as e:
+                        logger.warning(f"Could not fetch clients for {panel.name}: {str(e)}")
+
+                # Update panel status
+                state = status_data.get("state", "").lower()
+
+                if state == "running":
+                    panel.status = "running"
+                elif state == "stopped":
+                    panel.status = "stopped"
+                elif state == "offline":
+                    panel.status = "offline"
+                else:
+                    if status_data:
+                        panel.status = "running"
+                    else:
+                        panel.status = "offline"
+
+                panel.version = status_data.get("panelVersion")
+                panel.total_sent = status_data.get("netTraffic", {}).get("sent", 0)
+                panel.total_recv = status_data.get("netTraffic", {}).get("recv", 0)
+                panel.users_count = len(clients_data)
+                panel.last_check = datetime.now()
+
+                # Update is_full
+                if panel.capacity > 0:
+                    panel.is_full = panel.users_count >= panel.capacity
+                else:
+                    panel.is_full = False
+
+                refreshed_count += 1
+
+            except Exception as e:
+                logger.error(f"Error refreshing panel {panel.name}: {str(e)}")
+                panel.status = "offline"
+                panel.last_check = datetime.now()
+
+        db.commit()
+        db.close()
+
+        logger.info(f"✅ Refreshed {refreshed_count} panels")
+
+        return {
+            "status": "success",
+            "message": f"{refreshed_count} پنل به‌روزرسانی شد",
+            "data": {"refreshed": refreshed_count}
+        }
+    except Exception as e:
+        logger.error(f"Error refreshing all panels: {str(e)}")
+        return {"status": "error", "message": str(e)}
+
 
 
 @router.post("/api/panels/fetch-inbounds")
@@ -2930,14 +3175,14 @@ async def payment_callback(request: Request):
     """Payment callback from Zarinpal."""
     authority = request.query_params.get("Authority") or request.query_params.get("authority")
     status = request.query_params.get("Status") or request.query_params.get("status")
-    
+
     logger.info(f"🔔 Payment callback received! Authority: {authority}, Status: {status}")
-    
+
     if status == "OK" and authority:
         try:
             db = SessionLocal()
-            
-            # پیدا کردن پرداخت
+
+            # Find payment
             payment = db.query(PaymentDB).filter(PaymentDB.authority == authority).first()
             if not payment:
                 db.close()
@@ -2946,7 +3191,7 @@ async def payment_callback(request: Request):
                     "success": False,
                     "message": "پرداخت یافت نشد"
                 })
-            
+
             payment_setting = db.query(PaymentSettingsDB).first()
             if not payment_setting:
                 db.close()
@@ -2955,19 +3200,19 @@ async def payment_callback(request: Request):
                     "success": False,
                     "message": "تنظیمات پرداخت یافت نشد"
                 })
-            
-            # انتخاب سرور verify
+
+            # Select verify server
             if payment_setting.sandbox_mode:
                 verify_url = "https://sandbox.zarinpal.com/pg/v4/payment/verify.json"
             else:
                 verify_url = "https://api.zarinpal.com/pg/v4/payment/verify.json"
-            
+
             verify_data = {
                 "merchant_id": payment_setting.merchant_id,
                 "amount": payment.amount * 10,
                 "authority": authority
             }
-            
+
             async with httpx.AsyncClient(timeout=30.0) as client:
                 verify_response = await client.post(
                     verify_url,
@@ -2976,10 +3221,10 @@ async def payment_callback(request: Request):
                 )
                 verify_result = verify_response.json()
                 logger.info(f"Verify result: {verify_result}")
-                
+
                 if verify_result.get("data") and verify_result["data"].get("code") == 100:
                     ref_id = str(verify_result["data"].get("ref_id"))
-                    
+
                     if payment.payment_type == "settlement":
                         # Reset partner used_purchases
                         try:
@@ -2990,18 +3235,42 @@ async def payment_callback(request: Request):
                                 )
                             partner = db.query(SalesPartnerDB).filter(SalesPartnerDB.user_id == payment.user_id).first()
                             if partner:
-                                await activate_all_partner_accounts(partner.id)
+                                try:
+                                    async with httpx.AsyncClient(timeout=60.0) as activate_client:
+                                        await activate_client.post(
+                                            f"http://localhost:8000/admin/api/sales/partners/{partner.id}/activate-all"
+                                        )
+                                except Exception as activate_error:
+                                    logger.error(f"Error activating partner accounts: {str(activate_error)}")
+
                             logger.info(f"✅ Settlement completed for partner {payment.user_id}")
+                            
+                            # Send success message to partner
+                            try:
+                                from api.routes.webhook import application
+                                await application.bot.send_message(
+                                    chat_id=payment.user_id,
+                                    text="✅ **تسویه حساب با موفقیت انجام شد!**\n\n"
+                                         f"💰 **مبلغ پرداخت شده:** {payment.amount:,} تومان\n"
+                                         f"🧾 **شماره پیگیری:** `{ref_id}`\n\n"
+                                         "✅ اکانت‌های شما مجدداً فعال شدند.\n"
+                                         "📊 محدودیت خرید شما بازنشانی شد.\n\n"
+                                         "💡 از این پس می‌توانید خرید و تمدید جدید انجام دهید.",
+                                    parse_mode="Markdown"
+                                )
+                                logger.info(f"Settlement success message sent to partner {payment.user_id}")
+                            except Exception as msg_error:
+                                logger.error(f"Error sending settlement message: {str(msg_error)}")
                         except Exception as settle_error:
                             logger.error(f"Error settling payment: {str(settle_error)}")
-                        
+
                         # Update payment status
                         payment.status = "paid"
                         payment.ref_id = ref_id
                         payment.paid_at = datetime.now()
                         db.commit()
                         db.close()
-                        
+
                         return templates.TemplateResponse("payment_result.html", {
                             "request": request,
                             "success": True,
@@ -3010,14 +3279,14 @@ async def payment_callback(request: Request):
                             "ref_id": ref_id,
                             "is_renewal": False
                         })
-                    
+
                     if payment.is_renewal:
                         # ====== RENEWAL PROCESS ======
                         result = await process_online_renewal(payment, db)
                     else:
                         # ====== NEW PURCHASE PROCESS ======
                         result = await process_online_purchase(payment, db)
-                    
+
                     if result.get("status") == "success":
                         payment.status = "paid"
                         payment.ref_id = ref_id
@@ -3025,7 +3294,7 @@ async def payment_callback(request: Request):
                         payment.client_email = result.get("data", {}).get("client_email")
                         payment.client_sub_id = result.get("data", {}).get("client_sub_id")
                         db.commit()
-                        
+
                         try:
                             async with httpx.AsyncClient(timeout=10.0) as client:
                                 await client.post(
@@ -3039,12 +3308,10 @@ async def payment_callback(request: Request):
                         except Exception as e:
                             logger.error(f"Error applying referral discounts: {str(e)}")
 
-
-
                         await send_payment_success_message(payment.user_id, result.get("data", {}), payment.is_renewal)
-                        
+
                         db.close()
-                        
+
                         return templates.TemplateResponse("payment_result.html", {
                             "request": request,
                             "success": True,
@@ -3082,7 +3349,6 @@ async def payment_callback(request: Request):
             "success": False,
             "message": "پرداخت ناموفق بود"
         })
-
 
 
 # ==============================================
@@ -4921,16 +5187,16 @@ async def update_sales_partner(partner_id: int, request: Request):
             partner.is_active = data["is_active"]
         if "debt_days" in data:
             partner.debt_days = int(data["debt_days"])
+            if partner.debt_started_at and partner.total_debt > 0:
+                partner.debt_deadline = partner.debt_started_at + timedelta(days=partner.debt_days)
         
         db.commit()
         db.close()
         
         return {"status": "success", "message": "همکار با موفقیت ویرایش شد"}
-    except Exception as e:
+    except Exception as e:                          
         logger.error(f"Error updating sales partner: {str(e)}")
         return {"status": "error", "message": str(e)}
-
-
 
 @router.delete("/api/sales/partners/{partner_id}")
 async def delete_sales_partner(partner_id: int):
@@ -5503,65 +5769,49 @@ async def toggle_sales_account(request: Request):
         partner_user_id = data.get("partner_user_id")
         client_email = data.get("client_email")
         enable = data.get("enable", True)
-        
+
         # Check ownership
         db = SessionLocal()
         transaction = db.query(SalesTransactionDB).filter(
             SalesTransactionDB.partner_user_id == partner_user_id,
             SalesTransactionDB.client_email == client_email
         ).first()
-        
+
         if not transaction:
             db.close()
             return {"status": "error", "message": "این کاربر در لیست شما نیست"}
-        
+
         # Find panel
         service = db.query(ServiceDB).filter(ServiceDB.id == transaction.service_id).first()
         if not service:
             db.close()
             return {"status": "error", "message": "سرویس پیدا نشد"}
-        
+
         panel = db.query(PanelDB).filter(PanelDB.id == service.panel_id).first()
         if not panel:
             db.close()
             return {"status": "error", "message": "پنل پیدا نشد"}
-        
+
         panel_url = panel.url.rstrip("/")
         panel_api_token = panel.api_token
-        
+
         db.close()
-        
-        # ====== ✅ Fix: Include email in update_data ======
-        headers = {
-            "accept": "application/json",
-            "Authorization": f"Bearer {panel_api_token}",
-            "Content-Type": "application/json"
-        }
-        
-        update_data = {
-            "email": client_email,  # ✅ email required
-            "enable": enable
-        }
-        
-        async with httpx.AsyncClient(timeout=30.0, verify=False) as http_client:
-            response = await http_client.post(
-                f"{panel_url}/panel/api/clients/update/{client_email}",
-                headers=headers,
-                json=update_data
-            )
-            
-            if response.status_code != 200:
-                return {"status": "error", "message": f"خطا در بروزرسانی: {response.text}"}
-            
-            result = response.json()
-            if not result.get("success"):
-                return {"status": "error", "message": result.get("msg", "خطا")}
-        
+
+        # Use helper function to preserve all settings
+        result = await set_partner_account_state(
+            client_email=client_email,
+            panel_url=panel_url,
+            panel_api_token=panel_api_token,
+            enable=enable
+        )
+
+        if not result.get("success"):
+            return {"status": "error", "message": result.get("message", "خطا")}
+
         return {"status": "success", "message": "عملیات موفق"}
     except Exception as e:
         logger.error(f"Error toggling account: {str(e)}")
         return {"status": "error", "message": str(e)}
-
 
 @router.post("/api/sales/partners/{partner_id}/deactivate-all")
 async def deactivate_all_partner_accounts(partner_id: int):
@@ -5589,42 +5839,33 @@ async def deactivate_all_partner_accounts(partner_id: int):
                 # Find panel
                 service = db.query(ServiceDB).filter(ServiceDB.id == t.service_id).first()
                 if not service:
+                    failed_count += 1
+                    results.append({"email": t.client_email, "status": "error", "error": "service_not_found"})
                     continue
 
                 panel = db.query(PanelDB).filter(PanelDB.id == service.panel_id).first()
                 if not panel:
+                    failed_count += 1
+                    results.append({"email": t.client_email, "status": "error", "error": "panel_not_found"})
                     continue
 
                 panel_url = panel.url.rstrip("/")
                 panel_api_token = panel.api_token
 
-                headers = {
-                    "accept": "application/json",
-                    "Authorization": f"Bearer {panel_api_token}",
-                    "Content-Type": "application/json"
-                }
+                # Use helper function to preserve all settings
+                result = await set_partner_account_state(
+                    client_email=t.client_email,
+                    panel_url=panel_url,
+                    panel_api_token=panel_api_token,
+                    enable=False
+                )
 
-                update_data = {
-                    "email": t.client_email,
-                    "enable": False
-                }
-
-                async with httpx.AsyncClient(timeout=30.0, verify=False) as http_client:
-                    response = await http_client.post(
-                        f"{panel_url}/panel/api/clients/update/{t.client_email}",
-                        headers=headers,
-                        json=update_data
-                    )
-
-                    if response.status_code == 200:
-                        result = response.json()
-                        if result.get("success"):
-                            success_count += 1
-                            results.append({"email": t.client_email, "status": "success"})
-                        else:
-                            failed_count += 1
-                    else:
-                        failed_count += 1
+                if result.get("success"):
+                    success_count += 1
+                    results.append({"email": t.client_email, "status": "success"})
+                else:
+                    failed_count += 1
+                    results.append({"email": t.client_email, "status": "error", "error": result.get("message")})
             except Exception as e:
                 failed_count += 1
                 results.append({"email": t.client_email, "status": "error", "error": str(e)})
@@ -5644,6 +5885,236 @@ async def deactivate_all_partner_accounts(partner_id: int):
         logger.error(f"Error deactivating partner accounts: {str(e)}")
         return {"status": "error", "message": str(e)}
 
+
+@router.post("/api/sales/partners/{partner_id}/activate-all")
+async def activate_all_partner_accounts(partner_id: int):
+    """Activate all accounts of a partner after settlement."""
+    try:
+        db = SessionLocal()
+        partner = db.query(SalesPartnerDB).filter(SalesPartnerDB.id == partner_id).first()
+
+        if not partner:
+            db.close()
+            return {"status": "error", "message": "همکار پیدا نشد"}
+
+        # Get all settled transactions (recently settled)
+        transactions = db.query(SalesTransactionDB).filter(
+            SalesTransactionDB.partner_user_id == partner.user_id,
+            SalesTransactionDB.is_settled == True
+        ).all()
+
+        results = []
+        success_count = 0
+        failed_count = 0
+
+        for t in transactions:
+            try:
+                service = db.query(ServiceDB).filter(ServiceDB.id == t.service_id).first()
+                if not service:
+                    failed_count += 1
+                    results.append({"email": t.client_email, "status": "error", "error": "service_not_found"})
+                    continue
+
+                panel = db.query(PanelDB).filter(PanelDB.id == service.panel_id).first()
+                if not panel:
+                    failed_count += 1
+                    results.append({"email": t.client_email, "status": "error", "error": "panel_not_found"})
+                    continue
+
+                panel_url = panel.url.rstrip("/")
+                panel_api_token = panel.api_token
+
+                # Use helper function to preserve all settings
+                result = await set_partner_account_state(
+                    client_email=t.client_email,
+                    panel_url=panel_url,
+                    panel_api_token=panel_api_token,
+                    enable=True
+                )
+
+                if result.get("success"):
+                    success_count += 1
+                    results.append({"email": t.client_email, "status": "success"})
+                else:
+                    failed_count += 1
+                    results.append({"email": t.client_email, "status": "error", "error": result.get("message")})
+            except Exception as e:
+                failed_count += 1
+                results.append({"email": t.client_email, "status": "error", "error": str(e)})
+
+        db.close()
+
+        return {
+            "status": "success",
+            "message": f"{success_count} اکانت فعال شد، {failed_count} خطا",
+            "data": {
+                "success_count": success_count,
+                "failed_count": failed_count,
+                "results": results
+            }
+        }
+    except Exception as e:
+        logger.error(f"Error activating partner accounts: {str(e)}")
+        return {"status": "error", "message": str(e)}
+
+
+@router.get("/api/sales/partners/{partner_id}/clients")
+async def get_partner_clients(partner_id: int):
+    """Get all clients of a sales partner with live panel data."""
+    try:
+        db = SessionLocal()
+        
+        # Get partner
+        partner = db.query(SalesPartnerDB).filter(SalesPartnerDB.id == partner_id).first()
+        if not partner:
+            db.close()
+            return {"status": "error", "message": "همکار پیدا نشد"}
+        
+        # Get all transactions of this partner
+        transactions = db.query(SalesTransactionDB).filter(
+            SalesTransactionDB.partner_user_id == partner.user_id
+        ).order_by(SalesTransactionDB.created_at.desc()).all()
+        
+        if not transactions:
+            db.close()
+            return {"status": "success", "data": []}
+        
+        # Cache panels to avoid repeated DB queries
+        panels_cache = {}
+        
+        # Build clients list with live data
+        clients = []
+        
+        for t in transactions:
+            client_info = {
+                "id": t.id,
+                "client_email": t.client_email,
+                "service_name": t.service_name,
+                "price": t.price,
+                "transaction_type": t.transaction_type,
+                "is_settled": t.is_settled,
+                "created_at": t.created_at.isoformat() if t.created_at else None,
+                "volume_gb": None,
+                "used_gb": None,
+                "remaining_gb": None,
+                "expiry_time": None,
+                "expiry_date": None,
+                "enable": None,
+                "status": "unknown",
+                "total_gb_bytes": 0,
+                "used_bytes": 0
+            }
+            
+            try:
+                # Get service to find panel
+                service = None
+                if t.service_id:
+                    service = db.query(ServiceDB).filter(ServiceDB.id == t.service_id).first()
+                
+                if not service:
+                    client_info["status"] = "deleted"
+                    clients.append(client_info)
+                    continue
+                
+                panel = None
+                if service.panel_id:
+                    if service.panel_id in panels_cache:
+                        panel = panels_cache[service.panel_id]
+                    else:
+                        panel = db.query(PanelDB).filter(PanelDB.id == service.panel_id).first()
+                        panels_cache[service.panel_id] = panel
+                
+                if not panel:
+                    client_info["status"] = "deleted"
+                    clients.append(client_info)
+                    continue
+                
+                panel_url = panel.url.rstrip("/")
+                panel_api_token = panel.api_token
+                
+                headers = {
+                    "accept": "application/json",
+                    "Authorization": f"Bearer {panel_api_token}"
+                }
+                
+                # Fetch live data from panel
+                async with httpx.AsyncClient(timeout=15.0, verify=False) as http_client:
+                    resp = await http_client.get(
+                        f"{panel_url}/panel/api/inbounds/list",
+                        headers=headers
+                    )
+                    
+                    if resp.status_code == 200:
+                        data = resp.json()
+                        if data.get("success") and data.get("obj"):
+                            found = False
+                            for inbound in data.get("obj", []):
+                                for client in inbound.get("clientStats", []):
+                                    if client.get("email") == t.client_email:
+                                        found = True
+                                        total_bytes = client.get("total", 0)
+                                        up_bytes = client.get("up", 0)
+                                        down_bytes = client.get("down", 0)
+                                        used_bytes = up_bytes + down_bytes
+                                        remaining_bytes = max(0, total_bytes - used_bytes) if total_bytes > 0 else 0
+                                        expiry_time = client.get("expiryTime", 0)
+                                        enable = client.get("enable", False)
+                                        
+                                        client_info["total_gb_bytes"] = total_bytes
+                                        client_info["used_bytes"] = used_bytes
+                                        client_info["volume_gb"] = total_bytes / 1073741824 if total_bytes > 0 else 0
+                                        client_info["used_gb"] = used_bytes / 1073741824
+                                        client_info["remaining_gb"] = remaining_bytes / 1073741824
+                                        client_info["expiry_time"] = expiry_time
+                                        client_info["enable"] = enable
+                                        
+                                        if expiry_time and expiry_time > 0:
+                                            from datetime import datetime as dt
+                                            expiry_dt = dt.fromtimestamp(expiry_time / 1000)
+                                            client_info["expiry_date"] = expiry_dt.isoformat()
+                                        
+                                        # Determine status
+                                        if total_bytes == 0:
+                                            client_info["status"] = "unlimited" if enable else "disabled"
+                                        else:
+                                            if not enable:
+                                                client_info["status"] = "disabled"
+                                            elif expiry_time > 0 and expiry_time < int(datetime.now().timestamp() * 1000):
+                                                client_info["status"] = "expired"
+                                            elif remaining_bytes <= 0:
+                                                client_info["status"] = "traffic_finished"
+                                            else:
+                                                client_info["status"] = "active"
+                                        
+                                        break
+                                if found:
+                                    break
+                            
+                            if not found:
+                                client_info["status"] = "deleted"
+                    else:
+                        client_info["status"] = "unknown"
+                        
+            except Exception as e:
+                logger.error(f"Error fetching live data for {t.client_email}: {str(e)}")
+                client_info["status"] = "error"
+            
+            clients.append(client_info)
+        
+        db.close()
+        
+        return {
+            "status": "success",
+            "data": clients,
+            "partner": {
+                "id": partner.id,
+                "user_id": partner.user_id,
+                "username": partner.username
+            }
+        }
+    except Exception as e:
+        logger.error(f"Error getting partner clients: {str(e)}")
+        return {"status": "error", "message": str(e)}
 
 
 async def deactivate_partner_accounts_by_user_id(user_id: int, db=None):
@@ -5971,69 +6442,127 @@ async def save_gift_account_settings(request: Request):
 @router.post("/api/gift-account/send")
 async def send_gift_account():
     """Send gift account to channel."""
+    import traceback
+    import uuid
+    import secrets
+    import string
+    
     try:
+        logger.info("=" * 50)
+        logger.info("🎁 [STEP 1] Gift account send started")
+        
         db = SessionLocal()
+        
+        # ====== STEP 2: Get gift settings ======
+        logger.info("🎁 [STEP 2] Getting gift account settings from DB")
         setting = db.query(GiftAccountSettingsDB).first()
 
-        if not setting or not setting.is_enabled:
+        if not setting:
+            logger.error("❌ [STEP 2] No gift account settings found")
+            db.close()
+            return {"status": "error", "message": "تنظیمات اکانت هدیه یافت نشد"}
+
+        logger.info(f"✅ [STEP 2] Settings found: is_enabled={setting.is_enabled}, panel_ids={setting.panel_ids}")
+
+        if not setting.is_enabled:
+            logger.error("❌ [STEP 2] Gift account is disabled")
             db.close()
             return {"status": "error", "message": "اکانت هدیه غیرفعال است"}
 
-        # Get channel settings
+        # ====== STEP 3: Get channel settings ======
+        logger.info("🎁 [STEP 3] Getting channel settings from DB")
         channel = db.query(ChannelSettingsDB).first()
-        if not channel or not channel.channel_chat_id:
+        
+        if not channel:
+            logger.error("❌ [STEP 3] No channel settings found")
             db.close()
             return {"status": "error", "message": "کانال تنظیم نشده است"}
+        
+        logger.info(f"✅ [STEP 3] Channel found: chat_id={channel.channel_chat_id}, username={channel.channel_username}")
 
-        # Get panels
+        if not channel.channel_chat_id:
+            logger.error("❌ [STEP 3] Channel chat_id is empty")
+            db.close()
+            return {"status": "error", "message": "Chat ID کانال تنظیم نشده است"}
+
+        # ====== STEP 4: Get panels ======
+        logger.info("🎁 [STEP 4] Getting panels from DB")
         if setting.panel_ids:
-            panels = db.query(PanelDB).filter(PanelDB.id.in_(setting.panel_ids)).all()
+            logger.info(f"🎁 [STEP 4] Filtering by panel_ids: {setting.panel_ids}")
+            panels = db.query(PanelDB).filter(
+                PanelDB.id.in_(setting.panel_ids),
+                PanelDB.inbound_ids != None,
+                PanelDB.inbound_ids != []
+            ).all()
         else:
-            panels = db.query(PanelDB).filter(PanelDB.is_active == True).all()
+            logger.info("🎁 [STEP 4] Getting all active panels with inbounds")
+            panels = db.query(PanelDB).filter(
+                PanelDB.is_active == True,
+                PanelDB.inbound_ids != None,
+                PanelDB.inbound_ids != []
+            ).all()
 
         if not panels:
+            logger.error("❌ [STEP 4] No panels found with inbounds")
             db.close()
-            return {"status": "error", "message": "پنلی پیدا نشد"}
+            return {"status": "error", "message": "پنلی با inbound پیدا نشد"}
 
-        # Select panel (sequential rotation)
+        logger.info(f"✅ [STEP 4] Found {len(panels)} panels")
+
+        # ====== STEP 5: Select panel ======
+        logger.info("🎁 [STEP 5] Selecting panel by rotation")
         panel_index = setting.current_panel_index % len(panels)
         panel = panels[panel_index]
         setting.current_panel_index += 1
 
-        # Create account
+        logger.info(f"✅ [STEP 5] Selected panel: {panel.name} (index={panel_index}, id={panel.id})")
+
+        # ====== STEP 6: Prepare panel data ======
+        logger.info("🎁 [STEP 6] Preparing panel data")
         panel_url = panel.url.rstrip("/")
         panel_api_token = panel.api_token
         panel_sub_url = panel.sub_url or ""
         panel_name = panel.name
 
-        import uuid
-        import secrets
-        import string
+        logger.info(f"✅ [STEP 6] Panel URL: {panel_url}")
+        logger.info(f"✅ [STEP 6] Panel Sub URL: {panel_sub_url}")
 
-        # Generate username
+        # ====== STEP 7: Generate client info ======
+        logger.info("🎁 [STEP 7] Generating client info")
         random_suffix = ''.join(secrets.choice(string.ascii_lowercase + string.digits) for _ in range(8))
         client_email = f"gift_{datetime.now().strftime('%Y%m%d')}_{random_suffix}"
         client_sub_id = str(uuid.uuid4())
 
-        # Calculate volume
-        total_gb = setting.volume_gb * 1073741824
+        logger.info(f"✅ [STEP 7] Client email: {client_email}")
+        logger.info(f"✅ [STEP 7] Client sub_id: {client_sub_id}")
 
-        # Calculate expiry
+        # ====== STEP 8: Calculate volume and expiry ======
+        logger.info("🎁 [STEP 8] Calculating volume and expiry")
+        total_gb = setting.volume_gb * 1073741824
         expiry_time = int((datetime.now() + timedelta(days=setting.duration_days)).timestamp() * 1000)
 
-        # Get inbound IDs
+        logger.info(f"✅ [STEP 8] Volume: {setting.volume_gb} GB ({total_gb} bytes)")
+        logger.info(f"✅ [STEP 8] Expiry: {datetime.fromtimestamp(expiry_time/1000)}")
+
+        # ====== STEP 9: Get inbound IDs ======
+        logger.info("🎁 [STEP 9] Getting inbound IDs")
         inbound_ids = []
         if panel.inbound_ids:
             for inbound_id in panel.inbound_ids:
                 try:
                     inbound_ids.append(int(inbound_id))
-                except:
-                    pass
+                except Exception as e:
+                    logger.warning(f"⚠️ [STEP 9] Cannot convert inbound_id '{inbound_id}' to int: {e}")
 
         if not inbound_ids:
+            logger.error(f"❌ [STEP 9] No valid inbound IDs. panel.inbound_ids={panel.inbound_ids}")
             db.close()
-            return {"status": "error", "message": "Inbound پیدا نشد"}
+            return {"status": "error", "message": "Inbound معتبر پیدا نشد"}
 
+        logger.info(f"✅ [STEP 9] Inbound IDs: {inbound_ids}")
+
+        # ====== STEP 10: Build client data ======
+        logger.info("🎁 [STEP 10] Building client data")
         client_data = {
             "client": {
                 "email": client_email,
@@ -6046,6 +6575,7 @@ async def send_gift_account():
             },
             "inboundIds": inbound_ids
         }
+        logger.info(f"✅ [STEP 10] Client data prepared")
 
         headers = {
             "accept": "application/json",
@@ -6053,6 +6583,9 @@ async def send_gift_account():
             "Content-Type": "application/json"
         }
 
+        # ====== STEP 11: Create account in panel ======
+        logger.info(f"🎁 [STEP 11] Creating account in panel {panel_name}")
+        
         async with httpx.AsyncClient(timeout=30.0, verify=False) as http_client:
             response = await http_client.post(
                 f"{panel_url}/panel/api/clients/add",
@@ -6060,31 +6593,76 @@ async def send_gift_account():
                 json=client_data
             )
 
+            logger.info(f"✅ [STEP 11] Panel response status: {response.status_code}")
+            logger.info(f"✅ [STEP 11] Panel response body (first 500 chars): {response.text[:500]}")
+            
             if response.status_code != 200:
+                logger.error(f"❌ [STEP 11] Panel returned non-200 status")
                 db.close()
-                return {"status": "error", "message": "خطا در ساخت اکانت"}
+                return {"status": "error", "message": f"خطا در ساخت اکانت: {response.text[:200]}"}
 
-            result = response.json()
+            try:
+                result = response.json()
+                logger.info(f"✅ [STEP 11] Panel result: {result}")
+            except Exception as json_error:
+                logger.error(f"❌ [STEP 11] Cannot parse JSON: {json_error}")
+                db.close()
+                return {"status": "error", "message": f"پاسخ نامعتبر از پنل: {response.text[:200]}"}
+            
             if not result.get("success"):
+                logger.error(f"❌ [STEP 11] Panel returned success=false: {result.get('msg')}")
                 db.close()
-                return {"status": "error", "message": result.get("msg", "خطا")}
+                return {"status": "error", "message": result.get("msg", "خطا در ساخت اکانت")}
 
-        # Build sub URL
+        # ====== STEP 12: Build subscription URL ======
+        logger.info("🎁 [STEP 12] Building subscription URL")
         sub_url = f"{panel_sub_url.rstrip('/')}/{client_sub_id}" if panel_sub_url and client_sub_id else None
+        logger.info(f"✅ [STEP 12] Subscription URL: {sub_url}")
 
-        # Build message
+        # ====== STEP 13: Build message ======
+        logger.info("🎁 [STEP 13] Building message text")
         message_text = setting.post_message.replace("{sub_url}", sub_url or "N/A")
+        logger.info(f"✅ [STEP 13] Message built, length: {len(message_text)} chars")
+        
+        # Escape underscore for Markdown
+        message_text = message_text.replace('_', '\\_')
+        logger.info(f"✅ [STEP 13] Message escaped, length: {len(message_text)} chars")
 
-        # Send to channel
+        # ====== STEP 14: Send to channel ======
+        logger.info(f"🎁 [STEP 14] Sending message to channel {channel.channel_chat_id}")
+        
         from api.routes.webhook import application
 
-        sent_message = await application.bot.send_message(
-            chat_id=channel.channel_chat_id,
-            text=message_text,
-            parse_mode="Markdown"
-        )
+        # Check if bot is ready
+        if not application.bot:
+            logger.warning("⚠️ [STEP 14] Application bot not initialized, initializing...")
+            try:
+                await application.initialize()
+                logger.info("✅ [STEP 14] Application initialized")
+            except Exception as init_error:
+                logger.error(f"❌ [STEP 14] Failed to initialize application: {init_error}")
+                db.close()
+                return {"status": "error", "message": f"خطا در راه‌اندازی ربات: {str(init_error)}"}
 
-        # Save gift account record
+        logger.info(f"✅ [STEP 14] Bot is ready: {application.bot.id}")
+
+        try:
+            sent_message = await application.bot.send_message(
+                chat_id=channel.channel_chat_id,
+                text=message_text,
+                parse_mode="Markdown"
+            )
+            logger.info(f"✅ [STEP 14] Message sent successfully: message_id={sent_message.message_id}")
+        except Exception as send_error:
+            logger.error(f"❌ [STEP 14] Failed to send message: {type(send_error).__name__}: {send_error}")
+            logger.error(f"❌ [STEP 14] Traceback:")
+            logger.error(traceback.format_exc())
+            db.close()
+            return {"status": "error", "message": f"خطا در ارسال پیام: {type(send_error).__name__}: {str(send_error)}"}
+
+        # ====== STEP 15: Save to database ======
+        logger.info("🎁 [STEP 15] Saving gift account to database")
+        
         gift_account = GiftAccountDB(
             client_email=client_email,
             client_sub_id=client_sub_id,
@@ -6097,7 +6675,13 @@ async def send_gift_account():
         )
         db.add(gift_account)
         db.commit()
+        logger.info(f"✅ [STEP 15] Gift account saved: id={gift_account.id}")
+
         db.close()
+
+        # ====== STEP 16: Return success ======
+        logger.info(f"🎉 [STEP 16] Gift account send completed successfully")
+        logger.info("=" * 50)
 
         return {
             "status": "success",
@@ -6109,9 +6693,15 @@ async def send_gift_account():
                 "message_id": sent_message.message_id
             }
         }
+        
     except Exception as e:
-        logger.error(f"Error sending gift account: {str(e)}")
-        return {"status": "error", "message": str(e)}
+        logger.error(f"❌❌❌ FATAL ERROR in send_gift_account ❌❌❌")
+        logger.error(f"Error type: {type(e).__name__}")
+        logger.error(f"Error message: {str(e)}")
+        logger.error(f"Traceback:")
+        logger.error(traceback.format_exc())
+        logger.error("=" * 50)
+        return {"status": "error", "message": f"{type(e).__name__}: {str(e)}"}
 
 
 @router.post("/api/gift-account/cleanup")
