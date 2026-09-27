@@ -88,7 +88,6 @@ class MessageHandler:
                 channel_settings = data.get("channel_settings")
                 
                 if not is_member and channel_settings:
-                    # کاربر عضو نیست - باید عضو بشه
                     channel_url = channel_settings.get("channel_url", "")
                     channel_username = channel_settings.get("channel_username", "")
                     
@@ -155,27 +154,35 @@ class MessageHandler:
                     except Exception as e:
                         logger.error(f"Error processing referral code: {str(e)}")
             
-            # ====== ساخت پیام خوش‌آمد ======
-                        # ====== ✅ Get welcome message from settings ======
             async with httpx.AsyncClient(timeout=10.0) as client:
                 response = await client.get(f"{settings.API_BASE_URL}/admin/api/settings/messages")
                 msg_settings = response.json().get("data", {})
-            
-            welcome_template = msg_settings.get("welcome_message", 
+
+            welcome_template = msg_settings.get("welcome_message",
                 "👋 سلام {first_name} عزیز!\nبه ربات مدیریت سرویس‌ها خوش آمدید.\n\nلطفاً یکی از گزینه‌های زیر را انتخاب کنید:")
-            
+
+            # Clean first_name: remove special chars that break Markdown
+            raw_first_name = user.first_name or "کاربر"
+            clean_first_name = raw_first_name
+            for char in ['`', '*', '_', '[', ']', '(', ')', '~', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!', '\\']:
+                clean_first_name = clean_first_name.replace(char, '')
+
+            # If first_name became empty, use "کاربر"
+            if not clean_first_name.strip():
+                clean_first_name = "کاربر"
+
             if referral_message:
-                welcome_text = welcome_template.replace("{first_name}", user.first_name or "کاربر")
+                welcome_text = welcome_template.replace("{first_name}", clean_first_name)
                 welcome_text += f"\n\n{referral_message}"
             else:
-                welcome_text = welcome_template.replace("{first_name}", user.first_name or "کاربر")
+                welcome_text = welcome_template.replace("{first_name}", clean_first_name)
 
-            welcome_text = escape_markdown(welcome_text)
             await update.message.reply_text(
                 text=welcome_text,
                 parse_mode="Markdown",
                 reply_markup=self.keyboard_builder.create_main_menu()
             )
+
             logger.info(f"Main menu sent to user: {user.id}")
             
         except Exception as e:
