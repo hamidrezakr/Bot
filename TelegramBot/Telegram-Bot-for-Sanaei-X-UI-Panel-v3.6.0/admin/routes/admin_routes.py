@@ -1161,10 +1161,8 @@ async def create_panel(request: Request):
         elif isinstance(capacity, str):
             capacity = 0 if capacity.lower() == "unlimited" else int(capacity) if capacity else 0
 
-        # ====== مهم: دریافت inbound_details ======
         inbound_details = data.get("inbound_details", [])
 
-        # ====== اگر inbound_details خالی است اما inbound_ids پر است، از inbound_ids استفاده کن ======
         if not inbound_details and data.get("inbound_ids"):
             for inbound_id in data.get("inbound_ids", []):
                 inbound_details.append({
@@ -1175,7 +1173,6 @@ async def create_panel(request: Request):
                     "active_clients": 0
                 })
 
-        # ====== چاپ لاگ برای دیباگ ======
         logger.info(f"Creating panel with inbound_details: {inbound_details}")
 
         new_panel = PanelDB(
@@ -1372,8 +1369,6 @@ async def check_panel_status(panel_id: int):
             except Exception as e:
                 logger.warning(f"Could not fetch clients: {str(e)}")
         
-        # ====== اصلاح وضعیت ======
-        # بررسی وضعیت از پاسخ API
         state = status_data.get("state", "").lower()
         
         if state == "running":
@@ -1383,7 +1378,6 @@ async def check_panel_status(panel_id: int):
         elif state == "offline":
             panel.status = "offline"
         else:
-            # اگر پنل پاسخ داد، ولی state مشخص نبود، سالم در نظر بگیر
             if status_data:
                 panel.status = "running"
             else:
@@ -1395,7 +1389,6 @@ async def check_panel_status(panel_id: int):
         panel.users_count = len(clients_data)
         panel.last_check = datetime.now()
         
-        # بروزرسانی ظرفیت
         if panel.capacity > 0:
             panel.is_full = panel.users_count >= panel.capacity
         else:
@@ -1539,7 +1532,6 @@ async def fetch_inbounds(request: Request):
         if not url or not token:
             return {"status": "error", "message": "آدرس URL و توکن API الزامی است"}
         
-        # ====== اصلاح: حذف / اضافی از انتهای آدرس ======
         url = url.rstrip("/")
         
         full_url = f"{url}/panel/api/inbounds/list"
@@ -1553,7 +1545,6 @@ async def fetch_inbounds(request: Request):
         async with httpx.AsyncClient(timeout=15.0, verify=False) as client:
             response = await client.get(full_url, headers=headers)
             
-            # ====== اگر خطای 404 بود، پیام مناسب برگردان ======
             if response.status_code == 404:
                 logger.warning(f"Inbounds endpoint not found: {full_url}")
                 return {"status": "error", "message": "آدرس پنل یا توکن صحیح نیست - مسیر Inbound‌ها پیدا نشد (404)"}
@@ -2343,7 +2334,6 @@ async def approve_receipt(receipt_id: int):
                     db.close()
                     return {"status": "error", "message": result.get("msg", "خطا در ساخت کاربر")}
 
-            # ====== ذخیره در دیتابیس ======
             receipt.status = "approved"
             receipt.processed_at = datetime.now()
             receipt.client_email = email
@@ -2369,7 +2359,6 @@ async def approve_receipt(receipt_id: int):
             except Exception as e:
                 logger.error(f"Error applying referral discounts: {str(e)}")
 
-            # ====== ارسال پیام موفقیت به کاربر ======
             full_sub_url = f"{panel_sub_url.rstrip('/')}/{client_sub_id}" if panel_sub_url and client_sub_id else panel_sub_url
             volume_display = service_volume if service_volume else "نامحدود"
 
@@ -2556,14 +2545,12 @@ async def check_test_account_eligibility(user_id: int):
             db.close()
             return {"status": "success", "data": {"can_get": False, "reason": "disabled"}}
 
-        # محاسبه شروع هفته (شنبه)
         tehran_tz = get_timezone()
         today = datetime.now(tehran_tz).date()
         days_since_saturday = (today.weekday() + 2) % 7
         week_start = today - timedelta(days=days_since_saturday)
         week_start_datetime = datetime.combine(week_start, datetime.min.time())
 
-        # شمارش اکانت‌های تست این هفته
         count = db.query(TestAccountDB).filter(
             TestAccountDB.user_id == user_id,
             TestAccountDB.created_at >= week_start_datetime
@@ -2602,7 +2589,6 @@ async def create_test_account(request: Request):
         
         db = SessionLocal()
         
-        # بررسی تنظیمات
         setting = db.query(TestAccountSettingsDB).first()
         if not setting:
             setting = TestAccountSettingsDB()
@@ -2614,7 +2600,6 @@ async def create_test_account(request: Request):
             db.close()
             return {"status": "error", "message": "اکانت تست غیرفعال است"}
         
-        # بررسی محدودیت
         tehran_tz = get_timezone()
         today = datetime.now(tehran_tz).date()
         days_since_saturday = (today.weekday() + 2) % 7
@@ -2633,37 +2618,29 @@ async def create_test_account(request: Request):
                 "message": f"شما {setting.max_per_week} بار در این هفته اکانت تست گرفته‌اید. لطفاً هفته آینده مجدداً تلاش کنید."
             }
         
-        # دریافت پنل
         panel = db.query(PanelDB).filter(PanelDB.id == panel_id).first()
         if not panel:
             db.close()
             return {"status": "error", "message": "پنل پیدا نشد"}
         
-        # ====== ذخیره اطلاعات پنل قبل از بستن session ======
         panel_url = panel.url.rstrip("/")
         panel_api_token = panel.api_token
         panel_name = panel.name
         panel_sub_url = panel.sub_url or ""
         panel_inbound_ids = panel.inbound_ids or []
         
-        # ====== ذخیره تنظیمات قبل از بستن session ======
         test_volume_mb = setting.volume_mb
         test_duration_days = setting.duration_days
         test_max_per_week = setting.max_per_week
         
-        # ====== ساخت نام کاربری ======
-        # شمارش کل اکانت‌های تست این کاربر (نه فقط این هفته)
         total_test_count = db.query(TestAccountDB).filter(
             TestAccountDB.user_id == user_id
         ).count()
         
-        # شمارنده جدید = تعداد کل + 1
         test_number = total_test_count + 1
         
-        # پاکسازی username تلگرام (حذف کاراکترهای غیرمجاز)
         clean_telegram_username = username.replace("@", "").replace(" ", "_") if username else "user"
         
-        # ساخت نام کاربری با تاریخ شمسی
         import jdatetime
         tehran_tz = get_timezone()
         today_jalali = jdatetime.date.fromgregorian(date=datetime.now(tehran_tz).date())
@@ -2671,15 +2648,12 @@ async def create_test_account(request: Request):
         
         client_email = f"test_{jalali_str}_{clean_telegram_username}_{test_number}"
         
-        # محاسبه حجم و زمان
         total_gb = test_volume_mb * 1048576  # تبدیل مگابایت به بایت
         expiry_time = int((datetime.now() + timedelta(days=test_duration_days)).timestamp() * 1000)
         
-        # ساخت subId
         import uuid
         client_sub_id = str(uuid.uuid4())
         
-        # دریافت inbound ID
         inbound_ids = []
         for inbound_id in panel_inbound_ids:
             try:
@@ -2691,7 +2665,6 @@ async def create_test_account(request: Request):
             db.close()
             return {"status": "error", "message": "هیچ Inboundی برای این پنل تعریف نشده است"}
         
-        # آماده‌سازی داده برای پنل
         client_data = {
             "client": {
                 "email": client_email,
@@ -2711,7 +2684,6 @@ async def create_test_account(request: Request):
             "Content-Type": "application/json"
         }
         
-        # ارسال به پنل
         async with httpx.AsyncClient(timeout=30.0, verify=False) as http_client:
             response = await http_client.post(
                 f"{panel_url}/panel/api/clients/add",
@@ -2728,7 +2700,6 @@ async def create_test_account(request: Request):
                 db.close()
                 return {"status": "error", "message": result.get("msg", "خطا در ساخت اکانت")}
         
-        # ذخیره در دیتابیس
         test_account = TestAccountDB(
             user_id=user_id,
             username=username,
@@ -2744,7 +2715,6 @@ async def create_test_account(request: Request):
         db.commit()
         db.close()
         
-        # ساخت لینک ساب
         sub_url = f"{panel_sub_url.rstrip('/')}/{client_sub_id}" if panel_sub_url and client_sub_id else None
         
         return {
@@ -2812,7 +2782,6 @@ async def cleanup_expired_test_accounts():
                 panel = db.query(PanelDB).filter(PanelDB.id == account.panel_id).first()
                 
                 if not panel:
-                    # پنل وجود نداره - از دیتابیس حذف کن
                     db.delete(account)
                     deleted_count += 1
                     results.append({
@@ -2843,7 +2812,6 @@ async def cleanup_expired_test_accounts():
                         result_data = response.json()
                         
                         if result_data.get("success"):
-                            # حذف موفق
                             db.delete(account)
                             deleted_count += 1
                             results.append({
@@ -3079,7 +3047,6 @@ async def create_payment(request: Request):
 
         db = SessionLocal()
 
-        # دریافت تنظیمات پرداخت
         payment_setting = db.query(PaymentSettingsDB).first()
         if not payment_setting:
             db.close()
@@ -3094,7 +3061,6 @@ async def create_payment(request: Request):
             db.close()
             return {"status": "error", "message": "مرچنت کد تنظیم نشده است"}
 
-        # انتخاب سرور زرین‌پال
         if payment_setting.sandbox_mode:
             zarinpal_url = "https://sandbox.zarinpal.com/pg/v4/payment/request.json"
         else:
@@ -3132,7 +3098,6 @@ async def create_payment(request: Request):
                 else:
                     payment_url = f"https://payment.zarinpal.com/pg/StartPay/{authority}"
 
-                # ====== ذخیره در دیتابیس ======
                 new_payment = PaymentDB(
                     user_id=user_id,
                     username=username,
@@ -3671,7 +3636,6 @@ async def get_referral_stats(user_id: int):
     try:
         db = SessionLocal()
         
-        # دریافت تنظیمات
         setting = db.query(ReferralSettingsDB).first()
         if not setting:
             setting = ReferralSettingsDB()
@@ -3679,32 +3643,24 @@ async def get_referral_stats(user_id: int):
             db.commit()
             db.refresh(setting)
         
-        # لینک رفرال
         referral_link = f"https://t.me/SpaceGateBot?start=ref_{user_id}"
         
-        # تعداد کل معرفی‌ها
         total_referrals = db.query(ReferralDB).filter(
             ReferralDB.referrer_id == user_id,
             ReferralDB.is_used == True
         ).count()
         
-        # دریافت لیست زیرمجموعه‌ها
         referrals = db.query(ReferralDB).filter(
             ReferralDB.referrer_id == user_id,
             ReferralDB.is_used == True
         ).all()
         
-        # بررسی فعال بودن هر کاربر
         active_users = []
         now_timestamp = int(datetime.now().timestamp() * 1000)
         
         for ref in referrals:
-            # چک کردن اینکه آیا کاربر سرویس فعال داره
-            # با جستجو در پنل‌ها
             is_active = False
             try:
-                from core.database import SessionLocal
-
                 db2 = SessionLocal()
                 
                 panels = db2.query(PanelDB).all()
@@ -3734,7 +3690,6 @@ async def get_referral_stats(user_id: int):
                                 if client_obj.get("tgId") == ref.referred_id:
                                     expiry_time = client_obj.get("expiryTime", 0)
                                     if expiry_time == 0:
-                                        # نامحدود
                                         is_active = True
                                     elif expiry_time > now_timestamp:
                                         is_active = True
@@ -3753,7 +3708,6 @@ async def get_referral_stats(user_id: int):
             except Exception as e:
                 logger.error(f"Error checking active status: {str(e)}")
         
-        # دریافت اعتبار تخفیف
         discount = db.query(ReferralDiscountDB).filter(
             ReferralDiscountDB.user_id == user_id
         ).first()
@@ -3805,7 +3759,6 @@ async def register_referral(request: Request):
         
         db = SessionLocal()
         
-        # بررسی تنظیمات
         setting = db.query(ReferralSettingsDB).first()
         if not setting or not setting.is_enabled:
             db.close()
@@ -3819,7 +3772,6 @@ async def register_referral(request: Request):
             db.close()
             return {"status": "error", "message": "شما قبلاً از کد رفرال استفاده کرده‌اید"}
         
-        # ثبت رفرال جدید
         new_referral = ReferralDB(
             referrer_id=referrer_id,
             referred_id=referred_id,
@@ -3857,7 +3809,6 @@ async def apply_referral_discount(request: Request):
         
         db = SessionLocal()
         
-        # پیدا کردن رفرال استفاده نشده
         referral = db.query(ReferralDB).filter(
             ReferralDB.referred_id == user_id,
             ReferralDB.is_used == False
@@ -3869,11 +3820,9 @@ async def apply_referral_discount(request: Request):
         
         discount_percent = referral.discount_percent
         
-        # علامت‌گذاری به عنوان استفاده شده
         referral.is_used = True
         referral.used_at = datetime.now()
         
-        # اضافه کردن اعتبار به معرف
         discount = db.query(ReferralDiscountDB).filter(
             ReferralDiscountDB.user_id == referral.referrer_id
         ).first()
@@ -3916,7 +3865,6 @@ async def apply_recurring_discount(request: Request):
         
         db = SessionLocal()
         
-        # پیدا کردن زیرمجموعه بودن کاربر
         referral = db.query(ReferralDB).filter(
             ReferralDB.referred_id == user_id
         ).first()
@@ -3925,7 +3873,6 @@ async def apply_recurring_discount(request: Request):
             db.close()
             return {"status": "success", "data": {"applied": False}}
         
-        # دریافت تنظیمات
         setting = db.query(ReferralSettingsDB).first()
         if not setting or not setting.is_enabled:
             db.close()
@@ -3933,7 +3880,6 @@ async def apply_recurring_discount(request: Request):
         
         recurring_percent = setting.recurring_discount
         
-        # اضافه کردن اعتبار به معرف
         discount = db.query(ReferralDiscountDB).filter(
             ReferralDiscountDB.user_id == referral.referrer_id
         ).first()
@@ -3994,7 +3940,6 @@ async def redeem_referral_discount(request: Request):
             db.close()
             return {"status": "error", "message": f"اعتبار شما کمتر از {min_percent}% است"}
         
-        # استفاده از min_percent درصد
         discount.used_percent += min_percent
         discount.remaining_percent -= min_percent
         discount.updated_at = datetime.now()
@@ -4026,7 +3971,6 @@ async def check_referral_discount(request: Request):
         
         db = SessionLocal()
         
-        # پیدا کردن رفرال استفاده نشده
         referral = db.query(ReferralDB).filter(
             ReferralDB.referred_id == user_id,
             ReferralDB.is_used == False
@@ -4210,11 +4154,9 @@ async def send_broadcast(request: Request):
         failed_count = 0
         results = []
 
-        # ارسال به همه کاربران
         for user in users:
             try:
                 if photo_path:
-                    # ارسال عکس با کپشن
                     with open(photo_path, 'rb') as photo_file:
                         await application.bot.send_photo(
                             chat_id=user.user_id,
@@ -4223,7 +4165,6 @@ async def send_broadcast(request: Request):
                             parse_mode="Markdown" if message_text else None
                         )
                 else:
-                    # ارسال متن
                     await application.bot.send_message(
                         chat_id=user.user_id,
                         text=message_text,
@@ -4233,7 +4174,6 @@ async def send_broadcast(request: Request):
                 success_count += 1
                 results.append({"user_id": user.user_id, "status": "success"})
 
-                # ⚠️ محدودیت تلگرام - 30 پیام در ثانیه
                 await asyncio.sleep(0.05)  # 50ms delay
 
             except Exception as e:
@@ -4275,13 +4215,11 @@ async def register_user(request: Request):
         existing = db.query(UserDB).filter(UserDB.user_id == user_id).first()
         
         if existing:
-            # بروزرسانی
             existing.username = username
             existing.first_name = first_name
             existing.last_name = last_name
             existing.last_seen = datetime.now()
         else:
-            # ثبت جدید
             new_user = UserDB(
                 user_id=user_id,
                 username=username,
