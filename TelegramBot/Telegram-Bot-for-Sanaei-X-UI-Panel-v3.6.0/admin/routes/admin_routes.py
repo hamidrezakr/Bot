@@ -24,12 +24,10 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 # ==============================================
 # Database Setup
 # ==============================================
-from sqlalchemy import create_engine, Column, Integer, String, DateTime, Boolean, JSON, Text, BigInteger
+from sqlalchemy import Column, Integer, String, DateTime, Boolean, JSON, Text, BigInteger
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
 from pydantic import BaseModel, Field
 from datetime import datetime, timedelta
-from fastapi.responses import HTMLResponse
 
 # Setup templates
 templates_dir = Path(__file__).parent.parent / "templates"
@@ -44,10 +42,9 @@ subscription_service = SubscriptionService()
 # ==============================================
 # Database Setup for Panels
 # ==============================================
-engine = create_engine(settings.DATABASE_URL)
-SessionLocal = sessionmaker(bind=engine)
-Base = declarative_base()
+from core.database import engine, SessionLocal
 
+Base = declarative_base()
 
 class PanelDB(Base):
     """Panel database model."""
@@ -2329,7 +2326,7 @@ async def approve_receipt(receipt_id: int):
                 "Content-Type": "application/json"
             }
 
-            # ====== ارسال درخواست به پنل ======
+            
             async with httpx.AsyncClient(timeout=30.0, verify=False) as http_client:
                 response = await http_client.post(
                     f"{panel_url}/panel/api/clients/add",
@@ -3706,12 +3703,9 @@ async def get_referral_stats(user_id: int):
             # با جستجو در پنل‌ها
             is_active = False
             try:
-                from sqlalchemy import create_engine
-                from sqlalchemy.orm import sessionmaker as sm
-                
-                engine2 = create_engine(settings.DATABASE_URL)
-                SessionLocal2 = sm(bind=engine2)
-                db2 = SessionLocal2()
+                from core.database import SessionLocal
+
+                db2 = SessionLocal()
                 
                 panels = db2.query(PanelDB).all()
                 db2.close()

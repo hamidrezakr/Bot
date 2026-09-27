@@ -2288,19 +2288,15 @@ class MessageHandler:
         try:
             import httpx
             from datetime import datetime
-            from sqlalchemy import create_engine
-            from sqlalchemy.orm import sessionmaker
-            
-            # ====== دریافت مستقیم از دیتابیس ======
-            engine = create_engine(settings.DATABASE_URL)
-            SessionLocal = sessionmaker(bind=engine)
+            from core.database import SessionLocal
+
             db = SessionLocal()
             
-            # دریافت پنل‌ها با توکن کامل
+           
             from admin.routes.admin_routes import PanelDB
             panels_db = db.query(PanelDB).all()
             
-            # تبدیل به دیکشنری با توکن کامل
+          
             panels = []
             for p in panels_db:
                 panels.append({
